@@ -54,7 +54,7 @@ export default function Login(props) {
           w={80}
         />
         
-        <Title mb={32}>Masuk ke akun</Title>
+        <Title mb={32}>Masuk ke akun MBTI</Title>
         
         <form onSubmit={submit} style={{
           width: '100%'
