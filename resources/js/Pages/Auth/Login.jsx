@@ -3,15 +3,14 @@ import { useForm } from '@inertiajs/react'
 import { AppLayout } from '../../Layouts/AppLayout'
 import {
   Button,
-  Card,
   Image,
   PasswordInput,
+  Stack,
   TextInput,
   Title
 } from '@mantine/core'
 
 export default function Login(props) {
-  console.log(props)
   const {
     data,
     setData,
@@ -40,12 +39,15 @@ export default function Login(props) {
   
   return (
     <AppLayout title="Masuk Akun" meta={props.meta} isAuth>
-      <Card w={{
+      <Stack w={{
         base: '100%',
         sm: '75%',
         md: '50%',
         lg: '25%'
-      }}>
+      }}
+             p={16}
+             align="center"
+      >
         <Image
           src="https://i.imgur.com/3eTKJe2.png"
           mb={16}
@@ -54,7 +56,9 @@ export default function Login(props) {
         
         <Title mb={32}>Masuk ke akun</Title>
         
-        <form onSubmit={submit}>
+        <form onSubmit={submit} style={{
+          width: '100%'
+        }}>
           <TextInput
             type="email"
             withAsterisk
@@ -100,7 +104,7 @@ export default function Login(props) {
             Masuk
           </Button>
         </form>
-      </Card>
+      </Stack>
     
     </AppLayout>
     // <GuestLayout>

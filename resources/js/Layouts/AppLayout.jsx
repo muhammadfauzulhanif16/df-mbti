@@ -11,11 +11,14 @@ export const AppLayout = (props) => {
         title: props.meta.title,
         message: props.meta.message,
         color: props.meta.status ? 'green' : 'red',
-        autoClose: 2000
+        autoClose: 2000,
+        withBorder: true
+        
       })
     }
     
   }, [props.meta])
+  
   return (
     <>
       <Head title={props.title} />
@@ -28,9 +31,11 @@ export const AppLayout = (props) => {
         {!props.isAuth &&
           <NavBar title={props.title} authed={props.authed} />}
         
-        <ScrollArea mih="100vh" p={16}>
-          {props.children}
-        </ScrollArea>
+        {props.isAuth ? props.children :
+          <ScrollArea mih="100vh" p={16} w="100vw">
+            {props.children}
+          </ScrollArea>
+        }
       </Flex>
     </>
   )

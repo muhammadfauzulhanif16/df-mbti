@@ -21,6 +21,7 @@ createInertiaApp({
       <MantineProvider
         // defaultColorScheme="dark"
         theme={{
+          defaultRadius: 'lg',
           white: '#f3f3f3',
           black: '#0c0c0c',
           fontFamily: 'Outfit, sans-serif',

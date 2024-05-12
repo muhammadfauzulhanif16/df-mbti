@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Button,
-  Center,
-  Flex,
-  Image,
-  Menu,
-  Stack,
-  Text
-} from '@mantine/core'
+import { Avatar, Center, Flex, Image, Menu, Stack, Text } from '@mantine/core'
 import React from 'react'
 import {
   IconArticle,
@@ -112,7 +103,7 @@ export const NavBar = (props) => {
             radius="xl"
             variant="filled"
           >
-            {props.authed.name.split(' ')[0][0] + props.authed.name.split(' ')[props.authed.name.split(' ').length - 1][0]}
+            {props.authed.name.split(' ').length > 1 ? props.authed.name.split(' ')[0][0] + props.authed.name.split(' ')[props.authed.name.split(' ').length - 1][0] : props.authed.name.split(' ')[0][0]}
           </Avatar>
         </Menu.Target>
         
@@ -122,8 +113,9 @@ export const NavBar = (props) => {
           border: '1px solid #c5c5c5',
           borderRadius: 16
         }}>
-          <Button variant="subtle" mb={8}>Button</Button>
-          <Button variant="subtle">Button</Button>
+          <Menu.Item onClick={() => router.post(route('logout'))}>
+            Keluar Akun
+          </Menu.Item>
         </Menu.Dropdown>
       </Menu>
     
