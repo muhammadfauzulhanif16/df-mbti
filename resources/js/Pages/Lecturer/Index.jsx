@@ -22,7 +22,7 @@ const Index = (props) => {
   }, [props.meta])
   
   const filteredElements = props.lecturers.filter(element =>
-    element.nama?.toLowerCase().includes(search.toLowerCase())
+    element.user.nama?.toLowerCase().includes(search.toLowerCase())
   )
   
   const THList = ['Foto', 'Nama', 'NIDN', 'Status', 'Tahun Ajaran', 'Email', 'Opsi']
@@ -63,21 +63,21 @@ const Index = (props) => {
           
           <Table.Tbody>
             {filteredElements.map((lecturer) => (
-              <Table.Tr key={lecturer.id}>
+              <Table.Tr key={lecturer.user.id}>
                 <Table.Td>
-                  <Avatar src={lecturer.foto} alt={lecturer.nama} />
+                  <Avatar src={lecturer.user.foto} alt={lecturer.user.nama} />
                 </Table.Td>
-                <Table.Td>{lecturer.nama}</Table.Td>
+                <Table.Td>{lecturer.user.nama}</Table.Td>
                 <Table.Td>{lecturer.nidn}</Table.Td>
-                <Table.Td>{lecturer.peran}</Table.Td>
+                <Table.Td>{lecturer.user.peran}</Table.Td>
                 <Table.Td>{lecturer.tahun_ajaran}</Table.Td>
-                <Table.Td>{lecturer.email}</Table.Td>
+                <Table.Td>{lecturer.user.email}</Table.Td>
                 <Table.Td>
                   <Button.Group>
                     <Button variant="outline" color="yellow"
-                            onClick={() => router.get(route('lecturers.edit', lecturer.id))}>Ubah</Button>
+                            onClick={() => router.get(route('lecturers.edit', lecturer.user.id))}>Ubah</Button>
                     <Button variant="outline" color="red"
-                            onClick={() => router.delete(route('lecturers.destroy', lecturer.id))}>Hapus</Button>
+                            onClick={() => router.delete(route('lecturers.destroy', lecturer.user.id))}>Hapus</Button>
                   </Button.Group>
                 </Table.Td>
               </Table.Tr>

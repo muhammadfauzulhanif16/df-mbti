@@ -13,7 +13,6 @@ import {
   TextInput,
   Title
 } from '@mantine/core'
-import { YearPickerInput } from '@mantine/dates'
 import { router } from '@inertiajs/core'
 
 const Create = (props) => {
@@ -40,8 +39,6 @@ const Create = (props) => {
     password: ''
   })
   
-  console.log(form.data)
-  
   return (
     <>
       <Head title="Tambah Dosen" />
@@ -53,7 +50,7 @@ const Create = (props) => {
           e.preventDefault()
           form.post(route('lecturers.store'))
         }}>
-          <Title align="center" mb={32}>Masukkan Data Dosen</Title>
+          <Title align="center" mb={32}>Tambah Data Dosen</Title>
           
           <Radio.Group
             mb={16}
@@ -69,7 +66,7 @@ const Create = (props) => {
           </Radio.Group>
           
           <SimpleGrid cols={2}>
-            < TextInput
+            <TextInput
               withAsterisk
               label="Nama"
               placeholder="Masukkan nama..."
@@ -92,11 +89,12 @@ const Create = (props) => {
               onChange={(e) => form.setData('email', e.target.value)}
             />
             
-            <YearPickerInput
+            <NumberInput
               withAsterisk
+              clearable
               label="Tahun Ajaran"
               placeholder="Masukkan Tahun Ajaran..."
-              onChange={(value) => form.setData('tahun_ajaran', value.getFullYear())}
+              onChange={(value) => form.setData('tahun_ajaran', value.toString())}
             />
             
             <NumberInput
@@ -104,12 +102,11 @@ const Create = (props) => {
               label="No HP"
               hideControls
               placeholder="Masukkan No HP..."
-              onChange={(value) => form.setData('no_hp', '0' + value.toString())}
+              onChange={(value) => form.setData('no_hp', value.toString())}
             />
             
             <PasswordInput
               withAsterisk
-              value={form.data.nidn}
               label="Kata Sandi"
               placeholder="Masukkan Kata Sandi..."
               onChange={(e) => form.setData('password', e.target.value)}
@@ -131,7 +128,7 @@ const Create = (props) => {
               loading={form.processing}
               type="submit"
             >
-              Simpan
+              Tambah
             </Button>
           </Button.Group>
         </form>

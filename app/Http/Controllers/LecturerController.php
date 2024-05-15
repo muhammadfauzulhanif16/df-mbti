@@ -2,7 +2,6 @@
   
   namespace App\Http\Controllers;
   
-  use App\Http\Requests\UpdateLecturerRequest;
   use App\Models\Lecturer;
   use App\Models\User;
   use Illuminate\Http\Request;
@@ -18,18 +17,7 @@
     {
       return Inertia::render('Lecturer/Index', [
         'meta' => session('meta'),
-        'lecturers' => Lecturer::with('user')->get()->map(function ($lecturer) {
-          return [
-            'id' => $lecturer->user->id,
-            'nama' => $lecturer->user->nama,
-            'nidn' => $lecturer->nidn,
-            'tahun_ajaran' => $lecturer->tahun_ajaran,
-            'foto' => $lecturer->user->foto,
-            'no_hp' => $lecturer->user->no_hp,
-            'peran' => $lecturer->user->peran,
-            'email' => $lecturer->user->email,
-          ];
-        })
+        'lecturers' => Lecturer::with('user')->get(),
       ]);
     }
     
@@ -40,7 +28,7 @@
     {
       $dosen = User::create([
         'nama' => $request->nama,
-        'no_hp' => $request->no_hp,
+        'no_hp' => '0' + $request->no_hp,
         'peran' => $request->status,
         'email' => $request->email,
         'password' => Hash::make($request->password),
@@ -81,32 +69,26 @@
     public function edit(Request $lecturer)
     {
       return Inertia::render('Lecturer/Edit', [
-        'lecturer' => [
-          'id' => $lecturer->user->id,
-          'nama' => $lecturer->user->nama,
-          'nidn' => $lecturer->nidn,
-          'tahun_ajaran' => $lecturer->tahun_ajaran,
-          'foto' => $lecturer->user->foto,
-          'no_hp' => $lecturer->user->no_hp,
-          'peran' => $lecturer->user->peran,
-          'email' => $lecturer->user->email,
-        ]
+        'lecturer' => Lecturer::with('user')->where('user_id', $lecturer->id)->first(),
       ]);
     }
     
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLecturerRequest $request, Lecturer $lecturer)
+    public function update(Request $request)
     {
-      $lecturer->user->update([
+      $user = User::find($request->id);
+      
+      $user->update([
         'nama' => $request->nama,
-        'no_hp' => $request->no_hp,
+        'no_hp' => '0' + $request->no_hp,
         'peran' => $request->status,
         'email' => $request->email,
+        'password' => $request->password ? Hash::make($request->password) : $user->password,
       ]);
       
-      $lecturer->update([
+      $user->lecturer()->update([
         'nidn' => $request->nidn,
         'tahun_ajaran' => $request->tahun_ajaran,
       ]);

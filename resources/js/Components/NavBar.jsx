@@ -1,4 +1,12 @@
-import { ActionIcon, Avatar, Button, Drawer, Group, Image } from '@mantine/core'
+import {
+  ActionIcon,
+  Avatar,
+  Button,
+  Drawer,
+  Group,
+  Image,
+  Text
+} from '@mantine/core'
 import React from 'react'
 import { router } from '@inertiajs/core'
 import {
@@ -71,16 +79,19 @@ export const NavBar = (props) => {
   // }
   
   return (
-    <Group p={16} justify="space-between" pos="sticky" top={0}>
+    <Group p={16} justify="space-between" pos="sticky" top={0} style={{
+      borderBottom: '1px solid #DEE2E6'
+    }}>
       <Image src="https://i.imgur.com/3eTKJe2.png" w={48} />
       
       <ActionIcon
         variant="filled"
         size={48}
+        color="gray"
         aria-label="Menu"
         display={{
           base: 'block',
-          md: 'none'
+          lg: 'none'
         }}
         onClick={open}
       >
@@ -96,6 +107,16 @@ export const NavBar = (props) => {
         title="Menu"
         size="xs"
       >
+        <Group mb={16}>
+          <Avatar
+            alt={props.authed.nama}
+            style={{
+              cursor: 'pointer'
+            }}
+          />
+          <Text>{props.authed.nama}</Text>
+        </Group>
+        
         <Button.Group
           style={{ zIndex: 2 }}
           bg="white"
@@ -103,6 +124,7 @@ export const NavBar = (props) => {
         >
           {NavList.map((nav, id) => (
             <Button
+              color="gray"
               justify="start"
               leftSection={nav.icon}
               onClick={() => nav.route === 'logout' ? router.post('logout') : router.get(route(nav.route))}
@@ -127,6 +149,7 @@ export const NavBar = (props) => {
       >
         {NavList.map((nav, id) => (
           <Button
+            color="gray"
             leftSection={nav.icon}
             onClick={() => nav.route === 'logout' ? router.post('logout') : router.get(route(nav.route))}
             variant={nav.label === props.title ? 'filled' : 'subtle'}
@@ -137,9 +160,15 @@ export const NavBar = (props) => {
         ))}
       </Button.Group>
       
-      <Avatar src="avatar.png" alt="it's me" style={{
-        cursor: 'pointer'
-      }} />
+      <Avatar
+        alt={props.authed.name}
+        display={{
+          base: 'none',
+          lg: 'block'
+        }}
+        style={{
+          cursor: 'pointer'
+        }} />
     </Group>
   )
 }

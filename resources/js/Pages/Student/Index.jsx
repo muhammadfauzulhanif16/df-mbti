@@ -9,7 +9,6 @@ import { router } from '@inertiajs/core'
 const Index = (props) => {
   const [search, setSearch] = useState('')
   
-  
   useEffect(() => {
     if (props.meta) {
       notifications.show({
@@ -23,7 +22,7 @@ const Index = (props) => {
   }, [props.meta])
   
   const filteredElements = props.students.filter(element =>
-    element.nama?.toLowerCase().includes(search.toLowerCase())
+    element.user.nama?.toLowerCase().includes(search.toLowerCase())
   )
   
   const THList = ['Foto', 'NIM', 'Nama', 'Email', 'DPA', 'Opsi']
@@ -66,18 +65,18 @@ const Index = (props) => {
             {filteredElements.map((student, id) => (
               <Table.Tr key={id}>
                 <Table.Td>
-                  <Avatar src={student.foto} alt={student.nama} />
+                  <Avatar src={student.user.foto} alt={student.user.nama} />
                 </Table.Td>
                 <Table.Td>{student.nim}</Table.Td>
-                <Table.Td>{student.nama}</Table.Td>
-                <Table.Td>{student.email}</Table.Td>
+                <Table.Td>{student.user.nama}</Table.Td>
+                <Table.Td>{student.user.email}</Table.Td>
                 <Table.Td>{student.dpa}</Table.Td>
                 <Table.Td>
                   <Button.Group>
                     <Button variant="outline" color="yellow"
-                            onClick={() => router.get(route('students.edit', student.id))}>Ubah</Button>
+                            onClick={() => router.get(route('students.edit', student.user.id))}>Ubah</Button>
                     <Button variant="outline" color="red"
-                            onClick={() => router.delete(route('students.destroy', student.id))}>Hapus</Button>
+                            onClick={() => router.delete(route('students.destroy', student.user.id))}>Hapus</Button>
                   </Button.Group>
                 </Table.Td>
               </Table.Tr>

@@ -18,19 +18,7 @@
     {
       return Inertia::render('Student/Index', [
         'meta' => session('meta'),
-        'students' => Student::with('user')->get()->map(function ($student) {
-          return [
-            'id' => $student->user->id,
-            'nama' => $student->user->nama,
-            'nim' => $student->nim,
-            'tahun_ajaran' => $student->tahun_ajaran,
-            'foto' => $student->user->foto,
-            'no_hp' => $student->user->no_hp,
-            'peran' => $student->user->peran,
-            'email' => $student->user->email,
-            'dpa' => $student->dpa,
-          ];
-        })
+        'students' => Student::with('user')->get(),
       ]);
     }
     
@@ -41,7 +29,7 @@
     {
       $mahasiswa = User::create([
         'nama' => $request->nama,
-        'no_hp' => $request->no_hp,
+        'no_hp' => '0' + $request->no_hp,
         'peran' => 'Mahasiswa',
         'email' => $request->email,
         'password' => Hash::make($request->password),
@@ -85,7 +73,7 @@
     public function edit(Request $student)
     {
       return Inertia::render('Student/Edit', [
-        'student' => User::where('id', $student->id)->with('student')->first(),
+        'student' => Student::with('user')->where('user_id', $student->id)->first(),
         'lecturers' => Lecturer::with('user')->get(),
       ]);
     }
@@ -93,16 +81,19 @@
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request)
     {
-      $student->user->update([
+      $user = User::find($request->id);
+      
+      $user->update([
         'nama' => $request->nama,
-        'no_hp' => $request->no_hp,
-        'peran' => $request->status,
+        'no_hp' => '0' + $request->no_hp,
+        'peran' => 'Mahasiswa',
         'email' => $request->email,
+        'password' => $request->password ? Hash::make($request->password) : $user->password,
       ]);
       
-      $student->update([
+      $user->student()->update([
         'nim' => $request->nim,
         'tahun_ajaran' => $request->tahun_ajaran,
         'dpa' => $request->dpa,
