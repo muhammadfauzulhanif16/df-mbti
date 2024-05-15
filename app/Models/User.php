@@ -19,7 +19,7 @@
     protected $fillable = [
       'nama',
       'foto',
-      'telepon',
+      'no_hp',
       'peran',
       'email',
       'password',

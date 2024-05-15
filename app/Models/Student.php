@@ -15,6 +15,7 @@
       'user_id',
       'nim',
       'tahun_ajaran',
+      'dpa',
     ];
     
     public function user()

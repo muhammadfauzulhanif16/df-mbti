@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { notifications } from '@mantine/notifications'
 import { Head } from '@inertiajs/react'
-import { Button, Group, Stack, Table, TextInput } from '@mantine/core'
+import { Avatar, Button, Group, Stack, Table, TextInput } from '@mantine/core'
 import { NavBar } from '@/Components/NavBar.jsx'
 import { IconPlus, IconSearch } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 
 const Index = (props) => {
   const [search, setSearch] = useState('')
-  
-  console.log(props)
   
   useEffect(() => {
     if (props.meta) {
@@ -21,9 +19,7 @@ const Index = (props) => {
         withBorder: true
       })
     }
-    
   }, [props.meta])
-  
   
   const filteredElements = props.lecturers.filter(element =>
     element.nama?.toLowerCase().includes(search.toLowerCase())
@@ -35,12 +31,11 @@ const Index = (props) => {
     <>
       <Head title="Dosen" />
       
-      <NavBar title="Beranda" authed={props.auth.user} />
+      <NavBar title="Dosen" authed={props.auth.user} />
       
       <Stack p={16}>
         <Group justify="space-between">
           <Button
-            color="green"
             leftSection={<IconPlus />}
             onClick={() => router.get(route('lecturers.create'))}
           >
@@ -69,17 +64,26 @@ const Index = (props) => {
           <Table.Tbody>
             {filteredElements.map((lecturer) => (
               <Table.Tr key={lecturer.id}>
-                <Table.Td>{lecturer.foto}</Table.Td>
+                <Table.Td>
+                  <Avatar src={lecturer.foto} alt={lecturer.nama} />
+                </Table.Td>
                 <Table.Td>{lecturer.nama}</Table.Td>
                 <Table.Td>{lecturer.nidn}</Table.Td>
                 <Table.Td>{lecturer.peran}</Table.Td>
                 <Table.Td>{lecturer.tahun_ajaran}</Table.Td>
                 <Table.Td>{lecturer.email}</Table.Td>
+                <Table.Td>
+                  <Button.Group>
+                    <Button variant="outline" color="yellow"
+                            onClick={() => router.get(route('lecturers.edit', lecturer.id))}>Ubah</Button>
+                    <Button variant="outline" color="red"
+                            onClick={() => router.delete(route('lecturers.destroy', lecturer.id))}>Hapus</Button>
+                  </Button.Group>
+                </Table.Td>
               </Table.Tr>
             ))}
           </Table.Tbody>
         </Table>
-      
       </Stack>
     </>
   )

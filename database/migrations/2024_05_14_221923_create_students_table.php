@@ -14,6 +14,7 @@
         $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
         $table->char('nim', 10)->unique();
         $table->year('tahun_ajaran');
+        $table->string('dpa')->nullable();
       });
     }
     

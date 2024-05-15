@@ -40,11 +40,13 @@ const Create = (props) => {
     password: ''
   })
   
+  console.log(form.data)
+  
   return (
     <>
       <Head title="Tambah Dosen" />
       
-      <NavBar title="Beranda" authed={props.auth.user} />
+      <NavBar title="Dosen" authed={props.auth.user} />
       
       <Center h="100vh" p={16}>
         <form onSubmit={(e) => {
@@ -54,6 +56,7 @@ const Create = (props) => {
           <Title align="center" mb={32}>Masukkan Data Dosen</Title>
           
           <Radio.Group
+            mb={16}
             label="Status"
             withAsterisk
             onChange={(value) => form.setData('status', value)}
@@ -65,8 +68,8 @@ const Create = (props) => {
             </Group>
           </Radio.Group>
           
-          <SimpleGrid cols={2} my={16}>
-            <TextInput
+          <SimpleGrid cols={2}>
+            < TextInput
               withAsterisk
               label="Nama"
               placeholder="Masukkan nama..."
@@ -101,7 +104,7 @@ const Create = (props) => {
               label="No HP"
               hideControls
               placeholder="Masukkan No HP..."
-              onChange={(value) => form.setData('no_hp', value)}
+              onChange={(value) => form.setData('no_hp', '0' + value.toString())}
             />
             
             <PasswordInput
@@ -113,12 +116,11 @@ const Create = (props) => {
             />
           </SimpleGrid>
           
-          <Button.Group>
+          <Button.Group mt={32}>
             <Button
               variant="outline"
               color="red"
               disabled={form.processing}
-              type="submit"
               fullWidth
               onClick={() => router.get(route('lecturers.index'))}
             >

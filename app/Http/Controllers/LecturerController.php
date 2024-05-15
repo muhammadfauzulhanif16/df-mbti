@@ -78,9 +78,20 @@
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Lecturer $lecturer)
+    public function edit(Request $lecturer)
     {
-      //
+      return Inertia::render('Lecturer/Edit', [
+        'lecturer' => [
+          'id' => $lecturer->user->id,
+          'nama' => $lecturer->user->nama,
+          'nidn' => $lecturer->nidn,
+          'tahun_ajaran' => $lecturer->tahun_ajaran,
+          'foto' => $lecturer->user->foto,
+          'no_hp' => $lecturer->user->no_hp,
+          'peran' => $lecturer->user->peran,
+          'email' => $lecturer->user->email,
+        ]
+      ]);
     }
     
     /**
@@ -88,14 +99,37 @@
      */
     public function update(UpdateLecturerRequest $request, Lecturer $lecturer)
     {
-      //
+      $lecturer->user->update([
+        'nama' => $request->nama,
+        'no_hp' => $request->no_hp,
+        'peran' => $request->status,
+        'email' => $request->email,
+      ]);
+      
+      $lecturer->update([
+        'nidn' => $request->nidn,
+        'tahun_ajaran' => $request->tahun_ajaran,
+      ]);
+      
+      return to_route('lecturers.index')->with('meta', [
+        'status' => true,
+        'title' => 'Berhasil mengubah dosen',
+        'message' => 'Dosen ' . $request->nama . ' berhasil diubah!'
+      ]);
     }
     
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lecturer $lecturer)
+    public function destroy(Request $lecturer)
     {
-      //
+      $user = User::find($lecturer->id);
+      $user->delete();
+      
+      return to_route('lecturers.index')->with('meta', [
+        'status' => true,
+        'title' => 'Berhasil menghapus dosen',
+        'message' => 'Dosen ' . $user->nama . ' berhasil dihapus!'
+      ]);
     }
   }

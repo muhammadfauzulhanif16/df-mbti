@@ -1,8 +1,7 @@
 <?php
   
   use App\Http\Controllers\LecturerController;
-  use App\Http\Controllers\ProfileController;
-  use App\Models\Lecturer;
+  use App\Http\Controllers\StudentController;
   use Illuminate\Support\Facades\Route;
   use Inertia\Inertia;
   
@@ -18,18 +17,21 @@
     
     Route::group(['prefix' => 'lecturers'], function () {
       Route::get('', [LecturerController::class, 'index'])->name('lecturers.index');
-      
       Route::get('create', [LecturerController::class, 'create'])->name('lecturers.create');
-      
       Route::post('', [LecturerController::class, 'store'])->name('lecturers.store');
-      
-      Route::get('{lecturer}/edit', function (Lecturer $lecturer) {
-        return Inertia::render('Lecturer/Edit', [
-          'lecturer' => $lecturer,
-        ]);
-      })->name('lecturers.edit');
+      Route::get('{id}/edit', [LecturerController::class, 'edit'])->name('lecturers.edit');
+      Route::put('{id}', [LecturerController::class, 'update'])->name('lecturers.update');
+      Route::delete('{id}', [LecturerController::class, 'destroy'])->name('lecturers.destroy');
     });
     
+    Route::group(['prefix' => 'students'], function () {
+      Route::get('', [StudentController::class, 'index'])->name('students.index');
+      Route::get('create', [StudentController::class, 'create'])->name('students.create');
+      Route::post('', [StudentController::class, 'store'])->name('students.store');
+      Route::get('{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
+      Route::put('{id}', [StudentController::class, 'update'])->name('students.update');
+      Route::delete('{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+    });
     
     Route::get('/personality', function () {
       return Inertia::render('Personality/index');
@@ -40,10 +42,5 @@
     })->name('guide');
   });
   
-  Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-  });
   
   require __DIR__ . '/auth.php';

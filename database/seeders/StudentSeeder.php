@@ -24,6 +24,7 @@
         'user_id' => $mahasiswa->id,
         'nim' => '0123456789',
         'tahun_ajaran' => '2020',
+//        'dpa_id' => '-',
       ]);
     }
   }

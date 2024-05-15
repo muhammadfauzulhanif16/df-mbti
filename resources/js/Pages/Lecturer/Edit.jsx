@@ -1,7 +1,7 @@
-const Edit = () => {
+const Edit = (props) => {
   return (
     <div>
-      <h1>Lecturer Edit</h1>
+      <h1>{props.lecturer.name}</h1>
     </div>
   )
 }
