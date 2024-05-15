@@ -17,7 +17,10 @@
      * @var array<int, string>
      */
     protected $fillable = [
-      'name',
+      'nama',
+      'foto',
+      'telepon',
+      'peran',
       'email',
       'password',
     ];
@@ -31,6 +34,16 @@
       'password',
       'remember_token',
     ];
+    
+    public function student()
+    {
+      return $this->hasOne(Student::class);
+    }
+    
+    public function lecturer()
+    {
+      return $this->hasOne(Lecturer::class);
+    }
     
     /**
      * Get the attributes that should be cast.

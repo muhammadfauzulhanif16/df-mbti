@@ -1,17 +1,11 @@
 <?php
   
+  use App\Http\Controllers\LecturerController;
   use App\Http\Controllers\ProfileController;
+  use App\Models\Lecturer;
   use Illuminate\Support\Facades\Route;
   use Inertia\Inertia;
-
-//  Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//      'canLogin' => Route::has('login'),
-//      'canRegister' => Route::has('register'),
-//      'laravelVersion' => Application::VERSION,
-//      'phpVersion' => PHP_VERSION,
-//    ]);
-//  });
+  
   
   Route::fallback(fn() => to_route(auth()->check() ? 'dashboard' : 'login'));
   
@@ -22,10 +16,20 @@
       ]);
     })->name('dashboard');
     
-    // Add your new routes here
-    Route::get('/user', function () {
-      return Inertia::render('User/index');
-    })->name('user');
+    Route::group(['prefix' => 'lecturers'], function () {
+      Route::get('', [LecturerController::class, 'index'])->name('lecturers.index');
+      
+      Route::get('create', [LecturerController::class, 'create'])->name('lecturers.create');
+      
+      Route::post('', [LecturerController::class, 'store'])->name('lecturers.store');
+      
+      Route::get('{lecturer}/edit', function (Lecturer $lecturer) {
+        return Inertia::render('Lecturer/Edit', [
+          'lecturer' => $lecturer,
+        ]);
+      })->name('lecturers.edit');
+    });
+    
     
     Route::get('/personality', function () {
       return Inertia::render('Personality/index');

@@ -12,12 +12,12 @@
     {
       Schema::create('users', function (Blueprint $table) {
         $table->id();
-        $table->string('name');
+        $table->string('nama');
+        $table->string('foto')->unique()->nullable();
+        $table->string('no_hp')->unique()->nullable();
+        $table->string('peran');
         $table->string('email')->unique();
-        $table->timestamp('email_verified_at')->nullable();
         $table->string('password');
-        $table->rememberToken();
-        $table->timestamp('last_seen_at')->nullable();
         $table->timestamps();
       });
       

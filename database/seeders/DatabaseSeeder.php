@@ -15,12 +15,16 @@
      */
     public function run(): void
     {
-      foreach (['Admin', 'Dosen', 'Mahasiswa'] as $role) {
-        User::create([
-          'name' => $role,
-          'email' => strtolower($role) . '@mbti.id',
-          'password' => Hash::make(strtolower($role)),
-        ]);
-      }
+      User::create([
+        'nama' => 'Admin',
+        'peran' => 'Admin',
+        'email' => 'admin@mbti.id',
+        'password' => Hash::make('admin'),
+      ]);
+      
+      $this->call([
+        LecturerSeeder::class,
+        StudentSeeder::class,
+      ]);
     }
   }

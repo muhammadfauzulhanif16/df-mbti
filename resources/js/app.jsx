@@ -2,6 +2,8 @@ import './bootstrap'
 import '../css/app.css'
 import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
+import '@mantine/dropzone/styles.css'
+import '@mantine/dates/styles.css'
 
 import { createRoot } from 'react-dom/client'
 import { createInertiaApp } from '@inertiajs/react'
@@ -19,9 +21,8 @@ createInertiaApp({
     
     root.render(
       <MantineProvider
-        // defaultColorScheme="dark"
         theme={{
-          defaultRadius: 'lg',
+          autoContrast: true,
           white: '#f3f3f3',
           black: '#0c0c0c',
           fontFamily: 'Outfit, sans-serif',
