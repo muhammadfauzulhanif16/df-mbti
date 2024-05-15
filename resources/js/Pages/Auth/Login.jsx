@@ -42,7 +42,7 @@ const Login = (props) => {
         }}>
           <Image
             src="https://i.imgur.com/3eTKJe2.png"
-            w={48}
+            w={80}
             mx="auto"
             mb={32}
           />
