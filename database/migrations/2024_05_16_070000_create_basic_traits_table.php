@@ -10,9 +10,8 @@
      */
     public function up(): void
     {
-      Schema::create('statements', function (Blueprint $table) {
+      Schema::create('basic_traits', function (Blueprint $table) {
         $table->uuid('id')->primary();
-        $table->foreignUuid('basic_trait_dimension_id')->constrained();
         $table->string('name');
         $table->timestamps();
       });
@@ -23,6 +22,6 @@
      */
     public function down(): void
     {
-      Schema::dropIfExists('statements');
+      Schema::dropIfExists('basic_traits');
     }
   };

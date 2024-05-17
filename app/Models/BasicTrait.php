@@ -7,7 +7,7 @@
   use Illuminate\Database\Eloquent\Model;
   use Illuminate\Support\Carbon;
   
-  class BasicTraitDimension extends Model
+  class BasicTrait extends Model
   {
     use HasFactory, HasUuids;
     

@@ -7,8 +7,8 @@ import { AppLayout } from '@/Layouts/AppLayout.jsx'
 const Index = (props) => {
   const [search, setSearch] = useState('')
   
-  const basicTraitDimensions = props.basic_trait_dimensions.filter(basic_trait_dimension =>
-    basic_trait_dimension.name?.toLowerCase().includes(search.toLowerCase())
+  const basicTraits = props.basic_traits.filter(basic_trait =>
+    basic_trait.name.toLowerCase().includes(search.toLowerCase())
   )
   
   const THList = ['#', 'Nama Kategori Soal', 'Dibuat Pada', 'Diperbarui Pada', 'Aksi']
@@ -20,7 +20,7 @@ const Index = (props) => {
         <Group justify="space-between">
           <Button
             leftSection={<IconPlus />}
-            onClick={() => router.get(route('basic-trait-dimensions.create'))}
+            onClick={() => router.get(route('basic-traits.create'))}
           >
             Tambah Kategori Soal
           </Button>
@@ -46,21 +46,21 @@ const Index = (props) => {
             </Table.Thead>
             
             <Table.Tbody>
-              {basicTraitDimensions.map((basicTraitDimension, id) => (
+              {basicTraits.map((basicTrait, id) => (
                 <Table.Tr key={id}>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{basicTraitDimension.name}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{basicTrait.name}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{basicTraitDimension.created_at}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{basicTrait.created_at}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{basicTraitDimension.updated_at}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{basicTrait.updated_at}</Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
                     <Button.Group>
                       <Button variant="outline" color="yellow"
-                              onClick={() => router.get(route('basic-trait-dimensions.edit', basicTraitDimension))}>Ubah</Button>
+                              onClick={() => router.get(route('basic-traits.edit', basicTrait))}>Ubah</Button>
                       <Button variant="outline" color="red"
-                              onClick={() => router.delete(route('basic-trait-dimensions.destroy', basicTraitDimension))}>Hapus</Button>
+                              onClick={() => router.delete(route('basic-traits.destroy', basicTrait))}>Hapus</Button>
                     </Button.Group>
                   </Table.Td>
                 </Table.Tr>

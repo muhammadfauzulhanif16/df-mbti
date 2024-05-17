@@ -1,6 +1,6 @@
 <?php
   
-  use App\Http\Controllers\BasicTraitDimensionController;
+  use App\Http\Controllers\BasicTraitController;
   use App\Http\Controllers\LecturerController;
   use App\Http\Controllers\QuestionController;
   use App\Http\Controllers\StudentController;
@@ -54,13 +54,13 @@
 //      });
     });
     
-    Route::group(['prefix' => 'basic-trait-dimensions'], function () {
-      Route::get('', [BasicTraitDimensionController::class, 'index'])->name('basic-trait-dimensions.index');
-      Route::get('create', [BasicTraitDimensionController::class, 'create'])->name('basic-trait-dimensions.create');
-      Route::post('', [BasicTraitDimensionController::class, 'store'])->name('basic-trait-dimensions.store');
-      Route::get('{basicTraitDimension}/edit', [BasicTraitDimensionController::class, 'edit'])->name('basic-trait-dimensions.edit');
-      Route::put('{basicTraitDimension}', [BasicTraitDimensionController::class, 'update'])->name('basic-trait-dimensions.update');
-      Route::delete('{basicTraitDimension}', [BasicTraitDimensionController::class, 'destroy'])->name('basic-trait-dimensions.destroy');
+    Route::group(['prefix' => 'basic-traits'], function () {
+      Route::get('', [BasicTraitController::class, 'index'])->name('basic-traits.index');
+      Route::get('create', [BasicTraitController::class, 'create'])->name('basic-traits.create');
+      Route::post('', [BasicTraitController::class, 'store'])->name('basic-traits.store');
+      Route::get('{basicTrait}/edit', [BasicTraitController::class, 'edit'])->name('basic-traits.edit');
+      Route::put('{basicTrait}', [BasicTraitController::class, 'update'])->name('basic-traits.update');
+      Route::delete('{basicTrait}', [BasicTraitController::class, 'destroy'])->name('basic-traits.destroy');
     });
     
     Route::get('/personality', function () {

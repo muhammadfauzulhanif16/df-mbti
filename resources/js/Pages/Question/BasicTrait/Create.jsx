@@ -5,8 +5,6 @@ import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Create = (props) => {
-  
-  
   const form = useForm({
     name: ''
   })
@@ -17,7 +15,7 @@ const Create = (props) => {
       <Center h="100vh" p={16}>
         <form onSubmit={(e) => {
           e.preventDefault()
-          form.post(route('basic-trait-dimensions.store'))
+          form.post(route('basic-traits.store'))
         }}>
           <Title align="center" mb={32}>Tambah Data Kategori Soal</Title>
           
@@ -34,7 +32,7 @@ const Create = (props) => {
               color="red"
               disabled={form.processing}
               fullWidth
-              onClick={() => router.get(route('categories.index'))}
+              onClick={() => router.get(route('basic-traits.index'))}
             >
               Batal
             </Button>

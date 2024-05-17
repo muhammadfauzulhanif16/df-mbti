@@ -44,7 +44,7 @@ export const NavBar = (props) => {
     {
       icon: <IconCategory />,
       label: 'Kategori Soal',
-      route: 'basic-trait-dimensions.index'
+      route: 'basic-traits.index'
     },
     {
       icon: <IconQuestionMark />,

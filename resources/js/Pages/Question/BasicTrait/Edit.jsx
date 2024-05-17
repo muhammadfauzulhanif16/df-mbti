@@ -5,9 +5,8 @@ import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Edit = (props) => {
-  console.log(props)
   const form = useForm({
-    name: props.basic_trait_dimension.name
+    name: props.basic_trait.name
   })
   
   return (
@@ -16,7 +15,7 @@ const Edit = (props) => {
       <Center h="100vh" p={16}>
         <form onSubmit={(e) => {
           e.preventDefault()
-          form.put(route('basic-trait-dimensions.update', props.basic_trait_dimension))
+          form.put(route('basic-traits.update', props.basic_trait))
         }}>
           <Title align="center" mb={32}>Ubah Data Kategori Soal</Title>
           
@@ -34,7 +33,7 @@ const Edit = (props) => {
               color="red"
               disabled={form.processing}
               fullWidth
-              onClick={() => router.get(route('basic-trait-dimensions.index'))}
+              onClick={() => router.get(route('basic-traits.index'))}
             >
               Batal
             </Button>

@@ -2,11 +2,11 @@
   
   namespace Database\Factories;
   
-  use App\Models\BasicTraitDimension;
+  use App\Models\BasicTrait;
   use Illuminate\Database\Eloquent\Factories\Factory;
   
   /**
-   * @extends Factory<BasicTraitDimension>
+   * @extends Factory<BasicTrait>
    */
   class CategoryFactory extends Factory
   {
