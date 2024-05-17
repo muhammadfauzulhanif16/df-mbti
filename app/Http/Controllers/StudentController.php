@@ -18,7 +18,7 @@
     {
       return Inertia::render('Student/Index', [
         'meta' => session('meta'),
-        'students' => Student::with('user')->get(),
+        'users' => User::where('role', 'Mahasiswa')->with('student')->get(),
       ]);
     }
     
@@ -27,26 +27,34 @@
      */
     public function store(Request $request)
     {
-      $mahasiswa = User::create([
-        'nama' => $request->nama,
-        'no_hp' => '0' + $request->no_hp,
-        'peran' => 'Mahasiswa',
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-      ]);
-      
-      $mahasiswa->student()->create([
-        'user_id' => $mahasiswa->id,
-        'nim' => $request->nim,
-        'tahun_ajaran' => $request->tahun_ajaran,
-        'dpa' => $request->dpa,
-      ]);
-      
-      return to_route('students.index')->with('meta', [
-        'status' => true,
-        'title' => 'Berhasil menambahkan mahasiswa',
-        'message' => 'Mahasiswa ' . $request->nama . ' berhasil ditambahkan!'
-      ]);
+      try {
+        $user = User::create([
+          'full_name' => $request->full_name,
+          'phone_number' => "0$request->phone_number",
+          'role' => 'Mahasiswa',
+          'email' => $request->email,
+          'password' => Hash::make($request->password),
+        ]);
+        
+        $user->student()->create([
+          'user_id' => $user->id,
+          'student_id_number' => $request->student_id_number,
+          'academic_year' => $request->academic_year,
+          'supervisor' => $request->supervisor,
+        ]);
+        
+        return to_route('students.index')->with('meta', [
+          'status' => true,
+          'title' => 'Berhasil menambahkan mahasiswa',
+          'message' => "Mahasiswa '{$request->full_name}' berhasil ditambahkan!"
+        ]);
+      } catch (Exception $e) {
+        return to_route('students.index')->with('meta', [
+          'status' => false,
+          'title' => 'Gagal menambahkan mahasiswa',
+          'message' => $e->getMessage()
+        ]);
+      }
     }
     
     /**
@@ -70,10 +78,10 @@
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $student)
+    public function edit(User $user)
     {
       return Inertia::render('Student/Edit', [
-        'student' => Student::with('user')->where('user_id', $student->id)->first(),
+        'user' => $user->load('student'),
         'lecturers' => Lecturer::with('user')->get(),
       ]);
     }
@@ -81,43 +89,56 @@
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
-      $user = User::find($request->id);
-      
-      $user->update([
-        'nama' => $request->nama,
-        'no_hp' => '0' + $request->no_hp,
-        'peran' => 'Mahasiswa',
-        'email' => $request->email,
-        'password' => $request->password ? Hash::make($request->password) : $user->password,
-      ]);
-      
-      $user->student()->update([
-        'nim' => $request->nim,
-        'tahun_ajaran' => $request->tahun_ajaran,
-        'dpa' => $request->dpa,
-      ]);
-      
-      return to_route('students.index')->with('meta', [
-        'status' => true,
-        'title' => 'Berhasil mengubah mahasiswa',
-        'message' => 'Mahasiswa ' . $request->nama . ' berhasil diubah!'
-      ]);
+      try {
+        $user->update([
+          'full_name' => $request->full_name,
+          'phone_number' => "0$request->phone_number",
+          'role' => 'Mahasiswa',
+          'email' => $request->email,
+          'password' => $request->password ? Hash::make($request->password) : $user->password,
+        ]);
+        
+        $user->student()->update([
+          'student_id_number' => $request->student_id_number,
+          'academic_year' => $request->academic_year,
+          'supervisor' => $request->supervisor,
+        ]);
+        
+        return to_route('students.index')->with('meta', [
+          'status' => true,
+          'title' => 'Berhasil mengubah mahasiswa',
+          'message' => "Mahasiswa '{$request->full_name}' berhasil diubah!"
+        ]);
+      } catch (Exception $e) {
+        return to_route('students.index')->with('meta', [
+          'status' => false,
+          'title' => 'Gagal mengubah mahasiswa',
+          'message' => $e->getMessage()
+        ]);
+      }
     }
     
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $student)
+    public function destroy(User $user)
     {
-      $user = User::find($student->id);
-      $user->delete();
-      
-      return to_route('students.index')->with('meta', [
-        'status' => true,
-        'title' => 'Berhasil menghapus mahasiswa',
-        'message' => 'Mahasiswa ' . $user->nama . ' berhasil dihapus!'
-      ]);
+      try {
+        $user->delete();
+        
+        return to_route('students.index')->with('meta', [
+          'status' => true,
+          'title' => 'Berhasil menghapus mahasiswa',
+          'message' => "Mahasiswa '{$user->full_name}' berhasil dihapus!"
+        ]);
+      } catch (Exception $e) {
+        return to_route('students.index')->with('meta', [
+          'status' => false,
+          'title' => 'Gagal menghapus mahasiswa',
+          'message' => $e->getMessage()
+        ]);
+      }
     }
   }

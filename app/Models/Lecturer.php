@@ -13,8 +13,8 @@
     
     protected $fillable = [
       'user_id',
-      'nidn',
-      'tahun_ajaran',
+      'national_lecturer_id_number',
+      'academic_year',
     ];
     
     public function user()

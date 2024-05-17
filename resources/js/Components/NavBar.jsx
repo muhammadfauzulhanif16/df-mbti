@@ -44,7 +44,7 @@ export const NavBar = (props) => {
     {
       icon: <IconCategory />,
       label: 'Kategori Soal',
-      route: 'questions.categories.index'
+      route: 'basic-trait-dimensions.index'
     },
     {
       icon: <IconQuestionMark />,
@@ -54,7 +54,7 @@ export const NavBar = (props) => {
     {
       icon: <IconCheck />,
       label: 'Jawaban',
-      route: 'questions.categories.index'
+      route: 'questions.choices.index'
     },
     {
       icon: <IconArticle />,
@@ -79,9 +79,16 @@ export const NavBar = (props) => {
   // }
   
   return (
-    <Group p={16} justify="space-between" pos="sticky" top={0} style={{
-      borderBottom: '1px solid #DEE2E6'
-    }}>
+    <Group
+      p={16}
+      justify="space-between"
+      bg="white"
+      pos="sticky"
+      top={0}
+      style={{
+        zIndex: 2,
+        borderBottom: '1px solid #DEE2E6'
+      }}>
       <Image src="https://i.imgur.com/3eTKJe2.png" w={48} />
       
       <ActionIcon
@@ -109,16 +116,15 @@ export const NavBar = (props) => {
       >
         <Group mb={16}>
           <Avatar
-            alt={props.authed.nama}
+            alt={props.authed.full_name}
             style={{
               cursor: 'pointer'
             }}
           />
-          <Text>{props.authed.nama}</Text>
+          <Text>{props.authed.full_name}</Text>
         </Group>
         
         <Button.Group
-          style={{ zIndex: 2 }}
           bg="white"
           orientation="vertical"
         >
@@ -127,8 +133,8 @@ export const NavBar = (props) => {
               color="gray"
               justify="start"
               leftSection={nav.icon}
-              onClick={() => nav.route === 'logout' ? router.post('logout') : router.get(route(nav.route))}
-              variant={nav.label === props.title ? 'filled' : 'subtle'}
+              onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
+              variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
               key={id}
             >
               {nav.label}
@@ -144,15 +150,15 @@ export const NavBar = (props) => {
         top={0}
         display={{
           base: 'none',
-          md: 'flex'
+          lg: 'flex'
         }}
       >
         {NavList.map((nav, id) => (
           <Button
             color="gray"
             leftSection={nav.icon}
-            onClick={() => nav.route === 'logout' ? router.post('logout') : router.get(route(nav.route))}
-            variant={nav.label === props.title ? 'filled' : 'subtle'}
+            onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
+            variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
             key={id}
           >
             {nav.label}
@@ -161,7 +167,7 @@ export const NavBar = (props) => {
       </Button.Group>
       
       <Avatar
-        alt={props.authed.name}
+        alt={props.authed.full_name}
         display={{
           base: 'none',
           lg: 'block'

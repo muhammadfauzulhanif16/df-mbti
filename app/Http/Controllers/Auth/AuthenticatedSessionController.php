@@ -8,7 +8,6 @@
   use Illuminate\Http\RedirectResponse;
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Auth;
-  use Illuminate\Support\Facades\Route;
   use Inertia\Inertia;
   use Inertia\Response;
   
@@ -20,7 +19,6 @@
     public function create(): Response
     {
       return Inertia::render('Auth/Login', [
-        'canResetPassword' => Route::has('password.request'),
         'meta' => session('meta'),
       ]);
     }
@@ -37,11 +35,9 @@
         return redirect()->route('dashboard')->with('meta', [
           'status' => true,
           'title' => 'Berhasil masuk akun',
-          'message' => 'Selamat datang kembali, ' . Auth::user()->nama . '!'
+          'message' => 'Selamat datang kembali, ' . Auth::user()->full_name . '!'
         ]);
       } catch (Exception $e) {
-        // Handle the exception
-        // You can return a redirect with an error message, log the error, etc.
         return redirect()->back()->with('meta', [
           'status' => false,
           'title' => 'Gagal masuk akun',

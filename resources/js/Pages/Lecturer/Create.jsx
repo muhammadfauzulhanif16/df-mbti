@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react'
-import { notifications } from '@mantine/notifications'
-import { Head, useForm } from '@inertiajs/react'
-import { NavBar } from '@/Components/NavBar.jsx'
+import React from 'react'
+import { useForm } from '@inertiajs/react'
 import {
   Button,
   Center,
@@ -14,37 +12,30 @@ import {
   Title
 } from '@mantine/core'
 import { router } from '@inertiajs/core'
+import { AppLayout } from '@/Layouts/AppLayout.jsx'
+import {
+  IconCalendar,
+  IconId,
+  IconMail,
+  IconPassword,
+  IconPhone,
+  IconUser
+} from '@tabler/icons-react'
 
 const Create = (props) => {
-  useEffect(() => {
-    if (props.meta) {
-      notifications.show({
-        title: props.meta.title,
-        message: props.meta.message,
-        color: props.meta.status ? 'green' : 'red',
-        autoClose: 2000,
-        withBorder: true
-      })
-    }
-    
-  }, [props.meta])
-  
   const form = useForm({
-    status: '',
-    nama: '',
-    nidn: '',
+    role: '',
+    full_name: '',
+    national_lecturer_id_number: '',
+    phone_number: '',
+    academic_year: '',
     email: '',
-    tahun_ajaran: '',
-    no_hp: '',
     password: ''
   })
   
   return (
-    <>
-      <Head title="Tambah Dosen" />
-      
-      <NavBar title="Dosen" authed={props.auth.user} />
-      
+    <AppLayout title="Tambah Dosen" activeNav="Dosen" authed={props.auth.user}
+               meta={props.meta}>
       <Center h="100vh" p={16}>
         <form onSubmit={(e) => {
           e.preventDefault()
@@ -56,59 +47,66 @@ const Create = (props) => {
             mb={16}
             label="Status"
             withAsterisk
-            onChange={(value) => form.setData('status', value)}
+            onChange={(value) => form.setData('role', value)}
           >
             <Group mt="xs">
               <Radio value="Ketua Program Studi" label="Ketua Program Studi" />
               <Radio value="Dosen Pembimbing Akademik"
                      label="Dosen Pembimbing Akademik" />
+              <Radio value="Dosen" label="Dosen" />
             </Group>
           </Radio.Group>
           
           <SimpleGrid cols={2}>
             <TextInput
+              leftSection={<IconUser />}
               withAsterisk
-              label="Nama"
-              placeholder="Masukkan nama..."
-              onChange={(e) => form.setData('nama', e.target.value)}
+              label="Nama Lengkap"
+              placeholder="Masukkan nama lengkap..."
+              onChange={(e) => form.setData('full_name', e.target.value)}
             />
             
             <NumberInput
+              leftSection={<IconId />}
               withAsterisk
               label="NIDN"
               hideControls
               placeholder="Masukkan NIDN..."
-              onChange={(value) => form.setData('nidn', value)}
+              onChange={(value) => form.setData('national_lecturer_id_number', value)}
+            />
+            
+            <NumberInput
+              leftSection={<IconPhone />}
+              withAsterisk
+              label="Nomor Telepon"
+              hideControls
+              placeholder="Masukkan nomor telepon..."
+              onChange={(value) => form.setData('phone_number', value.toString())}
+            />
+            
+            <NumberInput
+              leftSection={<IconCalendar />}
+              withAsterisk
+              hideControls
+              label="Tahun Akademik"
+              placeholder="Masukkan tahun akademik..."
+              onChange={(value) => form.setData('academic_year', value.toString())}
             />
             
             <TextInput
+              leftSection={<IconMail />}
               withAsterisk
               type="email"
-              label="Surel"
-              placeholder="Masukkan Surel..."
+              label="Alamar Surel"
+              placeholder="Masukkan alamat surel..."
               onChange={(e) => form.setData('email', e.target.value)}
             />
             
-            <NumberInput
-              withAsterisk
-              clearable
-              label="Tahun Ajaran"
-              placeholder="Masukkan Tahun Ajaran..."
-              onChange={(value) => form.setData('tahun_ajaran', value.toString())}
-            />
-            
-            <NumberInput
-              withAsterisk
-              label="No HP"
-              hideControls
-              placeholder="Masukkan No HP..."
-              onChange={(value) => form.setData('no_hp', value.toString())}
-            />
-            
             <PasswordInput
+              leftSection={<IconPassword />}
               withAsterisk
               label="Kata Sandi"
-              placeholder="Masukkan Kata Sandi..."
+              placeholder="Masukkan kata sandi..."
               onChange={(e) => form.setData('password', e.target.value)}
             />
           </SimpleGrid>
@@ -133,7 +131,7 @@ const Create = (props) => {
           </Button.Group>
         </form>
       </Center>
-    </>
+    </AppLayout>
   )
 }
 

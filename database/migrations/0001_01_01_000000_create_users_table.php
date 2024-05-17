@@ -11,11 +11,11 @@
     public function up(): void
     {
       Schema::create('users', function (Blueprint $table) {
-        $table->id();
-        $table->string('nama');
-        $table->string('foto')->unique()->nullable();
-        $table->string('no_hp')->unique()->nullable();
-        $table->string('peran');
+        $table->uuid('id')->primary();
+        $table->string('full_name');
+        $table->string('profile_photo_url')->unique()->nullable();
+        $table->string('phone_number')->unique()->nullable();
+        $table->string('role');
         $table->string('email')->unique();
         $table->string('password');
         $table->timestamps();
@@ -29,7 +29,7 @@
       
       Schema::create('sessions', function (Blueprint $table) {
         $table->string('id')->primary();
-        $table->foreignId('user_id')->nullable()->index();
+        $table->foreignUuid('user_id')->nullable()->index();
         $table->string('ip_address', 45)->nullable();
         $table->text('user_agent')->nullable();
         $table->longText('payload');

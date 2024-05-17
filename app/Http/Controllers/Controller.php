@@ -1,8 +1,10 @@
 <?php
-
-namespace App\Http\Controllers;
-
-abstract class Controller
-{
-    //
-}
+  
+  namespace App\Http\Controllers;
+  
+  use Illuminate\Database\Eloquent\Concerns\HasUuids;
+  
+  abstract class Controller
+  {
+    use HasUuids;
+  }

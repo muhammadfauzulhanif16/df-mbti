@@ -16,15 +16,10 @@
     public function run(): void
     {
       User::create([
-        'nama' => 'Admin',
-        'peran' => 'Admin',
+        'full_name' => 'Admin',
+        'role' => 'Admin',
         'email' => 'admin@mbti.id',
         'password' => Hash::make('admin'),
-      ]);
-      
-      $this->call([
-        LecturerSeeder::class,
-        StudentSeeder::class,
       ]);
     }
   }

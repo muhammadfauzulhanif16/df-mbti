@@ -11,10 +11,10 @@
     public function up(): void
     {
       Schema::create('students', function (Blueprint $table) {
-        $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-        $table->char('nim', 10)->unique();
-        $table->year('tahun_ajaran');
-        $table->string('dpa')->nullable();
+        $table->foreignUuid('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+        $table->char('student_id_number', 10)->unique();
+        $table->year('academic_year');
+        $table->string('supervisor');
       });
     }
     

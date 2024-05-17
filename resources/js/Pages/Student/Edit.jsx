@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react'
-import { notifications } from '@mantine/notifications'
-import { Head, useForm } from '@inertiajs/react'
-import { NavBar } from '@/Components/NavBar.jsx'
+import React from 'react'
+import { useForm } from '@inertiajs/react'
 import {
   Button,
   Center,
@@ -13,41 +11,27 @@ import {
   Title
 } from '@mantine/core'
 import { router } from '@inertiajs/core'
+import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Edit = (props) => {
-  useEffect(() => {
-    if (props.meta) {
-      notifications.show({
-        title: props.meta.title,
-        message: props.meta.message,
-        color: props.meta.status ? 'green' : 'red',
-        autoClose: 2000,
-        withBorder: true
-      })
-    }
-  }, [props.meta])
-  
   const form = useForm({
-    nama: props.student.user.nama,
-    nim: props.student.nim,
-    email: props.student.user.email,
-    tahun_ajaran: props.student.tahun_ajaran,
-    no_hp: props.student.user.no_hp,
+    nama: props.user.nama,
+    nim: props.user.student.nim,
+    email: props.user.email,
+    tahun_ajaran: props.user.student.tahun_ajaran,
+    no_hp: props.user.no_hp,
     password: '',
-    dpa: props.student.dpa
+    dpa: props.user.student.dpa
   })
   
-  console.log(form.data)
   return (
-    <>
-      <Head title="Ubah Mahasiswa" />
-      
-      <NavBar title="Mahasiswa" authed={props.auth.user} />
-      
+    <AppLayout title="Ubah Mahasiswa" activeNav="Mahasiswa"
+               authed={props.auth.user}
+               meta={props.meta}>
       <Center h="100vh" p={16}>
         <form onSubmit={(e) => {
           e.preventDefault()
-          form.put(route('students.update', props.student.user.id))
+          form.put(route('students.update', props.user))
         }}>
           <Title align="center" mb={32}>Ubah Data Mahasiswa</Title>
           
@@ -81,6 +65,7 @@ const Edit = (props) => {
             <NumberInput
               withAsterisk
               label="Tahun Ajaran"
+              hideControls
               value={form.data.tahun_ajaran}
               placeholder="Masukkan Tahun Ajaran..."
               onChange={(value) => form.setData('tahun_ajaran', value.toString())}
@@ -134,7 +119,7 @@ const Edit = (props) => {
           </Button.Group>
         </form>
       </Center>
-    </>
+    </AppLayout>
   )
 }
 

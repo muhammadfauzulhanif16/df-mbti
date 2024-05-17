@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
-  Box,
   Button,
   Center,
   Image,
@@ -8,9 +7,9 @@ import {
   TextInput,
   Title
 } from '@mantine/core'
-import { Head, useForm } from '@inertiajs/react'
-import { notifications } from '@mantine/notifications'
+import { useForm } from '@inertiajs/react'
 import { IconMail, IconPassword } from '@tabler/icons-react'
+import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Login = (props) => {
   const form = useForm({
@@ -18,23 +17,8 @@ const Login = (props) => {
     password: ''
   })
   
-  useEffect(() => {
-    if (props.meta) {
-      notifications.show({
-        title: props.meta.title,
-        message: props.meta.message,
-        color: props.meta.status ? 'green' : 'red',
-        autoClose: 2000,
-        withBorder: true
-      })
-    }
-    
-  }, [props.meta])
-  
   return (
-    <Box h="100vh" gap={0}>
-      <Head title="Masuk Akun" />
-      
+    <AppLayout title="Masuk Akun" authed={props.auth.user} meta={props.meta}>
       <Center h="100vh">
         <form onSubmit={(e) => {
           e.preventDefault()
@@ -50,6 +34,7 @@ const Login = (props) => {
           <Title mb={32} align="center">Masuk Akun</Title>
           
           <TextInput
+            autoFocus
             leftSection={<IconMail />}
             type="email"
             label="Surel"
@@ -79,7 +64,7 @@ const Login = (props) => {
           </Button>
         </form>
       </Center>
-    </Box>
+    </AppLayout>
   )
 }
 

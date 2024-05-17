@@ -13,9 +13,9 @@
     
     protected $fillable = [
       'user_id',
-      'nim',
-      'tahun_ajaran',
-      'dpa',
+      'student_id_number',
+      'academic_year',
+      'supervisor',
     ];
     
     public function user()

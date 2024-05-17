@@ -3,13 +3,15 @@
   namespace App\Models;
   
   // use Illuminate\Contracts\Auth\MustVerifyEmail;
+  use Illuminate\Database\Eloquent\Concerns\HasUuids;
   use Illuminate\Database\Eloquent\Factories\HasFactory;
   use Illuminate\Foundation\Auth\User as Authenticatable;
   use Illuminate\Notifications\Notifiable;
+  use Illuminate\Support\Carbon;
   
   class User extends Authenticatable
   {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUuids;
     
     /**
      * The attributes that are mass assignable.
@@ -17,10 +19,10 @@
      * @var array<int, string>
      */
     protected $fillable = [
-      'nama',
-      'foto',
-      'no_hp',
-      'peran',
+      'full_name',
+      'profile_photo_url',
+      'phone_number',
+      'role',
       'email',
       'password',
     ];
@@ -43,6 +45,16 @@
     public function lecturer()
     {
       return $this->hasOne(Lecturer::class);
+    }
+    
+    public function getCreatedAtAttribute($value)
+    {
+      return Carbon::parse($value)->format('d-m-Y H:i:s');
+    }
+    
+    public function getUpdatedAtAttribute($value)
+    {
+      return Carbon::parse($value)->format('d-m-Y H:i:s');
     }
     
     /**
