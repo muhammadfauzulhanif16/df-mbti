@@ -20,6 +20,7 @@
      */
     protected $fillable = [
       'full_name',
+      'id_number',
       'profile_photo_url',
       'phone_number',
       'role',

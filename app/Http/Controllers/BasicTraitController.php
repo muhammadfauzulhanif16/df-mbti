@@ -14,7 +14,7 @@
      */
     public function index()
     {
-      return Inertia::render('Question/BasicTrait/Index', [
+      return Inertia::render('BasicTrait/Index', [
         'meta' => session('meta'),
         'basic_traits' => BasicTrait::all()
       ]);
@@ -27,6 +27,7 @@
     {
       try {
         BasicTrait::create([
+          'code' => $request->code,
           'name' => $request->name
         ]);
         
@@ -49,7 +50,7 @@
      */
     public function create()
     {
-      return Inertia::render('Question/BasicTrait/Create');
+      return Inertia::render('BasicTrait/Create');
     }
     
     /**
@@ -65,7 +66,7 @@
      */
     public function edit(BasicTrait $basicTrait)
     {
-      return Inertia::render('Question/BasicTrait/Edit', [
+      return Inertia::render('BasicTrait/Edit', [
         'basic_trait' => $basicTrait
       ]);
     }
@@ -77,6 +78,7 @@
     {
       try {
         $basicTrait->update([
+          'code' => $request->code,
           'name' => $request->name
         ]);
         

@@ -1,6 +1,7 @@
 <?php
   
   use App\Http\Controllers\BasicTraitController;
+  use App\Http\Controllers\IndicatorController;
   use App\Http\Controllers\LecturerController;
   use App\Http\Controllers\QuestionController;
   use App\Http\Controllers\StudentController;
@@ -35,14 +36,14 @@
       Route::delete('{user}', [StudentController::class, 'destroy'])->name('students.destroy');
     });
     
-    Route::group(['prefix' => 'questions'], function () {
-      Route::get('', [QuestionController::class, 'index'])->name('questions.index');
-      Route::get('create', [QuestionController::class, 'create'])->name('questions.create');
-      Route::post('', [QuestionController::class, 'store'])->name('questions.store');
-      Route::get('{question}', [QuestionController::class, 'show'])->name('questions.show');
-      Route::get('{question}/edit', [QuestionController::class, 'edit'])->name('questions.edit');
-      Route::put('{question}', [QuestionController::class, 'update'])->name('questions.update');
-      Route::delete('{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+    Route::group(['prefix' => 'indicators'], function () {
+      Route::get('', [IndicatorController::class, 'index'])->name('indicators.index');
+      Route::get('create', [IndicatorController::class, 'create'])->name('indicators.create');
+      Route::post('', [IndicatorController::class, 'store'])->name('indicators.store');
+      Route::get('{indicator}', [IndicatorController::class, 'show'])->name('indicators.show');
+      Route::get('{indicator}/edit', [IndicatorController::class, 'edit'])->name('indicators.edit');
+      Route::put('{indicator}', [IndicatorController::class, 'update'])->name('indicators.update');
+      Route::delete('{indicator}', [IndicatorController::class, 'destroy'])->name('indicators.destroy');
 
 //      Route::group(['prefix' => 'choices'], function () {
 //        Route::get('', [ChoiceController::class, 'index'])->name('questions.choices.index');

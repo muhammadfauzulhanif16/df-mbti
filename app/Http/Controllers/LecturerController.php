@@ -27,9 +27,11 @@
      */
     public function store(Request $request)
     {
+//      dd($request->all());
       try {
         $user = User::create([
           'full_name' => $request->full_name,
+          'id_number' => $request->national_lecturer_id_number,
           'phone_number' => "0$request->phone_number",
           'role' => $request->role,
           'email' => $request->email,
@@ -38,9 +40,9 @@
         
         $user->lecturer()->create([
           'user_id' => $user->id,
-          'national_lecturer_id_number' => $request->national_lecturer_id_number,
           'academic_year' => $request->academic_year,
         ]);
+        
         return to_route('lecturers.index')->with('meta', [
           'status' => true,
           'title' => 'Berhasil menambahkan dosen',
@@ -89,6 +91,7 @@
       try {
         $user->update([
           'full_name' => $request->full_name,
+          'id_number' => $request->national_lecturer_id_number,
           'phone_number' => "0$request->phone_number",
           'role' => $request->role,
           'email' => $request->email,
@@ -96,7 +99,6 @@
         ]);
         
         $user->lecturer()->update([
-          'national_lecturer_id_number' => $request->national_lecturer_id_number,
           'academic_year' => $request->academic_year,
         ]);
         

@@ -14,7 +14,7 @@
      */
     public function index()
     {
-      return Inertia::render('Question/Choice/Index');
+      return Inertia::render('Indicator/Choice/Index');
     }
     
     /**
@@ -22,7 +22,7 @@
      */
     public function create()
     {
-      return Inertia::render('Question/Choice/Create');
+      return Inertia::render('Indicator/Choice/Create');
     }
     
     /**
@@ -46,7 +46,7 @@
      */
     public function edit(Choice $choice)
     {
-      return Inertia::render('Question/Choice/Edit');
+      return Inertia::render('Indicator/Choice/Edit');
     }
     
     /**

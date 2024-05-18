@@ -30,6 +30,7 @@
     {
       try {
         $request->authenticate();
+        
         $request->session()->regenerate();
         
         return redirect()->route('dashboard')->with('meta', [
@@ -41,7 +42,7 @@
         return redirect()->back()->with('meta', [
           'status' => false,
           'title' => 'Gagal masuk akun',
-          'message' => 'Surel atau kata sandi salah!'
+          'message' => $e->getMessage()
         ]);
       }
     }

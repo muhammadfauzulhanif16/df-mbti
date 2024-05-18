@@ -12,7 +12,6 @@
     {
       Schema::create('students', function (Blueprint $table) {
         $table->foreignUuid('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-        $table->char('student_id_number', 10)->unique();
         $table->year('academic_year');
         $table->string('supervisor');
       });

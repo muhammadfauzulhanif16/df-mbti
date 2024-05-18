@@ -49,7 +49,7 @@ export const NavBar = (props) => {
     {
       icon: <IconQuestionMark />,
       label: 'Soal',
-      route: 'questions.index'
+      route: 'indicators.index'
     },
     {
       icon: <IconCheck />,

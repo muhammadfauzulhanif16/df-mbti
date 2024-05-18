@@ -16,8 +16,10 @@ import {
   IconCalendar,
   IconMail,
   IconPassword,
-  IconPhone
+  IconPhone,
+  IconUser
 } from '@tabler/icons-react'
+import { YearPickerInput } from '@mantine/dates'
 
 const Create = (props) => {
   const form = useForm({
@@ -43,10 +45,14 @@ const Create = (props) => {
           
           <SimpleGrid cols={2} my={16}>
             <TextInput
+              leftSection={<IconUser />}
               withAsterisk
               label="Nama Lengkap"
               placeholder="Masukkan nama lengkap..."
-              onChange={(e) => form.setData('full_name', e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\b\w/g, char => char.toUpperCase()).replace(/\B\w/g, char => char.toLowerCase())
+                form.setData('full_name', value)
+              }}
             />
             
             <NumberInput
@@ -66,27 +72,27 @@ const Create = (props) => {
               onChange={(value) => form.setData('phone_number', value.toString())}
             />
             
-            <NumberInput
+            <YearPickerInput
               leftSection={<IconCalendar />}
               withAsterisk
-              hideControls
               label="Tahun Akademik"
               placeholder="Masukkan tahun akademik..."
-              onChange={(value) => form.setData('academic_year', value.toString())}
+              onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
             />
             
             <TextInput
               leftSection={<IconMail />}
               withAsterisk
               type="email"
-              label="Alamar Surel"
-              placeholder="Masukkan alamat surel..."
-              onChange={(e) => form.setData('email', e.target.value)}
+              label="Email"
+              placeholder="Masukkan email..."
+              onChange={(e) => form.setData('email', e.target.value.toLowerCase())}
             />
             
             <PasswordInput
               leftSection={<IconPassword />}
               withAsterisk
+              value={form.data.student_id_number}
               label="Kata Sandi"
               placeholder="Masukkan kata sandi..."
               onChange={(e) => form.setData('password', e.target.value)}
@@ -98,6 +104,7 @@ const Create = (props) => {
             placeholder="Masukkan Dosen Pembimbing Akademik..."
             clearable
             searchable
+            withAsterisk
             nothingFoundMessage="Tidak ada dosen pembimbing akademik"
             checkIconPosition="right"
             data={props.lecturers.map((lecturer) => lecturer.user.full_name)}
@@ -115,6 +122,14 @@ const Create = (props) => {
               Batal
             </Button>
             <Button
+              disabled={
+                form.data.full_name === '' ||
+                form.data.student_id_number === '' ||
+                form.data.phone_number === '' ||
+                form.data.academic_year === '' ||
+                form.data.email === '' ||
+                form.data.supervisor === ''
+              }
               fullWidth
               loading={form.processing}
               type="submit"

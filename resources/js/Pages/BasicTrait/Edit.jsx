@@ -4,9 +4,10 @@ import { Button, Center, TextInput, Title } from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
-const Create = (props) => {
+const Edit = (props) => {
   const form = useForm({
-    name: ''
+    code: props.basic_trait.code,
+    name: props.basic_trait.name
   })
   
   return (
@@ -15,12 +16,22 @@ const Create = (props) => {
       <Center h="100vh" p={16}>
         <form onSubmit={(e) => {
           e.preventDefault()
-          form.post(route('basic-traits.store'))
+          form.put(route('basic-traits.update', props.basic_trait))
         }}>
-          <Title align="center" mb={32}>Tambah Data Kategori Soal</Title>
+          <Title align="center" mb={32}>Ubah Data Kategori Soal</Title>
           
           <TextInput
             withAsterisk
+            mb={16}
+            value={form.data.code}
+            label="Kode Kategori Soal"
+            placeholder="Masukkan kode kategori soal..."
+            onChange={(e) => form.setData('code', e.target.value)}
+          />
+          
+          <TextInput
+            withAsterisk
+            value={form.data.name}
             label="Nama Kategori Soal"
             placeholder="Masukkan nama kategori soal..."
             onChange={(e) => form.setData('name', e.target.value)}
@@ -41,7 +52,7 @@ const Create = (props) => {
               loading={form.processing}
               type="submit"
             >
-              Tambah
+              Ubah
             </Button>
           </Button.Group>
         </form>
@@ -50,4 +61,4 @@ const Create = (props) => {
   )
 }
 
-export default Create
+export default Edit

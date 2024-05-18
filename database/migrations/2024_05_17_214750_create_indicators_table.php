@@ -10,10 +10,10 @@
      */
     public function up(): void
     {
-      Schema::create('basic_traits', function (Blueprint $table) {
+      Schema::create('indicators', function (Blueprint $table) {
         $table->uuid('id')->primary();
         $table->string('name');
-        $table->string('code');
+        $table->foreignUuid('basic_trait_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         $table->timestamps();
       });
     }
@@ -23,6 +23,6 @@
      */
     public function down(): void
     {
-      Schema::dropIfExists('basic_traits');
+      Schema::dropIfExists('indicators');
     }
   };

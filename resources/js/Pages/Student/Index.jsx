@@ -55,7 +55,7 @@ const Index = (props) => {
                     <Avatar src={user.profile_photo_url} alt={user.full_name} />
                   </Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.student.student_id_number}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{user.student.id_number}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{user.full_name}</Table.Td>
                   <Table.Td

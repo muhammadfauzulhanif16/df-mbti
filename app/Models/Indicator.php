@@ -7,11 +7,14 @@
   use Illuminate\Database\Eloquent\Model;
   use Illuminate\Support\Carbon;
   
-  class BasicTrait extends Model
+  class Indicator extends Model
   {
     use HasFactory, HasUuids;
     
-    protected $fillable = ['name', 'code'];
+    protected $fillable = [
+      'basic_trait_id',
+      'name',
+    ];
     
     public function getCreatedAtAttribute($value)
     {
@@ -21,5 +24,10 @@
     public function getUpdatedAtAttribute($value)
     {
       return Carbon::parse($value)->format('d-m-Y H:i:s');
+    }
+    
+    public function basicTrait()
+    {
+      return $this->belongsTo(BasicTrait::class);
     }
   }

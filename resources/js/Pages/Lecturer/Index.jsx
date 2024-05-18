@@ -54,7 +54,7 @@ const Index = (props) => {
                     src={user.profile_photo_url}
                     alt={user.full_name} /></Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.lecturer.national_lecturer_id_number}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{user.id_number}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{user.full_name}</Table.Td>
                   <Table.Td

@@ -13,7 +13,7 @@ import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Login = (props) => {
   const form = useForm({
-    email: '',
+    email_or_id_number: '',
     password: ''
   })
   
@@ -36,26 +36,24 @@ const Login = (props) => {
           <TextInput
             autoFocus
             leftSection={<IconMail />}
-            type="email"
-            label="Surel"
-            placeholder="Masukkan Surel..."
+            label="Email/NIDN/NIM"
+            placeholder="Masukkan email/NIDM/NIM..."
             mb={16}
             withAsterisk
-            onChange={(e) => form.setData('email', e.target.value)}
+            onChange={(e) => form.setData('email_or_id_number', e.target.value.toLowerCase())}
           />
-          
           
           <PasswordInput
             leftSection={<IconPassword />}
             label="Kata Sandi"
-            placeholder="Masukkan Kata Sandi..."
+            placeholder="Masukkan kata sandi..."
             mb={16}
             withAsterisk
             onChange={(e) => form.setData('password', e.target.value)}
           />
           
           <Button
-            disabled={form.data.email === '' || form.data.password === ''}
+            disabled={form.data.email_or_id_number === '' || form.data.password === ''}
             loading={form.processing}
             type="submit"
             fullWidth

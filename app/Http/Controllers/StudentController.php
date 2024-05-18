@@ -30,6 +30,7 @@
       try {
         $user = User::create([
           'full_name' => $request->full_name,
+          'id_number' => $request->student_id_number,
           'phone_number' => "0$request->phone_number",
           'role' => 'Mahasiswa',
           'email' => $request->email,
@@ -38,7 +39,6 @@
         
         $user->student()->create([
           'user_id' => $user->id,
-          'student_id_number' => $request->student_id_number,
           'academic_year' => $request->academic_year,
           'supervisor' => $request->supervisor,
         ]);
@@ -94,6 +94,7 @@
       try {
         $user->update([
           'full_name' => $request->full_name,
+          'id_number' => $request->student_id_number,
           'phone_number' => "0$request->phone_number",
           'role' => 'Mahasiswa',
           'email' => $request->email,
@@ -101,7 +102,6 @@
         ]);
         
         $user->student()->update([
-          'student_id_number' => $request->student_id_number,
           'academic_year' => $request->academic_year,
           'supervisor' => $request->supervisor,
         ]);

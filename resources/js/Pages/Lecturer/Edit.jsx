@@ -21,13 +21,14 @@ import {
   IconPhone,
   IconUser
 } from '@tabler/icons-react'
+import { YearPickerInput } from '@mantine/dates'
 
 const Edit = (props) => {
   console.log(props)
   const form = useForm({
     role: props.user.role,
     full_name: props.user.full_name,
-    national_lecturer_id_number: props.user.lecturer.national_lecturer_id_number,
+    national_lecturer_id_number: props.user.id_number,
     phone_number: props.user.phone_number,
     academic_year: props.user.lecturer.academic_year,
     email: props.user.email,
@@ -46,17 +47,15 @@ const Edit = (props) => {
           
           <Radio.Group
             mb={16}
-            value={form.data.role
-            }
+            value={form.data.role}
             label="Status"
             withAsterisk
-            onChange={(value) => form.setData('status', value)}
+            onChange={(value) => form.setData('role', value)}
           >
             <Group mt="xs">
               <Radio value="Ketua Program Studi" label="Ketua Program Studi" />
               <Radio value="Dosen Pembimbing Akademik"
                      label="Dosen Pembimbing Akademik" />
-              <Radio value="Dosen" label="Dosen" />
             </Group>
           </Radio.Group>
           
@@ -67,7 +66,10 @@ const Edit = (props) => {
               label="Nama Lengkap"
               value={form.data.full_name}
               placeholder="Masukkan nama lengkap..."
-              onChange={(e) => form.setData('full_name', e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\b\w/g, char => char.toUpperCase()).replace(/\B\w/g, char => char.toLowerCase())
+                form.setData('full_name', value)
+              }}
             />
             
             <NumberInput
@@ -90,14 +92,13 @@ const Edit = (props) => {
               onChange={(value) => form.setData('phone_number', value)}
             />
             
-            <NumberInput
+            <YearPickerInput
               leftSection={<IconCalendar />}
               withAsterisk
-              value={form.data.academic_year}
-              label="Tahun Ajaran"
-              hideControls
+              value={new Date(form.data.academic_year)}
+              label="Tahun Akademik"
               placeholder="Masukkan tahun akademik..."
-              onChange={(value) => form.setData('academic_year', value.toString())}
+              onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
             />
             
             <TextInput
@@ -105,9 +106,9 @@ const Edit = (props) => {
               withAsterisk
               type="email"
               value={form.data.email}
-              label="Surel"
-              placeholder="Masukkan aamat surel..."
-              onChange={(e) => form.setData('email', e.target.value)}
+              label="Email"
+              placeholder="Masukkan email..."
+              onChange={(e) => form.setData('email', e.target.value.toLowerCase())}
             />
             
             <PasswordInput
@@ -131,6 +132,10 @@ const Edit = (props) => {
             </Button>
             <Button
               fullWidth
+              disabled={
+                form.data.role === '' || form.data.full_name === '' || form.data.national_lecturer_id_number === '' ||
+                form.data.phone_number === '' || form.data.academic_year === '' || form.data.email === ''
+              }
               loading={form.processing}
               type="submit"
             >

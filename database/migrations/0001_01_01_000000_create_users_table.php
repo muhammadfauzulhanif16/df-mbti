@@ -13,6 +13,7 @@
       Schema::create('users', function (Blueprint $table) {
         $table->uuid('id')->primary();
         $table->string('full_name');
+        $table->string('id_number')->unique()->nullable();
         $table->string('profile_photo_url')->unique()->nullable();
         $table->string('phone_number')->unique()->nullable();
         $table->string('role');
