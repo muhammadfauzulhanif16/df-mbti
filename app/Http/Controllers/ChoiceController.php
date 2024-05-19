@@ -2,9 +2,10 @@
   
   namespace App\Http\Controllers;
   
-  use App\Http\Requests\StoreChoiceRequest;
-  use App\Http\Requests\UpdateChoiceRequest;
   use App\Models\Choice;
+  use App\Models\Statement;
+  use Exception;
+  use Illuminate\Http\Request;
   use Inertia\Inertia;
   
   class ChoiceController extends Controller
@@ -14,7 +15,36 @@
      */
     public function index()
     {
-      return Inertia::render('Indicator/Choice/Index');
+      return Inertia::render('Choice/Index', [
+        'meta' => session('meta'),
+        'statements' => Statement::all(),
+        'choices' => Choice::all(),
+      ]);
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+      try {
+        Choice::create([
+          'name' => $request->name,
+          'value' => $request->value,
+        ]);
+        
+        return redirect()->route('choices.index')->with('meta', [
+          'status' => true,
+          'title' => 'Berhasil menambahkan pilihan',
+          'message' => "Pilihan '{$request->name}' berhasil ditambahkan!"
+        ]);
+      } catch (Exception $e) {
+        return redirect()->route('choices.index')->with('meta', [
+          'status' => false,
+          'title' => 'Gagal menambahkan pilihan',
+          'message' => $e->getMessage(),
+        ]);
+      }
     }
     
     /**
@@ -22,15 +52,7 @@
      */
     public function create()
     {
-      return Inertia::render('Indicator/Choice/Create');
-    }
-    
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreChoiceRequest $request)
-    {
-      //
+      return Inertia::render('Choice/Create');
     }
     
     /**
@@ -46,15 +68,34 @@
      */
     public function edit(Choice $choice)
     {
-      return Inertia::render('Indicator/Choice/Edit');
+      return Inertia::render('Choice/Edit', [
+        'choice' => $choice
+      ]);
     }
     
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateChoiceRequest $request, Choice $choice)
+    public function update(Request $request, Choice $choice)
     {
-      //
+      try {
+        $choice->update([
+          'name' => $request->name,
+          'value' => $request->value,
+        ]);
+        
+        return redirect()->route('choices.index')->with('meta', [
+          'status' => true,
+          'title' => 'Berhasil mengubah pilihan',
+          'message' => "Pilihan '{$request->name}' berhasil diubah!"
+        ]);
+      } catch (Exception $e) {
+        return redirect()->route('choices.index')->with('meta', [
+          'status' => false,
+          'title' => 'Gagal mengubah pilihan',
+          'message' => $e->getMessage(),
+        ]);
+      }
     }
     
     /**
@@ -62,6 +103,20 @@
      */
     public function destroy(Choice $choice)
     {
-      //
+      try {
+        $choice->delete();
+        
+        return redirect()->route('choices.index')->with('meta', [
+          'status' => true,
+          'title' => 'Berhasil menghapus pilihan',
+          'message' => "Pilihan '{$choice->name}' berhasil dihapus!"
+        ]);
+      } catch (Exception $e) {
+        return redirect()->route('choices.index')->with('meta', [
+          'status' => false,
+          'title' => 'Gagal menghapus pilihan',
+          'message' => $e->getMessage(),
+        ]);
+      }
     }
   }

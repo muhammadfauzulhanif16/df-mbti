@@ -6,11 +6,11 @@ import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
   const [search, setSearch] = useState('')
-  const users = props.users.filter(user =>
-    user.full_name.toLowerCase().includes(search.toLowerCase())
+  const lecturers = props.lecturers.filter(lecturer =>
+    lecturer.user.full_name.toLowerCase().includes(search.toLowerCase())
   )
   
-  const THList = ['#', 'Foto', 'NIDN', 'Nama Lengkap', 'Status', 'Tahun Akademik', 'Alamat Surel', 'Nomor Telepon', 'Dibuat Pada', 'Diperbarui Pada', 'Aksi']
+  const THList = ['#', 'Foto', 'NIDN', 'Nama Lengkap', 'Status', 'Tahun Akademik', 'Email', 'Nomor Telepon', 'Dibuat Pada', 'Diperbarui Pada', 'Aksi']
   
   return (
     <AppLayout title="Dosen" activeNav="Dosen" authed={props.auth.user}
@@ -47,34 +47,34 @@ const Index = (props) => {
             </Table.Thead>
             
             <Table.Tbody>
-              {users.map((user, id) => (
+              {lecturers.map((lecturer, id) => (
                 <Table.Tr key={id}>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}><Avatar
-                    src={user.profile_photo_url}
-                    alt={user.full_name} /></Table.Td>
+                    src={lecturer.user.avatar}
+                    alt={lecturer.user.full_name} /></Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.id_number}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{lecturer.user.id_number}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.full_name}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{lecturer.user.full_name}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.role}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{lecturer.user.role}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.lecturer.academic_year}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{lecturer.academic_year}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.email}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{lecturer.user.email}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.phone_number}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{lecturer.user.phone_number}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.created_at}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{lecturer.user.created_at}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{user.updated_at}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{lecturer.user.updated_at}</Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
                     <Button.Group>
                       <Button variant="outline" color="yellow"
-                              onClick={() => router.get(route('lecturers.edit', user))}>Ubah</Button>
+                              onClick={() => router.get(route('lecturers.edit', lecturer))}>Ubah</Button>
                       <Button variant="outline" color="red"
-                              onClick={() => router.delete(route('lecturers.destroy', user))}>Hapus</Button>
+                              onClick={() => router.delete(route('lecturers.destroy', lecturer))}>Hapus</Button>
                     </Button.Group>
                   </Table.Td>
                 </Table.Tr>

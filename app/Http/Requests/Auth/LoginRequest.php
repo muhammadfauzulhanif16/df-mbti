@@ -28,7 +28,7 @@
     public function rules(): array
     {
       return [
-        'email_or_id_number' => ['required', 'string'],
+        'login' => ['required', 'string'],
         'password' => ['required', 'string'],
       ];
     }
@@ -42,9 +42,9 @@
     {
       $this->ensureIsNotRateLimited();
       
-      $fieldType = filter_var($this->email_or_id_number, FILTER_VALIDATE_EMAIL) ? 'email' : 'id_number';
+      $fieldType = filter_var($this->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'id_number';
       
-      if (!Auth::attempt([$fieldType => $this->email_or_id_number, 'password' => $this->password])) {
+      if (!Auth::attempt([$fieldType => $this->login, 'password' => $this->password])) {
         RateLimiter::hit($this->throttleKey());
 
 //        throw ValidationException::withMessages([

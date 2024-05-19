@@ -109,7 +109,7 @@ const Create = (props) => {
             <PasswordInput
               leftSection={<IconPassword />}
               withAsterisk
-              value={form.data.national_lecturer_id_number}
+              // value={form.data.national_lecturer_id_number}
               label="Kata Sandi"
               placeholder="Masukkan kata sandi..."
               onChange={(e) => form.setData('password', e.target.value)}

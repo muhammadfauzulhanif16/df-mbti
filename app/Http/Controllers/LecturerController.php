@@ -18,7 +18,7 @@
     {
       return Inertia::render('Lecturer/Index', [
         'meta' => session('meta'),
-        'users' => User::whereIn('role', ['Dosen', 'Ketua Program Studi', 'Dosen Pembimbing Akademik'])->with('lecturer')->get(),
+        'lecturers' => Lecturer::with('user')->get(),
       ]);
     }
     
@@ -27,7 +27,6 @@
      */
     public function store(Request $request)
     {
-//      dd($request->all());
       try {
         $user = User::create([
           'full_name' => $request->full_name,

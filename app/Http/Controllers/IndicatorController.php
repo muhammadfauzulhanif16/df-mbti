@@ -16,7 +16,8 @@
     {
       return Inertia::render('Indicator/Index', [
         'meta' => session('meta'),
-        'indicators' => Indicator::with('basicTrait')->get()
+        'indicators' => Indicator::with('basicTrait')->get(),
+        'basic_traits' => BasicTrait::all()
       ]);
     }
     

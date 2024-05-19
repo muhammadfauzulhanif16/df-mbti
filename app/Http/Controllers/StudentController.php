@@ -18,7 +18,8 @@
     {
       return Inertia::render('Student/Index', [
         'meta' => session('meta'),
-        'users' => User::where('role', 'Mahasiswa')->with('student')->get(),
+        'students' => Student::with('user')->get(),
+        'lecturers' => Lecturer::with('user')->get(),
       ]);
     }
     

@@ -1,12 +1,4 @@
-import {
-  ActionIcon,
-  Avatar,
-  Button,
-  Drawer,
-  Group,
-  Image,
-  Text
-} from '@mantine/core'
+import { ActionIcon, Button, Drawer, Group, Image } from '@mantine/core'
 import React from 'react'
 import { router } from '@inertiajs/core'
 import {
@@ -18,6 +10,7 @@ import {
   IconLogout,
   IconMenu,
   IconQuestionMark,
+  IconUser,
   IconUsers
 } from '@tabler/icons-react'
 import { useDisclosure } from '@mantine/hooks'
@@ -54,7 +47,7 @@ export const NavBar = (props) => {
     {
       icon: <IconCheck />,
       label: 'Jawaban',
-      route: 'questions.choices.index'
+      route: 'choices.index'
     },
     {
       icon: <IconArticle />,
@@ -65,6 +58,11 @@ export const NavBar = (props) => {
       icon: <IconInfoCircle />,
       label: 'Panduan',
       route: 'guide.index'
+    },
+    {
+      icon: <IconUser />,
+      label: 'Profil',
+      route: 'profile'
     },
     {
       icon: <IconLogout />,
@@ -114,16 +112,6 @@ export const NavBar = (props) => {
         title="Menu"
         size="xs"
       >
-        <Group mb={16}>
-          <Avatar
-            alt={props.authed.full_name}
-            style={{
-              cursor: 'pointer'
-            }}
-          />
-          <Text>{props.authed.full_name}</Text>
-        </Group>
-        
         <Button.Group
           bg="white"
           orientation="vertical"
@@ -165,16 +153,6 @@ export const NavBar = (props) => {
           </Button>
         ))}
       </Button.Group>
-      
-      <Avatar
-        alt={props.authed.full_name}
-        display={{
-          base: 'none',
-          lg: 'block'
-        }}
-        style={{
-          cursor: 'pointer'
-        }} />
     </Group>
   )
 }

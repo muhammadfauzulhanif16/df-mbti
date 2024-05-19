@@ -13,9 +13,11 @@ import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Login = (props) => {
   const form = useForm({
-    email_or_id_number: '',
+    login: '',
     password: ''
   })
+  
+  console.log(form.data)
   
   return (
     <AppLayout title="Masuk Akun" authed={props.auth.user} meta={props.meta}>
@@ -40,7 +42,19 @@ const Login = (props) => {
             placeholder="Masukkan email/NIDM/NIM..."
             mb={16}
             withAsterisk
-            onChange={(e) => form.setData('email_or_id_number', e.target.value.toLowerCase())}
+            onChange={(e) => {
+              form.setData('login', e.target.value.toLowerCase())
+              
+              if (!e.target.value) {
+                form.setError({
+                  login:
+                    'Email/NIDN/NIM tidak boleh kosong.'
+                })
+              } else {
+                form.clearErrors('login')
+              }
+            }}
+            error={form.errors.login}
           />
           
           <PasswordInput
@@ -49,11 +63,23 @@ const Login = (props) => {
             placeholder="Masukkan kata sandi..."
             mb={16}
             withAsterisk
-            onChange={(e) => form.setData('password', e.target.value)}
+            onChange={(e) => {
+              form.setData('password', e.target.value)
+              
+              if (!e.target.value) {
+                form.setError({
+                  password:
+                    'Kata sandi tidak boleh kosong.'
+                })
+              } else {
+                form.clearErrors('password')
+              }
+            }}
+            error={form.errors.password}
           />
           
           <Button
-            disabled={form.data.email_or_id_number === '' || form.data.password === ''}
+            disabled={form.data.email_or_id_number === '' || form.data.password === '' || form.hasErrors}
             loading={form.processing}
             type="submit"
             fullWidth

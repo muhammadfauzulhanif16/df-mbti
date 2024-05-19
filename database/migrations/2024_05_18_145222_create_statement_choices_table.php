@@ -10,11 +10,9 @@
      */
     public function up(): void
     {
-      Schema::create('choices', function (Blueprint $table) {
-        $table->uuid('id')->primary();
-        $table->string('name');
-        $table->unsignedTinyInteger('value');
-        $table->timestamps();
+      Schema::create('statement_choices', function (Blueprint $table) {
+        $table->foreignUuid('statement_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+        $table->foreignUuid('choice_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
       });
     }
     
@@ -23,6 +21,6 @@
      */
     public function down(): void
     {
-      Schema::dropIfExists('choices');
+      Schema::dropIfExists('statement_choices');
     }
   };

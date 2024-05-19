@@ -10,10 +10,9 @@
      */
     public function up(): void
     {
-      Schema::create('choices', function (Blueprint $table) {
+      Schema::create('statements', function (Blueprint $table) {
         $table->uuid('id')->primary();
         $table->string('name');
-        $table->unsignedTinyInteger('value');
         $table->timestamps();
       });
     }
@@ -23,6 +22,6 @@
      */
     public function down(): void
     {
-      Schema::dropIfExists('choices');
+      Schema::dropIfExists('statements');
     }
   };

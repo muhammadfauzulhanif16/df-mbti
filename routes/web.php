@@ -1,9 +1,11 @@
 <?php
   
   use App\Http\Controllers\BasicTraitController;
+  use App\Http\Controllers\ChoiceController;
   use App\Http\Controllers\IndicatorController;
   use App\Http\Controllers\LecturerController;
-  use App\Http\Controllers\QuestionController;
+  use App\Http\Controllers\ProfileController;
+  use App\Http\Controllers\StatementController;
   use App\Http\Controllers\StudentController;
   use Illuminate\Support\Facades\Route;
   use Inertia\Inertia;
@@ -17,6 +19,9 @@
         'meta' => session('meta'),
       ]);
     })->name('dashboard');
+    
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile');
+    Route::put('profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
     
     Route::group(['prefix' => 'lecturers'], function () {
       Route::get('', [LecturerController::class, 'index'])->name('lecturers.index');
@@ -40,19 +45,22 @@
       Route::get('', [IndicatorController::class, 'index'])->name('indicators.index');
       Route::get('create', [IndicatorController::class, 'create'])->name('indicators.create');
       Route::post('', [IndicatorController::class, 'store'])->name('indicators.store');
-      Route::get('{indicator}', [IndicatorController::class, 'show'])->name('indicators.show');
+//      Route::get('{indicator}', [IndicatorController::class, 'show'])->name('indicators.show');
       Route::get('{indicator}/edit', [IndicatorController::class, 'edit'])->name('indicators.edit');
       Route::put('{indicator}', [IndicatorController::class, 'update'])->name('indicators.update');
       Route::delete('{indicator}', [IndicatorController::class, 'destroy'])->name('indicators.destroy');
-
-//      Route::group(['prefix' => 'choices'], function () {
-//        Route::get('', [ChoiceController::class, 'index'])->name('questions.choices.index');
-//        Route::get('create', [ChoiceController::class, 'create'])->name('questions.choices.create');
-//        Route::post('', [ChoiceController::class, 'store'])->name('questions.choices.store');
-//        Route::get('{id}/edit', [ChoiceController::class, 'edit'])->name('questions.choices.edit');
-//        Route::put('{id}', [ChoiceController::class, 'update'])->name('questions.choices.update');
-//        Route::delete('{id}', [ChoiceController::class, 'destroy'])->name('questions.choices.destroy');
-//      });
+      
+      Route::get('{indicator}/statements', [StatementController::class, 'index'])->name('statements.index');
+      Route::get('{indicator}/statements/create', [StatementController::class, 'create'])->name('statements.create');
+    });
+    
+    Route::group(['prefix' => 'choices'], function () {
+      Route::get('', [ChoiceController::class, 'index'])->name('choices.index');
+      Route::get('create', [ChoiceController::class, 'create'])->name('choices.create');
+      Route::post('', [ChoiceController::class, 'store'])->name('choices.store');
+      Route::get('{choice}/edit', [ChoiceController::class, 'edit'])->name('choices.edit');
+      Route::put('{choice}', [ChoiceController::class, 'update'])->name('choices.update');
+      Route::delete('{choice}', [ChoiceController::class, 'destroy'])->name('choices.destroy');
     });
     
     Route::group(['prefix' => 'basic-traits'], function () {

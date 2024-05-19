@@ -4,7 +4,7 @@ import { IconPlus, IconSearch } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
-const Show = (props) => {
+const Index = (props) => {
   const [search, setSearch] = useState('')
   
   // const choices = props.choices.filter(choice =>
@@ -35,7 +35,8 @@ const Show = (props) => {
           />
         </Group>
         
-        <Title align="center">"{props.indicator.name}"</Title>
+        <Title
+          align="center">"{props.indicator.name} ({props.indicator.basic_trait.name})"</Title>
         
         <Table.ScrollContainer>
           <Table horizontalSpacing="xl" verticalSpacing="sm" highlightOnHover
@@ -79,4 +80,4 @@ const Show = (props) => {
   )
 }
 
-export default Show
+export default Index
