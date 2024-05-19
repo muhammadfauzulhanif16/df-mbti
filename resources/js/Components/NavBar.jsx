@@ -72,9 +72,9 @@ export const NavBar = (props) => {
   ]
   
   
-  // if (props.authed.role === 'Mahasiswa') {
-  //   NavList = NavList.filter(item => item.label !== 'Pengguna')
-  // }
+  if (props.authed.role === 'Admin') {
+    NavList = NavList.filter(item => item.label !== 'Profil')
+  }
   
   return (
     <Group

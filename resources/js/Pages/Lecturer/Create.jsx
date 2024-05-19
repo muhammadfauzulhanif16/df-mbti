@@ -34,7 +34,7 @@ const Create = (props) => {
     password: ''
   })
   
-  console.log(form.data)
+  console.log(form)
   
   return (
     <AppLayout title="Tambah Dosen" activeNav="Dosen" authed={props.auth.user}
@@ -50,7 +50,19 @@ const Create = (props) => {
             mb={16}
             label="Status"
             withAsterisk
-            onChange={(value) => form.setData('role', value)}
+            onChange={(value) => {
+              form.setData('role', value)
+              
+              if (!value) {
+                form.setError({
+                  role:
+                    'Status tidak boleh kosong.'
+                })
+              } else {
+                form.clearErrors('role')
+              }
+            }}
+            error={form.errors.role}
           >
             <Group mt="xs">
               <Radio value="Ketua Program Studi" label="Ketua Program Studi" />
@@ -68,7 +80,17 @@ const Create = (props) => {
               onChange={(e) => {
                 const value = e.target.value.replace(/\b\w/g, char => char.toUpperCase()).replace(/\B\w/g, char => char.toLowerCase())
                 form.setData('full_name', value)
+                
+                if (!value) {
+                  form.setError({
+                    full_name:
+                      'Nama lengkap tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('full_name')
+                }
               }}
+              error={form.errors.full_name}
             />
             
             <NumberInput
@@ -77,7 +99,28 @@ const Create = (props) => {
               label="NIDN"
               hideControls
               placeholder="Masukkan NIDN..."
-              onChange={(value) => form.setData('national_lecturer_id_number', value)}
+              onChange={(value) => {
+                form.setData('national_lecturer_id_number', value)
+                
+                if (!value) {
+                  form.setError({
+                    national_lecturer_id_number:
+                      'NIDN tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('national_lecturer_id_number')
+                }
+                
+                if (value.toString().length < 10 || value.toString().length > 10) {
+                  form.setError({
+                    national_lecturer_id_number:
+                      'NIDN harus 10 digit.'
+                  })
+                } else {
+                  form.clearErrors('national_lecturer_id_number')
+                }
+              }}
+              error={form.errors.national_lecturer_id_number}
             />
             
             <NumberInput
@@ -86,15 +129,48 @@ const Create = (props) => {
               label="Nomor Telepon"
               hideControls
               placeholder="Masukkan nomor telepon..."
-              onChange={(value) => form.setData('phone_number', value.toString())}
+              onChange={(value) => {
+                form.setData('phone_number', value.toString())
+                
+                if (!value) {
+                  form.setError({
+                    phone_number:
+                      'Nomor telepon tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('phone_number')
+                }
+                
+                if (value.toString().length < 10 || value.toString().length > 13) {
+                  form.setError({
+                    phone_number:
+                      'Nomor telepon harus 10-13 digit.'
+                  })
+                } else {
+                  form.clearErrors('phone_number')
+                }
+              }}
+              error={form.errors.phone_number}
             />
             
             <YearPickerInput
               leftSection={<IconCalendar />}
               withAsterisk
+              clearable
               label="Tahun Akademik"
               placeholder="Masukkan tahun akademik..."
-              onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
+              onChange={(value) => {
+                if (!value) {
+                  form.setError({
+                    academic_year:
+                      'Tahun akademik tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('academic_year')
+                  form.setData('academic_year', value.getFullYear().toString())
+                }
+              }}
+              error={form.errors.academic_year}
             />
             
             <TextInput
@@ -103,16 +179,39 @@ const Create = (props) => {
               type="email"
               label="Email"
               placeholder="Masukkan email..."
-              onChange={(e) => form.setData('email', e.target.value.toLowerCase())}
+              onChange={(e) => {
+                form.setData('email', e.target.value.toLowerCase())
+                
+                if (!e.target.value) {
+                  form.setError({
+                    email:
+                      'Email tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('email')
+                }
+              }}
+              error={form.errors.email}
             />
             
             <PasswordInput
               leftSection={<IconPassword />}
               withAsterisk
-              // value={form.data.national_lecturer_id_number}
+              value={form.data.national_lecturer_id_number}
               label="Kata Sandi"
               placeholder="Masukkan kata sandi..."
-              onChange={(e) => form.setData('password', e.target.value)}
+              onChange={(e) => {
+                form.setData('password', e.target.value)
+                
+                if (!e.target.value) {
+                  form.setError({
+                    password:
+                      'Kata sandi tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('password')
+                }
+              }}
             />
           </SimpleGrid>
           

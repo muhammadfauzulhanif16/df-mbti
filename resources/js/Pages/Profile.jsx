@@ -23,14 +23,13 @@ import {
 import { YearPickerInput } from '@mantine/dates'
 
 const Profile = (props) => {
-  console.log(props.user)
   const form = useForm({
     _method: 'put',
     avatar: props.auth.user.avatar || null,
     full_name: props.auth.user.full_name,
     id_number: props.auth.user.id_number,
     phone_number: props.auth.user.phone_number,
-    academic_year: props.auth.user.role === 'Mahasiswa' ? props.auth.user.student.academic_year : props.auth.user.lecturer.academic_year,
+    academic_year: props.auth.user.role === 'Admin' ? null : props.auth.user.role === 'Mahasiswa' ? props.auth.user.student.academic_year : props.auth.user.lecturer.academic_year,
     email: props.auth.user.email,
     password: ''
   })
@@ -88,29 +87,34 @@ const Profile = (props) => {
               </Grid.Col>
             )}
             
-            <Grid.Col span={6}>
-              <NumberInput
-                leftSection={<IconPhone />}
-                withAsterisk
-                label="Nomor Telepon"
-                value={form.data.phone_number}
-                hideControls
-                placeholder="Masukkan nomor telepon..."
-                onChange={(value) => form.setData('phone_number', value.toString())}
-              />
-            </Grid.Col>
             
-            <Grid.Col span={6}>
-              <YearPickerInput
-                leftSection={<IconCalendar />}
-                withAsterisk
-                disabled
-                value={new Date(form.data.academic_year)}
-                label="Tahun Akademik"
-                placeholder="Masukkan tahun akademik..."
-                onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
-              />
-            </Grid.Col>
+            {props.auth.user.role !== 'Admin' && (
+              <Grid.Col span={6}>
+                <NumberInput
+                  leftSection={<IconPhone />}
+                  withAsterisk
+                  label="Nomor Telepon"
+                  value={form.data.phone_number}
+                  hideControls
+                  placeholder="Masukkan nomor telepon..."
+                  onChange={(value) => form.setData('phone_number', value.toString())}
+                />
+              </Grid.Col>
+            )}
+            
+            {props.auth.user.role !== 'Admin' && (
+              <Grid.Col span={6}>
+                <YearPickerInput
+                  leftSection={<IconCalendar />}
+                  withAsterisk
+                  disabled
+                  value={new Date(form.data.academic_year)}
+                  label="Tahun Akademik"
+                  placeholder="Masukkan tahun akademik..."
+                  onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
+                />
+              </Grid.Col>
+            )}
             
             <Grid.Col span={6}>
               <TextInput
