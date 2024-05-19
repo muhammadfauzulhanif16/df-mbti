@@ -18,6 +18,8 @@ const Index = (props) => {
     student.user.full_name.toLowerCase().includes(search.toLowerCase())
   )
   
+  console.log(props)
+  
   const THList = ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Akademik', 'Email', 'Nomor Telepon', 'DPA', 'Aksi']
   
   return (
@@ -81,7 +83,7 @@ const Index = (props) => {
                     style={{ whiteSpace: 'nowrap' }}>{student.user.phone_number
                   }</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{student.supervisor}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{student.supervisor.full_name}</Table.Td>
                   <Table.Td>
                     <Button.Group>
                       <Button variant="outline" color="yellow"

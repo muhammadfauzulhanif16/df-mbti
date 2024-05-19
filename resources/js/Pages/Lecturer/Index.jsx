@@ -5,6 +5,7 @@ import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
+  console.log(props)
   const [search, setSearch] = useState('')
   const lecturers = props.lecturers.filter(lecturer =>
     lecturer.user.full_name.toLowerCase().includes(search.toLowerCase())
@@ -68,8 +69,10 @@ const Index = (props) => {
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
                     <Button.Group>
                       <Button variant="outline" color="yellow"
+                              
                               onClick={() => router.get(route('lecturers.edit', lecturer))}>Ubah</Button>
                       <Button variant="outline" color="red"
+                              disabled={lecturer.students.length}
                               onClick={() => router.delete(route('lecturers.destroy', lecturer))}>Hapus</Button>
                     </Button.Group>
                   </Table.Td>

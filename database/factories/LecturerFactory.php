@@ -1,14 +1,15 @@
 <?php
-
-namespace Database\Factories;
-
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Lecturer>
- */
-class LecturerFactory extends Factory
-{
+  
+  namespace Database\Factories;
+  
+  use App\Models\Lecturer;
+  use Illuminate\Database\Eloquent\Factories\Factory;
+  
+  /**
+   * @extends Factory<Lecturer>
+   */
+  class LecturerFactory extends Factory
+  {
     /**
      * Define the model's default state.
      *
@@ -16,8 +17,8 @@ class LecturerFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            //
-        ];
+      return [
+      
+      ];
     }
-}
+  }

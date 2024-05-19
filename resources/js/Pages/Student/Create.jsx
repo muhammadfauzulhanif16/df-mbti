@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from '@inertiajs/react'
 import {
   Button,
@@ -29,8 +29,14 @@ const Create = (props) => {
     academic_year: '',
     email: '',
     password: '',
-    supervisor: ''
+    supervisor_id: ''
   })
+  
+  useEffect(() => {
+    if (form.data.student_id_number) {
+      form.setData('password', form.data.student_id_number)
+    }
+  }, [form.data.student_id_number])
   
   return (
     <AppLayout title="Tambah Mahasiswa" activeNav="Mahasiswa"
@@ -52,7 +58,17 @@ const Create = (props) => {
               onChange={(e) => {
                 const value = e.target.value.replace(/\b\w/g, char => char.toUpperCase()).replace(/\B\w/g, char => char.toLowerCase())
                 form.setData('full_name', value)
+                
+                if (!value) {
+                  form.setError({
+                    full_name:
+                      'Nama lengkap tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('full_name')
+                }
               }}
+              error={form.errors.full_name}
             />
             
             <NumberInput
@@ -60,7 +76,28 @@ const Create = (props) => {
               label="NIM"
               hideControls
               placeholder="Masukkan NIM..."
-              onChange={(value) => form.setData('student_id_number', value)}
+              onChange={(value) => {
+                form.setData('student_id_number', value)
+                
+                if (!value) {
+                  form.setError({
+                    student_id_number:
+                      'NIM tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('student_id_number')
+                }
+                
+                if (value.toString().length < 10 || value.toString().length > 10) {
+                  form.setError({
+                    student_id_number:
+                      'NIM harus 10 digit.'
+                  })
+                } else {
+                  form.clearErrors('student_id_number')
+                }
+              }}
+              error={form.errors.student_id_number}
             />
             
             <NumberInput
@@ -69,7 +106,28 @@ const Create = (props) => {
               label="Nomor Telepon"
               hideControls
               placeholder="Masukkan nomor telepon..."
-              onChange={(value) => form.setData('phone_number', value.toString())}
+              onChange={(value) => {
+                form.setData('phone_number', value.toString())
+                
+                if (!value) {
+                  form.setError({
+                    phone_number:
+                      'Nomor telepon tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('phone_number')
+                }
+                
+                if (value.toString().length < 10 || value.toString().length > 13) {
+                  form.setError({
+                    phone_number:
+                      'Nomor telepon harus 10-13 digit.'
+                  })
+                } else {
+                  form.clearErrors('phone_number')
+                }
+              }}
+              error={form.errors.phone_number}
             />
             
             <YearPickerInput
@@ -77,7 +135,18 @@ const Create = (props) => {
               withAsterisk
               label="Tahun Akademik"
               placeholder="Masukkan tahun akademik..."
-              onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
+              onChange={(value) => {
+                if (!value) {
+                  form.setError({
+                    academic_year:
+                      'Tahun akademik tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('academic_year')
+                  form.setData('academic_year', value.getFullYear().toString())
+                }
+              }}
+              error={form.errors.academic_year}
             />
             
             <TextInput
@@ -86,20 +155,33 @@ const Create = (props) => {
               type="email"
               label="Email"
               placeholder="Masukkan email..."
-              onChange={(e) => form.setData('email', e.target.value.toLowerCase())}
+              onChange={(e) => {
+                form.setData('email', e.target.value.toLowerCase())
+                
+                if (!e.target.value) {
+                  form.setError({
+                    email:
+                      'Email tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('email')
+                }
+              }}
+              error={form.errors.email}
             />
             
             <PasswordInput
               leftSection={<IconPassword />}
               withAsterisk
+              disabled
               value={form.data.student_id_number}
-              label="Kata Sandi"
+              label="Kata Sandi (Default: NIM)"
               placeholder="Masukkan kata sandi..."
-              onChange={(e) => form.setData('password', e.target.value)}
             />
           </SimpleGrid>
           
           <Select
+            leftSection={<IconUser />}
             label="Dosen Pembimbing Akademik"
             placeholder="Masukkan Dosen Pembimbing Akademik..."
             clearable
@@ -107,8 +189,11 @@ const Create = (props) => {
             withAsterisk
             nothingFoundMessage="Tidak ada dosen pembimbing akademik"
             checkIconPosition="right"
-            data={props.lecturers.map((lecturer) => lecturer.user.full_name)}
-            onChange={(value) => form.setData('supervisor', value)}
+            data={props.lecturers.map((lecturer) => ({
+              label: lecturer.user.full_name,
+              value: lecturer.user.id
+            }))}
+            onChange={(value) => form.setData('supervisor_id', value)}
           />
           
           <Button.Group mt={32}>

@@ -74,6 +74,67 @@ export const NavBar = (props) => {
   
   if (props.authed.role === 'Admin') {
     NavList = NavList.filter(item => item.label !== 'Profil')
+  } else if (props.authed.role === 'Mahasiswa') {
+    NavList = [
+      {
+        icon: <IconHome />,
+        label: 'Beranda',
+        route: 'dashboard'
+      },
+      {
+        icon: <IconUser />,
+        label: 'Tes MBTI',
+        route: ''
+      },
+      {
+        icon: <IconUser />,
+        label: 'Hasil',
+        route: ''
+      },
+      {
+        icon: <IconUser />,
+        label: 'Profil',
+        route: 'profile'
+      },
+      {
+        icon: <IconLogout />,
+        label: 'Keluar',
+        route: 'logout'
+      }
+    ]
+  } else {
+    NavList = [
+      {
+        icon: <IconHome />,
+        label: 'Beranda',
+        route: 'dashboard'
+      },
+      {
+        icon: <IconUsers />,
+        label: 'Mahasiswa',
+        route: 'students.index'
+      },
+      {
+        icon: <IconUsers />,
+        label: 'Grafik',
+        route: ''
+      },
+      {
+        icon: <IconInfoCircle />,
+        label: 'Panduan',
+        route: 'guide.index'
+      },
+      {
+        icon: <IconUser />,
+        label: 'Profil',
+        route: 'profile'
+      },
+      {
+        icon: <IconLogout />,
+        label: 'Keluar',
+        route: 'logout'
+      }
+    ]
   }
   
   return (

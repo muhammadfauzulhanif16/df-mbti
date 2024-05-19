@@ -3,6 +3,7 @@
   namespace App\Http\Controllers;
   
   use App\Models\Lecturer;
+  use App\Models\Student;
   use App\Models\User;
   use Exception;
   use Illuminate\Http\Request;
@@ -18,7 +19,10 @@
     {
       return Inertia::render('Lecturer/Index', [
         'meta' => session('meta'),
-        'lecturers' => Lecturer::with('user')->get(),
+        'lecturers' => Lecturer::with('user')->get()->map(function ($lecturer) {
+          $lecturer['students'] = Student::with('user')->where('supervisor_id', $lecturer->user_id)->get();
+          return $lecturer;
+        })
       ]);
     }
     

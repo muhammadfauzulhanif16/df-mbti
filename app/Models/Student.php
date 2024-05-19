@@ -15,7 +15,7 @@
       'user_id',
       'student_id_number',
       'academic_year',
-      'supervisor',
+      'supervisor_id',
     ];
     
     public function user()

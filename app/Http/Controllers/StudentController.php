@@ -18,7 +18,10 @@
     {
       return Inertia::render('Student/Index', [
         'meta' => session('meta'),
-        'students' => Student::with('user')->get(),
+        'students' => Student::with('user')->get()->map(function ($student) {
+          $student['supervisor'] = User::find($student->supervisor_id);
+          return $student;
+        }),
         'lecturers' => Lecturer::with('user')->get(),
       ]);
     }
@@ -41,7 +44,7 @@
         $user->student()->create([
           'user_id' => $user->id,
           'academic_year' => $request->academic_year,
-          'supervisor' => $request->supervisor,
+          'supervisor_id' => $request->supervisor_id,
         ]);
         
         return to_route('students.index')->with('meta', [

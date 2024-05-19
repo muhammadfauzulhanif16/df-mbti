@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from '@inertiajs/react'
 import {
   Button,
@@ -34,7 +34,11 @@ const Create = (props) => {
     password: ''
   })
   
-  console.log(form)
+  useEffect(() => {
+    if (form.data.national_lecturer_id_number) {
+      form.setData('password', form.data.national_lecturer_id_number)
+    }
+  }, [form.data.national_lecturer_id_number])
   
   return (
     <AppLayout title="Tambah Dosen" activeNav="Dosen" authed={props.auth.user}
@@ -197,21 +201,10 @@ const Create = (props) => {
             <PasswordInput
               leftSection={<IconPassword />}
               withAsterisk
+              disabled
               value={form.data.national_lecturer_id_number}
-              label="Kata Sandi"
+              label="Kata Sandi (Default: NIDN)"
               placeholder="Masukkan kata sandi..."
-              onChange={(e) => {
-                form.setData('password', e.target.value)
-                
-                if (!e.target.value) {
-                  form.setError({
-                    password:
-                      'Kata sandi tidak boleh kosong.'
-                  })
-                } else {
-                  form.clearErrors('password')
-                }
-              }}
             />
           </SimpleGrid>
           

@@ -11,9 +11,9 @@
     public function up(): void
     {
       Schema::create('students', function (Blueprint $table) {
-        $table->foreignUuid('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+        $table->foreignUuid('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         $table->year('academic_year');
-        $table->string('supervisor');
+        $table->foreignUuid('supervisor_id')->constrained('users', 'id')->cascadeOnUpdate()->cascadeOnDelete();
       });
     }
     
