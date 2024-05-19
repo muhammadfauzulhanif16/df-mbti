@@ -11,7 +11,7 @@ const Index = (props) => {
     basic_trait.name.toLowerCase().includes(search.toLowerCase())
   )
   
-  const THList = ['#', 'Kode Kategori Soal', 'Nama Kategori Soal', 'Dibuat Pada', 'Diperbarui Pada', 'Aksi']
+  const THList = ['#', 'Kode Kategori Soal', 'Nama Kategori Soal', 'Aksi']
   
   return (
     <AppLayout title="Kategori Soal" activeNav="Kategori Soal"
@@ -53,10 +53,6 @@ const Index = (props) => {
                     style={{ whiteSpace: 'nowrap' }}>{basicTrait.code}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{basicTrait.name}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{basicTrait.created_at}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{basicTrait.updated_at}</Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
                     <Button.Group>
                       <Button variant="outline" color="yellow"

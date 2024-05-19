@@ -11,7 +11,7 @@ const Index = (props) => {
     indicator.name.toLowerCase().includes(search.toLowerCase())
   )
   
-  const THList = ['#', 'Soal', 'Kategori Soal', 'Dibuat Pada', 'Diperbarui Pada', 'Aksi']
+  const THList = ['#', 'Soal', 'Kategori Soal', 'Aksi']
   
   return (
     <AppLayout title="Soal" activeNav="Soal"
@@ -58,13 +58,10 @@ const Index = (props) => {
                     style={{ whiteSpace: 'nowrap' }}>{indicator.name}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{indicator.basic_trait.name}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{indicator.created_at}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{indicator.updated_at}</Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
                     <Button.Group>
                       <Button variant="outline" color="green"
+                              disabled
                               onClick={() => router.get(route('statements.index', indicator))}>
                         Lihat Konten Pertanyaan</Button>
                       <Button variant="outline" color="yellow"

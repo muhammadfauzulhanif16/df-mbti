@@ -11,7 +11,7 @@ const Index = (props) => {
     choice.name.toLowerCase().includes(search.toLowerCase())
   )
   
-  const THList = ['#', 'Nama Jawaban', 'Bobot Penilaian', 'Dibuat Pada', 'Diperbarui Pada', 'Aksi']
+  const THList = ['#', 'Nama Jawaban', 'Bobot Penilaian', 'Aksi']
   
   return (
     <AppLayout title="Jawaban" activeNav="Jawaban"
@@ -58,10 +58,6 @@ const Index = (props) => {
                     style={{ whiteSpace: 'nowrap' }}>{choice.name}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{choice.value}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{choice.created_at}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{choice.updated_at}</Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
                     <Button.Group>
                       <Button variant="outline" color="yellow"

@@ -11,7 +11,7 @@ const Index = (props) => {
   //   choice.name.toLowerCase().includes(search.toLowerCase())
   // )
   
-  const THList = ['#', 'Nama Jawaban', 'Bobot Penilaian', 'Dibuat Pada', 'Diperbarui Pada', 'Aksi']
+  const THList = ['#', 'Nama Jawaban', 'Bobot Penilaian', 'Aksi']
   
   return (
     <AppLayout title="Pertanyaan" activeNav="Soal"

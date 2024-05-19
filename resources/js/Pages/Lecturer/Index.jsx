@@ -10,7 +10,7 @@ const Index = (props) => {
     lecturer.user.full_name.toLowerCase().includes(search.toLowerCase())
   )
   
-  const THList = ['#', 'Foto', 'NIDN', 'Nama Lengkap', 'Status', 'Tahun Akademik', 'Email', 'Nomor Telepon', 'Dibuat Pada', 'Diperbarui Pada', 'Aksi']
+  const THList = ['#', 'Foto', 'NIDN', 'Nama Lengkap', 'Status', 'Tahun Akademik', 'Email', 'Nomor Telepon', 'Aksi']
   
   return (
     <AppLayout title="Dosen" activeNav="Dosen" authed={props.auth.user}
@@ -65,10 +65,6 @@ const Index = (props) => {
                     style={{ whiteSpace: 'nowrap' }}>{lecturer.user.email}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{lecturer.user.phone_number}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{lecturer.user.created_at}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{lecturer.user.updated_at}</Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
                     <Button.Group>
                       <Button variant="outline" color="yellow"
