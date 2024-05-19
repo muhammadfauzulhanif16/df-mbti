@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Drawer, Group, Image } from '@mantine/core'
+import { ActionIcon, Avatar, Button, Drawer, Group, Image } from '@mantine/core'
 import React from 'react'
 import { router } from '@inertiajs/core'
 import {
@@ -153,6 +153,14 @@ export const NavBar = (props) => {
           </Button>
         ))}
       </Button.Group>
+      
+      <Avatar
+        display={{
+          base: 'none',
+          lg: 'flex'
+        }}
+        src={props.authed.avatar}
+        alt={props.authed.full_name} />
     </Group>
   )
 }
