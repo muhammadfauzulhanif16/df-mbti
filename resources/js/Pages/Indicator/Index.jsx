@@ -60,8 +60,10 @@ const Index = (props) => {
                     style={{ whiteSpace: 'nowrap' }}>{indicator.basic_trait.name}</Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
                     <Button.Group>
+                      <Button variant="outline" color="blue"
+                              onClick={() => router.get(route('statements.index', indicator))}>
+                        Tambah Konten Pertanyaan</Button>
                       <Button variant="outline" color="green"
-                              disabled
                               onClick={() => router.get(route('statements.index', indicator))}>
                         Lihat Konten Pertanyaan</Button>
                       <Button variant="outline" color="yellow"

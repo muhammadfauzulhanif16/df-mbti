@@ -21,6 +21,7 @@ import {
 import { YearPickerInput } from '@mantine/dates'
 
 const Edit = (props) => {
+  console.log(props)
   const form = useForm({
     full_name: props.user.full_name,
     student_id_number: props.user.id_number,
@@ -28,7 +29,7 @@ const Edit = (props) => {
     academic_year: props.user.student.academic_year,
     email: props.user.email,
     password: '',
-    supervisor: props.user.student.supervisor
+    supervisor_id: props.user.student.supervisor_id
   })
   
   return (
@@ -51,7 +52,17 @@ const Edit = (props) => {
               onChange={(e) => {
                 const value = e.target.value.replace(/\b\w/g, char => char.toUpperCase()).replace(/\B\w/g, char => char.toLowerCase())
                 form.setData('full_name', value)
+                
+                if (!value) {
+                  form.setError({
+                    full_name:
+                      'Nama lengkap tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('full_name')
+                }
               }}
+              error={form.errors.full_name}
             />
             
             <NumberInput
@@ -60,7 +71,28 @@ const Edit = (props) => {
               label="NIM"
               hideControls
               placeholder="Masukkan NIM..."
-              onChange={(value) => form.setData('student_id_number', value)}
+              onChange={(value) => {
+                form.setData('student_id_number', value)
+                
+                if (!value) {
+                  form.setError({
+                    student_id_number:
+                      'NIM tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('student_id_number')
+                }
+                
+                if (value.toString().length < 10 || value.toString().length > 10) {
+                  form.setError({
+                    student_id_number:
+                      'NIM harus 10 digit.'
+                  })
+                } else {
+                  form.clearErrors('student_id_number')
+                }
+              }}
+              error={form.errors.student_id_number}
             />
             
             <NumberInput
@@ -70,7 +102,28 @@ const Edit = (props) => {
               label="Nomor Telepon"
               hideControls
               placeholder="Masukkan nomor telepon..."
-              onChange={(value) => form.setData('phone_number', value.toString())}
+              onChange={(value) => {
+                form.setData('phone_number', value.toString())
+                
+                if (!value) {
+                  form.setError({
+                    phone_number:
+                      'Nomor telepon tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('phone_number')
+                }
+                
+                if (value.toString().length < 10 || value.toString().length > 13) {
+                  form.setError({
+                    phone_number:
+                      'Nomor telepon harus 10-13 digit.'
+                  })
+                } else {
+                  form.clearErrors('phone_number')
+                }
+              }}
+              error={form.errors.phone_number}
             />
             
             <YearPickerInput
@@ -79,7 +132,18 @@ const Edit = (props) => {
               value={new Date(form.data.academic_year)}
               label="Tahun Akademik"
               placeholder="Masukkan tahun akademik..."
-              onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
+              onChange={(value) => {
+                if (!value) {
+                  form.setError({
+                    academic_year:
+                      'Tahun akademik tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('academic_year')
+                  form.setData('academic_year', value.getFullYear().toString())
+                }
+              }}
+              error={form.errors.academic_year}
             />
             
             <TextInput
@@ -89,7 +153,19 @@ const Edit = (props) => {
               value={form.data.email}
               label="Email"
               placeholder="Masukkan email..."
-              onChange={(e) => form.setData('email', e.target.value.toLowerCase())}
+              onChange={(e) => {
+                form.setData('email', e.target.value.toLowerCase())
+                
+                if (!e.target.value) {
+                  form.setError({
+                    email:
+                      'Email tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('email')
+                }
+              }}
+              error={form.errors.email}
             />
             
             <PasswordInput
@@ -105,12 +181,27 @@ const Edit = (props) => {
             placeholder="Masukkan Dosen Pembimbing Akademik..."
             clearable
             withAsterisk
-            value={form.data.supervisor}
+            value={form.data.supervisor_id}
             searchable
             nothingFoundMessage="Tidak ada dosen pembimbing akademik"
             checkIconPosition="right"
-            data={props.lecturers.map((lecturer) => lecturer.user.full_name)}
-            onChange={(value) => form.setData('supervisor', value)}
+            data={props.lecturers.map((lecturer) => ({
+              label: lecturer.user.full_name,
+              value: lecturer.user.id
+            }))}
+            onChange={(value) => {
+              form.setData('supervisor_id', value)
+              
+              if (!value) {
+                form.setError({
+                  supervisor_id:
+                    'Dosen pembimbing akademik tidak boleh kosong.'
+                })
+              } else {
+                form.clearErrors('supervisor_id')
+              }
+            }}
+            error={form.errors.supervisor_id}
           />
           
           <Button.Group mt={32}>
@@ -130,7 +221,7 @@ const Edit = (props) => {
                 form.data.phone_number === '' ||
                 form.data.academic_year === '' ||
                 form.data.email === '' ||
-                form.data.supervisor === ''
+                form.data.supervisor_id === ''
               }
               fullWidth
               loading={form.processing}

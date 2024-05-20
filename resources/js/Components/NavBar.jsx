@@ -179,6 +179,7 @@ export const NavBar = (props) => {
         >
           {NavList.map((nav, id) => (
             <Button
+              disabled={nav.disabled}
               color="gray"
               justify="start"
               leftSection={nav.icon}
@@ -204,6 +205,7 @@ export const NavBar = (props) => {
       >
         {NavList.map((nav, id) => (
           <Button
+            disabled={nav.disabled}
             color="gray"
             leftSection={nav.icon}
             onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}

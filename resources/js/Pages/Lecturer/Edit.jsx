@@ -24,7 +24,6 @@ import {
 import { YearPickerInput } from '@mantine/dates'
 
 const Edit = (props) => {
-  console.log(props)
   const form = useForm({
     role: props.user.role,
     full_name: props.user.full_name,

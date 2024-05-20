@@ -130,7 +130,7 @@
         return to_route('lecturers.index')->with('meta', [
           'status' => true,
           'title' => 'Berhasil menghapus dosen',
-          'message' => "Dosen '{$user->nama}' berhasil dihapus!"
+          'message' => "Dosen '{$user->full_name}' berhasil dihapus!"
         ]);
       } catch (Exception $e) {
         return to_route('lecturers.index')->with('meta', [

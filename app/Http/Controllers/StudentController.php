@@ -107,7 +107,7 @@
         
         $user->student()->update([
           'academic_year' => $request->academic_year,
-          'supervisor' => $request->supervisor,
+          'supervisor_id' => $request->supervisor_id,
         ]);
         
         return to_route('students.index')->with('meta', [

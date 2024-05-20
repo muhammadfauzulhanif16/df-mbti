@@ -2,23 +2,27 @@ import React, { useState } from 'react'
 import {
   Avatar,
   Button,
-  Group,
+  Grid,
+  Select,
   Stack,
   Table,
   TextInput,
   Tooltip
 } from '@mantine/core'
-import { IconPlus, IconSearch } from '@tabler/icons-react'
+import { IconCalendar, IconPlus, IconUser } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
   const [search, setSearch] = useState('')
-  const students = props.students.filter(student =>
-    student.user.full_name.toLowerCase().includes(search.toLowerCase())
-  )
+  const [academicYear, setAcademicYear] = useState('')
+  const [supervisor, setSupervisor] = useState(props.auth.user.role === 'Dosen Pembimbing Akademik' ? props.auth.user.full_name : '')
   
-  console.log(props)
+  const students = props.students.filter(student => (
+    (!search || student.user.full_name.toLowerCase().includes(search.toLowerCase())) &&
+    (!academicYear || student.academic_year === academicYear) &&
+    (!supervisor || student.supervisor.full_name === supervisor)
+  ))
   
   const THList = ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Akademik', 'Email', 'Nomor Telepon', 'DPA', 'Aksi']
   
@@ -26,28 +30,74 @@ const Index = (props) => {
     <AppLayout title="Mahasiswa" activeNav="Mahasiswa" authed={props.auth.user}
                meta={props.meta}>
       <Stack p={16}>
-        <Group justify="space-between">
-          <Tooltip
-            disabled={!!props.lecturers.length}
-            label={!props.lecturers.length && 'Harap isi data dosen dahulu!'}>
-            <Button
-              disabled={!props.lecturers.length}
-              leftSection={<IconPlus />}
-              onClick={() => router.get(route('students.create'))}
-            >
-              Tambah Mahasiswa
-            </Button>
-          </Tooltip>
+        <Grid grow>
+          <Grid.Col span={{
+            base: 6,
+            sm: 3
+          }}>
+            <Select
+              leftSection={<IconCalendar />}
+              clearable
+              searchable
+              placeholder="Tahun Ajaran"
+              checkIconPosition="right"
+              nothingFoundMessage="Tidak ada tahun ajaran"
+              data={[...new Set(props.students.map(student => student.academic_year))]}
+              onChange={(value) => setAcademicYear(value)}
+            />
+          </Grid.Col>
           
+          <Grid.Col span={{
+            base: 6,
+            sm: 3
+          }}>
+            <Select
+              leftSection={<IconUser />}
+              clearable
+              searchable
+              value={supervisor}
+              disabled={props.auth.user.role === 'Dosen Pembimbing Akademik'}
+              nothingFoundMessage="Tidak ada dosen pembimbing"
+              checkIconPosition="right"
+              placeholder="Dosen Pembimbing"
+              data={props.lecturers.map(lecturer => lecturer.user.full_name)}
+              onChange={(value) => setSupervisor(value)}
+            />
+          </Grid.Col>
           
-          <TextInput
-            leftSection={<IconSearch />}
-            placeholder="Cari mahasiswa..."
-            value={search}
-            onChange={(event) => setSearch(event.currentTarget.value)}
+          <Grid.Col span={{
+            base: 6,
+            sm: 3
+          }}>
+            <TextInput
+              leftSection={<IconUser />}
+              placeholder="Cari mahasiswa..."
+              value={search}
+              onChange={(event) => setSearch(event.currentTarget.value)}
+            />
+          </Grid.Col>
           
-          />
-        </Group>
+          {props.auth.user.role === 'Admin' && (
+            <Grid.Col span={{
+              base: 6,
+              sm: 3
+            }}>
+              <Tooltip
+                disabled={!!props.lecturers.length}
+                label={!props.lecturers.length && 'Harap isi data dosen dahulu!'}>
+                <Button
+                  fullWidth
+                  disabled={!props.lecturers.length}
+                  leftSection={<IconPlus />}
+                  onClick={() => router.get(route('students.create'))}
+                >
+                  Tambah Mahasiswa
+                </Button>
+              </Tooltip>
+            </Grid.Col>
+          )}
+        
+        </Grid>
         
         <Table.ScrollContainer>
           <Table horizontalSpacing="xl" verticalSpacing="sm" highlightOnHover
@@ -85,12 +135,19 @@ const Index = (props) => {
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{student.supervisor.full_name}</Table.Td>
                   <Table.Td>
-                    <Button.Group>
+                    {props.auth.userle === 'Admin' ? (
+                      <Button.Group>
+                        <Button variant="outline" color="yellow"
+                                onClick={() => router.get(route('students.edit', student))}>Ubah</Button>
+                        <Button variant="outline" color="red"
+                                onClick={() => router.delete(route('students.destroy', student))}>Hapus</Button>
+                      </Button.Group>
+                    ) : (
                       <Button variant="outline" color="yellow"
-                              onClick={() => router.get(route('students.edit', student))}>Ubah</Button>
-                      <Button variant="outline" color="red"
-                              onClick={() => router.delete(route('students.destroy', student))}>Hapus</Button>
-                    </Button.Group>
+                              onClick={() => router.delete(route(''))}>Detail</Button>
+                    )}
+                  
+                  
                   </Table.Td>
                 </Table.Tr>
               ))}

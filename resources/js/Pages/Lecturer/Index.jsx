@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
-import { Avatar, Button, Group, Stack, Table, TextInput } from '@mantine/core'
-import { IconPlus, IconSearch } from '@tabler/icons-react'
+import {
+  Avatar,
+  Button,
+  SimpleGrid,
+  Stack,
+  Table,
+  TextInput,
+  Tooltip
+} from '@mantine/core'
+import { IconPlus, IconUser } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
@@ -17,22 +25,24 @@ const Index = (props) => {
     <AppLayout title="Dosen" activeNav="Dosen" authed={props.auth.user}
                meta={props.meta}>
       <Stack p={16}>
-        <Group justify="space-between">
+        <SimpleGrid cols={{
+          base: 1,
+          xs: 2
+        }} justify="space-between">
+          <TextInput
+            leftSection={<IconUser />}
+            placeholder="Cari dosen..."
+            value={search}
+            onChange={(event) => setSearch(event.currentTarget.value)}
+          />
+          
           <Button
             leftSection={<IconPlus />}
             onClick={() => router.get(route('lecturers.create'))}
           >
             Tambah Dosen
           </Button>
-          
-          <TextInput
-            leftSection={<IconSearch />}
-            placeholder="Cari dosen..."
-            value={search}
-            onChange={(event) => setSearch(event.currentTarget.value)}
-          
-          />
-        </Group>
+        </SimpleGrid>
         
         <Table.ScrollContainer>
           <Table horizontalSpacing="xl" verticalSpacing="sm" highlightOnHover
@@ -71,9 +81,13 @@ const Index = (props) => {
                       <Button variant="outline" color="yellow"
                               
                               onClick={() => router.get(route('lecturers.edit', lecturer))}>Ubah</Button>
-                      <Button variant="outline" color="red"
-                              disabled={lecturer.students.length}
-                              onClick={() => router.delete(route('lecturers.destroy', lecturer))}>Hapus</Button>
+                      <Tooltip
+                        label="Tidak bisa dihapus, karena memiliki mahasiswa bimbingan!"
+                        disabled={!lecturer.students.length}>
+                        <Button variant="outline" color="red"
+                                disabled={lecturer.students.length}
+                                onClick={() => router.delete(route('lecturers.destroy', lecturer))}>Hapus</Button>
+                      </Tooltip>
                     </Button.Group>
                   </Table.Td>
                 </Table.Tr>

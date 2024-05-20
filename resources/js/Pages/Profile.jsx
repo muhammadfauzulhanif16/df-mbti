@@ -43,7 +43,9 @@ const Profile = (props) => {
           form.post(route('profile.update', props.auth.user))
         }}>
           <Title align="center"
-                 mb={32}>Profil</Title>
+                 mb={8}>Profil</Title>
+          <Title align="center" order={3}
+                 mb={32}>({props.auth.user.role})</Title>
           
           <Dropzone
             p={0}

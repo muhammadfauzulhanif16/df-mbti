@@ -6,7 +6,7 @@ const Dashboard = (props) => {
   return (
     <AppLayout title="Beranda" activeNav="Beranda" authed={props.auth.user}
                meta={props.meta}>
-      <Center h="100vh" p={16}>
+      <Center p={16}>
         <Center bg="blue.1" w="100vw" style={{
           borderRadius: 16
         }}>

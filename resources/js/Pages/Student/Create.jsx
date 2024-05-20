@@ -193,7 +193,19 @@ const Create = (props) => {
               label: lecturer.user.full_name,
               value: lecturer.user.id
             }))}
-            onChange={(value) => form.setData('supervisor_id', value)}
+            onChange={(value) => {
+              form.setData('supervisor_id', value)
+              
+              if (!value) {
+                form.setError({
+                  supervisor_id:
+                    'Dosen pembimbing akademik tidak boleh kosong.'
+                })
+              } else {
+                form.clearErrors('supervisor_id')
+              }
+            }}
+            error={form.errors.supervisor_id}
           />
           
           <Button.Group mt={32}>
