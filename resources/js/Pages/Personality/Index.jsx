@@ -13,7 +13,7 @@ const Index = (props) => {
   const THList = ['#', 'Nama Tipe Kepribadian', 'Deskripsi', 'Saran Pekerjaan', 'Aksi']
   
   return (
-    <AppLayout title="Jawaban" activeNav="Jawaban"
+    <AppLayout title="Kepribadian" activeNav="Kepribadian"
                authed={props.auth.user} meta={props.meta}>
       <Stack p={16}>
         <SimpleGrid cols={{
