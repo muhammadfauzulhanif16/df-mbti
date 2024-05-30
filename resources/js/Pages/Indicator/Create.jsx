@@ -1,12 +1,11 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import { Button, Center, Select, TextInput, Title } from '@mantine/core'
+import { Button, Center, TextInput, Title } from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Create = (props) => {
   const form = useForm({
-    basic_trait_id: '',
     name: ''
   })
   
@@ -19,22 +18,6 @@ const Create = (props) => {
           form.post(route('indicators.store'))
         }}>
           <Title align="center" mb={32}>Tambah Data Soal</Title>
-          
-          <Select
-            label="Kategori Soal"
-            placeholder="Masukkan kategori soal..."
-            clearable
-            mb={16}
-            withAsterisk
-            searchable
-            nothingFoundMessage="Tidak ada kategori soal..."
-            checkIconPosition="right"
-            data={props.basic_traits.map((basic_trait) => ({
-              value: basic_trait.id,
-              label: basic_trait.name
-            }))}
-            onChange={(value) => form.setData('basic_trait_id', value)}
-          />
           
           <TextInput
             withAsterisk
@@ -62,7 +45,7 @@ const Create = (props) => {
               loading={form.processing}
               type="submit"
             >
-              Tambah
+              Simpan
             </Button>
           </Button.Group>
         </form>

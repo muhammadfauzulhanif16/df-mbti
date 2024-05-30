@@ -10,7 +10,6 @@
   use Illuminate\Support\Facades\Route;
   use Inertia\Inertia;
   
-  
   Route::fallback(fn() => to_route(auth()->check() ? 'dashboard' : 'login'));
   
   Route::middleware(['auth', 'verified'])->group(function () {
@@ -52,6 +51,10 @@
       
       Route::get('{indicator}/statements', [StatementController::class, 'index'])->name('statements.index');
       Route::get('{indicator}/statements/create', [StatementController::class, 'create'])->name('statements.create');
+      Route::post('{indicator}/statements', [StatementController::class, 'store'])->name('statements.store');
+      Route::get('{indicator}/statements/{statement}/edit', [StatementController::class, 'edit'])->name('statements.edit');
+      Route::put('{indicator}/statements/{statement}', [StatementController::class, 'update'])->name('statements.update');
+      Route::delete('{indicator}/statements/{statement}', [StatementController::class, 'destroy'])->name('statements.destroy');
     });
     
     Route::group(['prefix' => 'choices'], function () {

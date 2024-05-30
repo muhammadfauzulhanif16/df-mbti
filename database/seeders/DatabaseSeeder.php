@@ -19,7 +19,12 @@
         'full_name' => 'Admin',
         'role' => 'Admin',
         'email' => 'admin@mbti.id',
-        'password' => Hash::make('admin'),
+        'password' => Hash::make('admin@mbti.id'),
+      ]);
+      
+      $this->call([
+        LecturerSeeder::class,
+        StudentSeeder::class,
       ]);
     }
   }

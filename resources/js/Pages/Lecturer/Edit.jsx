@@ -138,7 +138,7 @@ const Edit = (props) => {
               loading={form.processing}
               type="submit"
             >
-              Ubah
+              Simpan
             </Button>
           </Button.Group>
         </form>

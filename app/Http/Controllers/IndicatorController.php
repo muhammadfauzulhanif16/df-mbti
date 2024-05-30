@@ -4,6 +4,7 @@
   
   use App\Models\BasicTrait;
   use App\Models\Indicator;
+  use Exception;
   use Illuminate\Http\Request;
   use Inertia\Inertia;
   
@@ -28,7 +29,6 @@
     {
       try {
         Indicator::create([
-          'basic_trait_id' => $request->basic_trait_id,
           'name' => $request->name
         ]);
         

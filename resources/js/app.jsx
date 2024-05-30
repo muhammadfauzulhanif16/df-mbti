@@ -46,7 +46,8 @@ createInertiaApp({
               '#f3f3f3'
             ]
           }
-        }}>
+        }}
+      >
         <Notifications position="top-center" />
         
         <App {...props} />

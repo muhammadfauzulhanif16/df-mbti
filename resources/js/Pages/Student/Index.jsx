@@ -42,7 +42,7 @@ const Index = (props) => {
               placeholder="Tahun Ajaran"
               checkIconPosition="right"
               nothingFoundMessage="Tidak ada tahun ajaran"
-              data={[...new Set(props.students.map(student => student.academic_year))]}
+              data={[...new Set(props.students.map(student => student.academic_year))].sort()}
               onChange={(value) => setAcademicYear(value)}
             />
           </Grid.Col>

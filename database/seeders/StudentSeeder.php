@@ -2,6 +2,7 @@
   
   namespace Database\Seeders;
   
+  use App\Models\Lecturer;
   use App\Models\Student;
   use App\Models\User;
   use Illuminate\Database\Seeder;
@@ -13,18 +14,15 @@
      */
     public function run(): void
     {
-      $mahasiswa = User::create([
-        'nama' => 'Mahasiswa',
-        'peran' => 'Mahasiswa',
-        'email' => 'mahasiswa@mbti.id',
-        'password' => bcrypt('mahasiswa'),
-      ]);
+      $role = 'Mahasiswa';
       
-      Student::create([
-        'user_id' => $mahasiswa->id,
-        'nim' => '0123456789',
-        'tahun_ajaran' => '2020',
-//        'dpa_id' => '-',
-      ]);
+      User::factory(16)->create()->each(function ($user) use ($role) {
+        $user->role = $role;
+        $user->save();
+        Student::factory()->create([
+          'user_id' => $user->id,
+          'supervisor_id' => Lecturer::with('user')->inRandomOrder()->first()->user->id
+        ]);
+      });
     }
   }

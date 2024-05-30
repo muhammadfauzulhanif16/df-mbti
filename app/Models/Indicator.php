@@ -12,7 +12,6 @@
     use HasFactory, HasUuids;
     
     protected $fillable = [
-      'basic_trait_id',
       'name',
     ];
     

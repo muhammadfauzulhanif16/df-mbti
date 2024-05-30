@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Button, Group, Stack, Table, TextInput } from '@mantine/core'
-import { IconPlus, IconSearch } from '@tabler/icons-react'
+import { Button, SimpleGrid, Stack, Table, TextInput } from '@mantine/core'
+import { IconPlus, IconUser } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
@@ -17,21 +17,24 @@ const Index = (props) => {
     <AppLayout title="Kategori Soal" activeNav="Kategori Soal"
                authed={props.auth.user} meta={props.meta}>
       <Stack p={16}>
-        <Group justify="space-between">
+        <SimpleGrid cols={{
+          base: 1,
+          xs: 2
+        }} justify="space-between">
+          <TextInput
+            leftSection={<IconUser />}
+            placeholder="Cari kategori soal..."
+            value={search}
+            onChange={(event) => setSearch(event.currentTarget.value)}
+          />
+          
           <Button
             leftSection={<IconPlus />}
             onClick={() => router.get(route('basic-traits.create'))}
           >
             Tambah Kategori Soal
           </Button>
-          
-          <TextInput
-            leftSection={<IconSearch />}
-            placeholder="Cari kategori soal..."
-            value={search}
-            onChange={(event) => setSearch(event.currentTarget.value)}
-          />
-        </Group>
+        </SimpleGrid>
         
         <Table.ScrollContainer>
           <Table horizontalSpacing="xl" verticalSpacing="sm" highlightOnHover

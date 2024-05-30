@@ -1,14 +1,15 @@
 <?php
-
-namespace Database\Factories;
-
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
- */
-class StudentFactory extends Factory
-{
+  
+  namespace Database\Factories;
+  
+  use App\Models\Student;
+  use Illuminate\Database\Eloquent\Factories\Factory;
+  
+  /**
+   * @extends Factory<Student>
+   */
+  class StudentFactory extends Factory
+  {
     /**
      * Define the model's default state.
      *
@@ -16,8 +17,8 @@ class StudentFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            //
-        ];
+      return [
+        'academic_year' => $this->faker->date('Y')
+      ];
     }
-}
+  }

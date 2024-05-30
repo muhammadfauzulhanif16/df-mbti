@@ -231,7 +231,7 @@ const Create = (props) => {
               loading={form.processing}
               type="submit"
             >
-              Tambah
+              Simpan
             </Button>
           </Button.Group>
         </form>

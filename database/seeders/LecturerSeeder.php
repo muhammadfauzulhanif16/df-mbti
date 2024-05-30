@@ -13,17 +13,12 @@
      */
     public function run(): void
     {
-      $dosen = User::create([
-        'nama' => 'Dosen',
-        'peran' => 'Dosen',
-        'email' => 'dosen@mbti.id',
-        'password' => bcrypt('dosen'),
-      ]);
+      $roles = ['Ketua Program Studi', 'Dosen Pembimbing Akademik'];
       
-      Lecturer::create([
-        'user_id' => $dosen->id,
-        'nidn' => '1234567890',
-        'tahun_ajaran' => '2020',
-      ]);
+      User::factory(16)->create()->each(function ($user) use ($roles) {
+        $user->role = fake()->randomElement($roles);
+        $user->save();
+        Lecturer::factory()->create(['user_id' => $user->id]);
+      });
     }
   }

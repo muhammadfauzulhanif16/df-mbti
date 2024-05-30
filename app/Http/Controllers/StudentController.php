@@ -5,6 +5,7 @@
   use App\Models\Lecturer;
   use App\Models\Student;
   use App\Models\User;
+  use Exception;
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Hash;
   use Inertia\Inertia;

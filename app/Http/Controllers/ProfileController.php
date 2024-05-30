@@ -2,6 +2,7 @@
   
   namespace App\Http\Controllers;
   
+  use App\Models\Lecturer;
   use App\Models\User;
   use Illuminate\Http\Request;
   use Inertia\Inertia;
@@ -21,6 +22,7 @@
       return Inertia::render('Profile', [
         'meta' => session('meta'),
         'user' => $user,
+        'lecturers' => Lecturer::with('user')->get()
       ]);
     }
     

@@ -7,6 +7,7 @@ import {
   Grid,
   NumberInput,
   PasswordInput,
+  Select,
   TextInput,
   Title
 } from '@mantine/core'
@@ -31,9 +32,10 @@ const Profile = (props) => {
     phone_number: props.auth.user.phone_number,
     academic_year: props.auth.user.role === 'Admin' ? null : props.auth.user.role === 'Mahasiswa' ? props.auth.user.student.academic_year : props.auth.user.lecturer.academic_year,
     email: props.auth.user.email,
-    password: ''
+    password: '',
+    supervisor_id: props.auth.user.student?.supervisor_id
   })
-  
+  console.log(props)
   return (
     <AppLayout title="Profil" activeNav="Profil"
                authed={props.auth.user} meta={props.meta}>
@@ -139,6 +141,23 @@ const Profile = (props) => {
                 onChange={(e) => form.setData('password', e.target.value)}
               />
             </Grid.Col>
+            
+            {form.data.supervisor_id && (
+              <Grid.Col>
+                <Select
+                  disabled
+                  label="Dosen Pembimbing Akademik"
+                  value={form.data.supervisor_id}
+                  searchable
+                  checkIconPosition="right"
+                  data={props.lecturers.map((lecturer) => ({
+                    label: lecturer.user.full_name,
+                    value: lecturer.user.id
+                  }))}
+                />
+              </Grid.Col>
+            )}
+          
           </Grid>
           
           <Button

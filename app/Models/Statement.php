@@ -10,5 +10,11 @@
   {
     use HasFactory, HasUuids;
     
-    protected $fillable = ['name'];
+    protected $fillable = ['name',
+      'indicator_id', 'basic_trait_id'];
+    
+    public function basicTrait()
+    {
+      return $this->belongsTo(BasicTrait::class);
+    }
   }

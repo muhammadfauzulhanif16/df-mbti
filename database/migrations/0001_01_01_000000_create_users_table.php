@@ -16,7 +16,7 @@
         $table->char('id_number', 10)->unique()->nullable();
         $table->string('avatar')->unique()->nullable();
         $table->string('phone_number')->unique()->nullable();
-        $table->string('role');
+        $table->string('role')->nullable();
         $table->string('email')->unique();
         $table->string('password');
         $table->timestamps();
