@@ -4,6 +4,7 @@
   use App\Http\Controllers\ChoiceController;
   use App\Http\Controllers\IndicatorController;
   use App\Http\Controllers\LecturerController;
+  use App\Http\Controllers\PersonalityController;
   use App\Http\Controllers\ProfileController;
   use App\Http\Controllers\StatementController;
   use App\Http\Controllers\StudentController;
@@ -75,9 +76,15 @@
       Route::delete('{basicTrait}', [BasicTraitController::class, 'destroy'])->name('basic-traits.destroy');
     });
     
-    Route::get('/personality', function () {
-      return Inertia::render('Personality/index');
-    })->name('personality');
+    Route::group(['prefix' => 'personalities'], function () {
+      Route::get('', [PersonalityController::class, 'index'])->name('personalities.index');
+      Route::get('create', [PersonalityController::class, 'create'])->name('personalities.create');
+      Route::post('', [PersonalityController::class, 'store'])->name('personalities.store');
+      Route::get('{personality}/edit', [PersonalityController::class, 'edit'])->name('personalities.edit');
+      Route::put('{personality}', [PersonalityController::class, 'update'])->name('personalities.update');
+      Route::delete('{personality}', [PersonalityController::class, 'destroy'])->name('personalities.destroy');
+    });
+    
     
     Route::get('/guide', function () {
       return Inertia::render('Guide/index');

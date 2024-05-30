@@ -1,27 +1,19 @@
 import React, { useState } from 'react'
-import {
-  Button,
-  Group,
-  SimpleGrid,
-  Stack,
-  Table,
-  TextInput
-} from '@mantine/core'
+import { Button, SimpleGrid, Stack, Table, TextInput } from '@mantine/core'
 import { IconPlus, IconUser } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
   const [search, setSearch] = useState('')
-  console.log(props)
-  const indicators = props.indicators.filter(indicator =>
-    indicator.name.toLowerCase().includes(search.toLowerCase())
+  const personalities = props.personalities.filter(personality =>
+    personality.name.toLowerCase().includes(search.toLowerCase())
   )
   
-  const THList = ['#', 'Soal', 'Aksi']
+  const THList = ['#', 'Nama Tipe Kepribadian', 'Deskripsi', 'Saran Pekerjaan', 'Aksi']
   
   return (
-    <AppLayout title="Soal" activeNav="Soal"
+    <AppLayout title="Jawaban" activeNav="Jawaban"
                authed={props.auth.user} meta={props.meta}>
       <Stack p={16}>
         <SimpleGrid cols={{
@@ -30,16 +22,16 @@ const Index = (props) => {
         }} justify="space-between">
           <TextInput
             leftSection={<IconUser />}
-            placeholder="Cari soal..."
+            placeholder="Cari tipe kepribadian..."
             value={search}
             onChange={(event) => setSearch(event.currentTarget.value)}
           />
           
           <Button
             leftSection={<IconPlus />}
-            onClick={() => router.get(route('indicators.create'))}
+            onClick={() => router.get(route('personalities.create'))}
           >
-            Tambah Soal
+            Tambah Tipe Kepribadian
           </Button>
         </SimpleGrid>
         
@@ -56,24 +48,22 @@ const Index = (props) => {
             </Table.Thead>
             
             <Table.Tbody>
-              {indicators.map((indicator, id) => (
+              {personalities.map((personality, id) => (
                 <Table.Tr key={id}>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{indicator.name}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>{personality.name}</Table.Td>
+                  <Table.Td
+                    style={{ whiteSpace: 'nowrap' }}>{personality.description}</Table.Td>
+                  <Table.Td
+                    style={{ whiteSpace: 'nowrap' }}>{personality.job}</Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
-                    <Group>
-                      <Button variant="outline" color="blue"
-                              onClick={() => router.get(route('statements.create', indicator))}>
-                        Tambah Konten Pertanyaan</Button>
-                      <Button variant="outline" color="green"
-                              onClick={() => router.get(route('statements.index', indicator))}>
-                        Lihat Konten Pertanyaan</Button>
+                    <Button.Group>
                       <Button variant="outline" color="yellow"
-                              onClick={() => router.get(route('indicators.edit', indicator))}>Ubah</Button>
+                              onClick={() => router.get(route('personalities.edit', personality))}>Ubah</Button>
                       <Button variant="outline" color="red"
-                              onClick={() => router.delete(route('indicators.destroy', indicator))}>Hapus</Button>
-                    </Group>
+                              onClick={() => router.delete(route('personalities.destroy', personality))}>Hapus</Button>
+                    </Button.Group>
                   </Table.Td>
                 </Table.Tr>
               ))}

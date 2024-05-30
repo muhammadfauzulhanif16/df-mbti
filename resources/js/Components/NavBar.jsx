@@ -52,7 +52,7 @@ export const NavBar = (props) => {
     {
       icon: <IconArticle />,
       label: 'Kepribadian',
-      route: 'personality.index'
+      route: 'personalities.index'
     },
     {
       icon: <IconInfoCircle />,
