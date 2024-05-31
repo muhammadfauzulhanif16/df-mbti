@@ -21,10 +21,10 @@
         'email' => 'admin@mbti.id',
         'password' => Hash::make('admin@mbti.id'),
       ]);
-      
-      $this->call([
-        LecturerSeeder::class,
-        StudentSeeder::class,
-      ]);
+//      
+//      $this->call([
+//        LecturerSeeder::class,
+//        StudentSeeder::class,
+//      ]);
     }
   }

@@ -3,6 +3,8 @@ import { useForm } from '@inertiajs/react'
 import {
   Button,
   Center,
+  Divider,
+  FileButton,
   Group,
   NumberInput,
   PasswordInput,
@@ -22,9 +24,11 @@ import {
   IconUser
 } from '@tabler/icons-react'
 import { YearPickerInput } from '@mantine/dates'
+import { MS_EXCEL_MIME_TYPE } from '@mantine/dropzone'
 
 const Create = (props) => {
   const form = useForm({
+    file: null,
     role: '',
     full_name: '',
     national_lecturer_id_number: '',
@@ -33,7 +37,7 @@ const Create = (props) => {
     email: '',
     password: ''
   })
-  
+  console.log(form.data)
   useEffect(() => {
     if (form.data.national_lecturer_id_number) {
       form.setData('password', form.data.national_lecturer_id_number)
@@ -49,6 +53,15 @@ const Create = (props) => {
           form.post(route('lecturers.store'))
         }}>
           <Title align="center" mb={32}>Tambah Data Dosen</Title>
+          
+          <FileButton variant="light" color="green" w="100%"
+                      onChange={(file) => form.setData('file', file)}
+                      accept={MS_EXCEL_MIME_TYPE}>
+            {(props) =>
+              <Button {...props}>{form.data.file ? form.data.file.name : 'Pilih file excel'}</Button>}
+          </FileButton>
+          
+          <Divider my={16} label="Atau" labelPosition="center" />
           
           <Radio.Group
             mb={16}
@@ -219,10 +232,6 @@ const Create = (props) => {
               Batal
             </Button>
             <Button
-              disabled={
-                form.data.role === '' || form.data.full_name === '' || form.data.national_lecturer_id_number === '' ||
-                form.data.phone_number === '' || form.data.academic_year === '' || form.data.email === ''
-              }
               fullWidth
               loading={form.processing}
               type="submit"

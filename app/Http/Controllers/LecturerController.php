@@ -2,6 +2,7 @@
   
   namespace App\Http\Controllers;
   
+  use App\Imports\LecturersImport;
   use App\Models\Lecturer;
   use App\Models\Student;
   use App\Models\User;
@@ -9,6 +10,7 @@
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Hash;
   use Inertia\Inertia;
+  use Maatwebsite\Excel\Facades\Excel;
   
   class LecturerController extends Controller
   {
@@ -32,25 +34,35 @@
     public function store(Request $request)
     {
       try {
-        $user = User::create([
-          'full_name' => $request->full_name,
-          'id_number' => $request->national_lecturer_id_number,
-          'phone_number' => "0$request->phone_number",
-          'role' => $request->role,
-          'email' => $request->email,
-          'password' => Hash::make($request->password),
-        ]);
-        
-        $user->lecturer()->create([
-          'user_id' => $user->id,
-          'academic_year' => $request->academic_year,
-        ]);
-        
-        return to_route('lecturers.index')->with('meta', [
-          'status' => true,
-          'title' => 'Berhasil menambahkan dosen',
-          'message' => "Dosen '{$request->full_name}' berhasil ditambahkan!"
-        ]);
+        if ($request->hasFile('file')) {
+          Excel::import(new LecturersImport, $request->file('file'));
+          
+          return to_route('lecturers.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan dosen',
+            'message' => "Dosen berhasil ditambahkan!"
+          ]);
+        } else {
+          $user = User::create([
+            'full_name' => $request->full_name,
+            'id_number' => $request->national_lecturer_id_number,
+            'phone_number' => "0$request->phone_number",
+            'role' => $request->role,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+          ]);
+          
+          $user->lecturer()->create([
+            'user_id' => $user->id,
+            'academic_year' => $request->academic_year,
+          ]);
+          
+          return to_route('lecturers.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan dosen',
+            'message' => "Dosen '{$request->full_name}' berhasil ditambahkan!"
+          ]);
+        }
       } catch (Exception $e) {
         return to_route('lecturers.index')->with('meta', [
           'status' => false,
