@@ -2,12 +2,14 @@
   
   use App\Http\Controllers\BasicTraitController;
   use App\Http\Controllers\ChoiceController;
+  use App\Http\Controllers\GuideController;
   use App\Http\Controllers\IndicatorController;
   use App\Http\Controllers\LecturerController;
   use App\Http\Controllers\PersonalityController;
   use App\Http\Controllers\ProfileController;
   use App\Http\Controllers\StatementController;
   use App\Http\Controllers\StudentController;
+  use App\Http\Controllers\TestController;
   use Illuminate\Support\Facades\Route;
   use Inertia\Inertia;
   
@@ -85,6 +87,23 @@
       Route::delete('{personality}', [PersonalityController::class, 'destroy'])->name('personalities.destroy');
     });
     
+    Route::group(['prefix' => 'guides'], function () {
+      Route::get('', [GuideController::class, 'index'])->name('guides.index');
+      Route::get('create', [GuideController::class, 'create'])->name('guides.create');
+      Route::post('', [GuideController::class, 'store'])->name('guides.store');
+      Route::get('{guide}/edit', [GuideController::class, 'edit'])->name('guides.edit');
+      Route::put('{guide}', [GuideController::class, 'update'])->name('guides.update');
+      Route::delete('{guide}', [GuideController::class, 'destroy'])->name('guides.destroy');
+    });
+    
+    Route::group(['prefix' => 'tests'], function () {
+      Route::get('', [TestController::class, 'index'])->name('tests.index');
+      Route::get('create', [TestController::class, 'create'])->name('tests.create');
+      Route::post('', [TestController::class, 'store'])->name('tests.store');
+      Route::get('{test}/edit', [TestController::class, 'edit'])->name('tests.edit');
+      Route::put('{test}', [TestController::class, 'update'])->name('tests.update');
+      Route::delete('{test}', [TestController::class, 'destroy'])->name('tests.destroy');
+    });
     
     Route::get('/guide', function () {
       return Inertia::render('Guide/index');

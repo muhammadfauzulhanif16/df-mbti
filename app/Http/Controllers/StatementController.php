@@ -18,7 +18,7 @@
     {
       return Inertia::render('Statement/Index', [
         'indicator' => $indicator,
-        'statements' => Statement::with('basicTrait')->get(),
+        'statements' => Statement::with('basicTrait')->where('indicator_id', $indicator->id)->get(),
         'meta' => session('meta'),
       ]);
     }
@@ -28,7 +28,6 @@
      */
     public function store(Request $request)
     {
-//      dd($request->all());
       try {
         Statement::create([
           'name' => $request->name,
@@ -59,7 +58,7 @@
     {
       return Inertia::render('Statement/Create', [
         'basic_traits' => BasicTrait::all(),
-        'indicator' => $indicator::with('basicTrait')->first(),
+        'indicator' => $indicator,
       ]);
     }
     

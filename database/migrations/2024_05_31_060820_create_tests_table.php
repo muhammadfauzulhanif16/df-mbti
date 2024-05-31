@@ -10,10 +10,11 @@
      */
     public function up(): void
     {
-      Schema::create('guides', function (Blueprint $table) {
+      Schema::create('tests', function (Blueprint $table) {
         $table->uuid('id')->primary();
-        $table->string('personality');
-        $table->string('development');
+        $table->foreignUuid('user_id')->constrained();
+        $table->foreignUuid('statement_id')->constrained();
+        $table->foreignUuid('choice_id')->constrained();
         $table->timestamps();
       });
     }
@@ -23,6 +24,6 @@
      */
     public function down(): void
     {
-      Schema::dropIfExists('guides');
+      Schema::dropIfExists('tests');
     }
   };

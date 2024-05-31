@@ -57,7 +57,7 @@ export const NavBar = (props) => {
     {
       icon: <IconInfoCircle />,
       label: 'Panduan',
-      route: 'guide.index'
+      route: 'guides.index'
     },
     {
       icon: <IconUser />,
@@ -84,7 +84,7 @@ export const NavBar = (props) => {
       {
         icon: <IconUser />,
         label: 'Tes MBTI',
-        route: ''
+        route: 'tests.index'
       },
       {
         icon: <IconUser />,

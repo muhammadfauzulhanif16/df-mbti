@@ -29,7 +29,7 @@ const Create = (props) => {
             onChange={(e) => form.setData('name', e.target.value)}
           />
           
-          <TextInput
+          <Textarea
             withAsterisk
             label="Deskripsi"
             placeholder="Masukkan Deskripsi..."

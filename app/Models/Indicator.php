@@ -29,4 +29,9 @@
     {
       return $this->belongsTo(BasicTrait::class);
     }
+    
+    public function statements()
+    {
+      return $this->hasMany(Statement::class);
+    }
   }
