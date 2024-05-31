@@ -2,6 +2,7 @@
   
   namespace App\Http\Controllers;
   
+  use App\Imports\StudentsImport;
   use App\Models\Lecturer;
   use App\Models\Student;
   use App\Models\User;
@@ -9,6 +10,7 @@
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Hash;
   use Inertia\Inertia;
+  use Maatwebsite\Excel\Facades\Excel;
   
   class StudentController extends Controller
   {
@@ -33,26 +35,36 @@
     public function store(Request $request)
     {
       try {
-        $user = User::create([
-          'full_name' => $request->full_name,
-          'id_number' => $request->student_id_number,
-          'phone_number' => "0$request->phone_number",
-          'role' => 'Mahasiswa',
-          'email' => $request->email,
-          'password' => Hash::make($request->password),
-        ]);
-        
-        $user->student()->create([
-          'user_id' => $user->id,
-          'academic_year' => $request->academic_year,
-          'supervisor_id' => $request->supervisor_id,
-        ]);
-        
-        return to_route('students.index')->with('meta', [
-          'status' => true,
-          'title' => 'Berhasil menambahkan mahasiswa',
-          'message' => "Mahasiswa '{$request->full_name}' berhasil ditambahkan!"
-        ]);
+        if ($request->hasFile('file')) {
+          Excel::import(new StudentsImport, $request->file('file'));
+          
+          return to_route('students.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan mahasiswa',
+            'message' => 'Mahasiswa berhasil ditambahkan!'
+          ]);
+        } else {
+          $user = User::create([
+            'full_name' => $request->full_name,
+            'id_number' => $request->student_id_number,
+            'phone_number' => "0$request->phone_number",
+            'role' => 'Mahasiswa',
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+          ]);
+          
+          $user->student()->create([
+            'user_id' => $user->id,
+            'academic_year' => $request->academic_year,
+            'supervisor_id' => $request->supervisor_id,
+          ]);
+          
+          return to_route('students.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan mahasiswa',
+            'message' => "Mahasiswa '{$request->full_name}' berhasil ditambahkan!"
+          ]);
+        }
       } catch (Exception $e) {
         return to_route('students.index')->with('meta', [
           'status' => false,

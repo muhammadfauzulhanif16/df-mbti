@@ -3,6 +3,8 @@ import { useForm } from '@inertiajs/react'
 import {
   Button,
   Center,
+  Divider,
+  FileButton,
   NumberInput,
   PasswordInput,
   Select,
@@ -23,6 +25,7 @@ import { YearPickerInput } from '@mantine/dates'
 
 const Create = (props) => {
   const form = useForm({
+    file: null,
     full_name: '',
     student_id_number: '',
     phone_number: '',
@@ -48,6 +51,15 @@ const Create = (props) => {
           form.post(route('students.store'))
         }}>
           <Title align="center" mb={32}>Tambah Data Mahasiswa</Title>
+          
+          <FileButton variant="light" color="green" w="100%"
+                      onChange={(file) => form.setData('file', file)}
+                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            {(props) =>
+              <Button {...props}>{form.data.file ? form.data.file.name : 'Pilih file excel'}</Button>}
+          </FileButton>
+          
+          <Divider my={16} label="Atau" labelPosition="center" />
           
           <SimpleGrid cols={2} my={16}>
             <TextInput
@@ -219,14 +231,6 @@ const Create = (props) => {
               Batal
             </Button>
             <Button
-              disabled={
-                form.data.full_name === '' ||
-                form.data.student_id_number === '' ||
-                form.data.phone_number === '' ||
-                form.data.academic_year === '' ||
-                form.data.email === '' ||
-                form.data.supervisor === ''
-              }
               fullWidth
               loading={form.processing}
               type="submit"

@@ -24,7 +24,6 @@ import {
   IconUser
 } from '@tabler/icons-react'
 import { YearPickerInput } from '@mantine/dates'
-import { MS_EXCEL_MIME_TYPE } from '@mantine/dropzone'
 
 const Create = (props) => {
   const form = useForm({
@@ -56,7 +55,7 @@ const Create = (props) => {
           
           <FileButton variant="light" color="green" w="100%"
                       onChange={(file) => form.setData('file', file)}
-                      accept={MS_EXCEL_MIME_TYPE}>
+                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
             {(props) =>
               <Button {...props}>{form.data.file ? form.data.file.name : 'Pilih file excel'}</Button>}
           </FileButton>
