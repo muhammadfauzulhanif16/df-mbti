@@ -41,6 +41,8 @@
         "@mantine/tiptap": "^7.9.1",
         "@tabler/icons-react": "^3.3.0",
         "@tiptap/extension-link": "^2.3.2",
+        "@tiptap/extension-placeholder": "^2.4.0",
+        "@tiptap/extension-subscript": "^2.4.0",
         "@tiptap/react": "^2.3.2",
         "@tiptap/starter-kit": "^2.3.2",
         "dayjs": "^1.11.11",

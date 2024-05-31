@@ -2,3 +2,7 @@
   font-family: 'Outfit, sans-serif';
   src: url(/fonts/Outfit/static/Outfit-Regular.ttf); /* IE9 Compat Modes */
 }
+
+.ProseMirror-focused {
+  outline: none;
+}

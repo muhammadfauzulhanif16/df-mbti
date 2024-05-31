@@ -1,15 +1,18 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import { Button, Center, Textarea, TextInput, Title } from '@mantine/core'
+import { Button, Center, Text, TextInput, Title } from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
+import { RichTextEditor } from '@mantine/tiptap'
+import { useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import Placeholder from '@tiptap/extension-placeholder'
 
 const Create = (props) => {
   const form = useForm({
     personality: '',
     development: ''
   })
-  
   return (
     <AppLayout title="Tambah Panduan" activeNav="Panduan"
                authed={props.auth.user} meta={props.meta}>
@@ -21,18 +24,30 @@ const Create = (props) => {
           <Title align="center" mb={32}>Masukan Saran Pengembangan</Title>
           
           <TextInput
+            mb={16}
             withAsterisk
             label="Tipe Kepribadian"
             placeholder="Masukkan tipe kepribadian..."
             onChange={(e) => form.setData('personality', e.target.value)}
           />
           
-          <Textarea
-            withAsterisk
-            label="Saran Pengembangan"
-            placeholder="Masukkan saran pengembangan..."
-            onChange={(e) => form.setData('development', e.target.value)}
-          />
+          <Text fz={14}>Saran Pengembangan</Text>
+          <RichTextEditor
+            styles={{
+              content: {
+                border: '1px solid #dcdcdc'
+              }
+            }}
+            editor={useEditor({
+              extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
+              content: form.data.development,
+              onUpdate: ({ editor }) => {
+                form.setData('development', editor.getHTML())
+              }
+            })}>
+            <RichTextEditor.Content
+            />
+          </RichTextEditor>
           
           <Button.Group mt={32}>
             <Button

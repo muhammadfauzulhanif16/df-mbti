@@ -54,9 +54,17 @@ const Index = (props) => {
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{personality.name}</Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{personality.description}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: personality.description }}
+                    />
+                  </Table.Td>
                   <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{personality.job}</Table.Td>
+                    style={{ whiteSpace: 'nowrap' }}>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: personality.job }}
+                    />
+                  </Table.Td>
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>
                     <Button.Group>
                       <Button variant="outline" color="yellow"

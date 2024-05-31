@@ -23,8 +23,6 @@ createInertiaApp({
       <MantineProvider
         theme={{
           autoContrast: true,
-          white: '#f3f3f3',
-          black: '#0c0c0c',
           fontFamily: 'Outfit, sans-serif',
           colors: {
             // primary: virtualColor({

@@ -13,7 +13,7 @@
       Schema::create('guides', function (Blueprint $table) {
         $table->uuid('id')->primary();
         $table->string('personality');
-        $table->string('development');
+        $table->text('development');
         $table->timestamps();
       });
     }
