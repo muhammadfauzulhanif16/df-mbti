@@ -24,7 +24,7 @@ const Index = (props) => {
     (!supervisor || student.supervisor.full_name === supervisor)
   ))
   
-  const THList = ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Akademik', 'Email', 'Nomor Telepon', 'DPA', 'Aksi']
+  const THList = ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Ajaran', 'Email', 'Nomor Telepon', 'DPA', 'Aksi']
   
   return (
     <AppLayout title="Mahasiswa" activeNav="Mahasiswa" authed={props.auth.user}

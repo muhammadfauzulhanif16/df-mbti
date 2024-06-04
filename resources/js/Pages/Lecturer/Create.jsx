@@ -173,13 +173,13 @@ const Create = (props) => {
               leftSection={<IconCalendar />}
               withAsterisk
               clearable
-              label="Tahun Akademik"
-              placeholder="Masukkan tahun akademik..."
+              label="Tahun Ajaran"
+              placeholder="Masukkan tahun ajaran..."
               onChange={(value) => {
                 if (!value) {
                   form.setError({
                     academic_year:
-                      'Tahun akademik tidak boleh kosong.'
+                      'Tahun ajaran tidak boleh kosong.'
                   })
                 } else {
                   form.clearErrors('academic_year')

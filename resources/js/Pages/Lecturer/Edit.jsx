@@ -95,8 +95,8 @@ const Edit = (props) => {
               leftSection={<IconCalendar />}
               withAsterisk
               value={new Date(form.data.academic_year)}
-              label="Tahun Akademik"
-              placeholder="Masukkan tahun akademik..."
+              label="Tahun Ajaran"
+              placeholder="Masukkan tahun ajaran..."
               onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
             />
             
