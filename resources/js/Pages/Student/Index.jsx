@@ -135,7 +135,7 @@ const Index = (props) => {
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{student.supervisor.full_name}</Table.Td>
                   <Table.Td>
-                    {props.auth.userle === 'Admin' ? (
+                    {props.auth.user.role === 'Admin' ? (
                       <Button.Group>
                         <Button variant="outline" color="yellow"
                                 onClick={() => router.get(route('students.edit', student))}>Ubah</Button>
