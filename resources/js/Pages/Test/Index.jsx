@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -37,13 +37,13 @@ const Index = (props) => {
   // console.log('activeStatements', props.indicators[activeIndicator].sessions[activeStatements])
   // console.log('activeStatements', props.totalSessions)
   
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setTimer((prevTimer) => prevTimer + 1)
-  //   }, 1000)
-  //
-  //   return () => clearInterval(interval)
-  // }, [isTestStarted, timer])
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prevTimer) => prevTimer + 1)
+    }, 1000)
+    
+    return () => clearInterval(interval)
+  }, [isTestStarted, timer])
   
   const formatTime = (timeInSeconds) => {
     const hours = Math.floor(timeInSeconds / 3600)
@@ -65,6 +65,7 @@ const Index = (props) => {
   ))
   
   const form = useForm({
+    time: timer,
     tests
   })
   
@@ -115,11 +116,6 @@ const Index = (props) => {
       {
         isTestStarted && (
           <Box px={16}>
-            <Group justify="space-between" my={32}>
-              {/*<p>Waktu: {formatTime(timer)}</p>*/}
-              <Button color="red" onClick={openFinishModal}>Selesai</Button>
-            </Group>
-            
             <Progress.Root radius="xl" size="xl">
               <Tooltip label={`${
                 100 / props.totalSessions * sessionProgress
@@ -133,6 +129,11 @@ const Index = (props) => {
                 </Progress.Section>
               </Tooltip>
             </Progress.Root>
+            
+            <Group justify="space-between" my={32}>
+              <p>Waktu: {formatTime(timer)}</p>
+            </Group>
+            
             
             <Box>
               <Title mt={16} align="center">
@@ -178,22 +179,34 @@ const Index = (props) => {
                   }
                 }
                         disabled={sessionProgress === 0}
-                >Sebelumnya</Button>}
+                >Kembali</Button>}
               
-              <Button onClick={
-                () => {
-                  if (activeStatements === props.indicators[activeIndicator].sessions.length - 1) {
-                    setActiveIndicator(activeIndicator + 1)
-                    setSessionProgress(sessionProgress + 1)
-                    setActiveStatements(0)
-                  } else {
-                    setActiveStatements(activeStatements + 1)
-                    setSessionProgress(sessionProgress + 1)
-                  }
-                }
+              {
+                sessionProgress === props.totalSessions && (
+                  <Button onClick={openFinishModal}>Selesai</Button>
+                )
               }
-                      disabled={sessionProgress === props.totalSessions}
-              >Selanjutnya</Button>
+              
+              {
+                sessionProgress !== props.totalSessions && (
+                  <Button onClick={
+                    () => {
+                      if (activeStatements === props.indicators[activeIndicator].sessions.length - 1) {
+                        setActiveIndicator(activeIndicator + 1)
+                        setSessionProgress(sessionProgress + 1)
+                        setActiveStatements(0)
+                      } else {
+                        setActiveStatements(activeStatements + 1)
+                        setSessionProgress(sessionProgress + 1)
+                      }
+                    }
+                  }
+                          disabled={sessionProgress === props.totalSessions}
+                  >Selanjutnya</Button>
+                )
+              }
+            
+            
             </Group>
           </Box>
         )
