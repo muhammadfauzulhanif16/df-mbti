@@ -5,15 +5,12 @@ import {
   Center,
   Group,
   List,
-  Modal,
   Progress,
   Radio,
-  SimpleGrid,
   Title,
   Tooltip
 } from '@mantine/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
-import { useDisclosure } from '@mantine/hooks'
 import { useForm } from '@inertiajs/react'
 
 const Index = (props) => {
@@ -21,14 +18,10 @@ const Index = (props) => {
   
   const [isTestStarted, setIsTestStarted] = useState(false)
   const [timer, setTimer] = useState(0)
-  const [opened, { open, close }] = useDisclosure(false)
-  const [finishModalOpened, {
-    open: openFinishModal,
-    close: closeFinishModal
-  }] = useDisclosure(false)
   const [activeIndicator, setActiveIndicator] = useState(0)
   const [sessionProgress, setSessionProgress] = useState(1)
   const [activeStatements, setActiveStatements] = useState(0)
+  
   // console.log('activeIndicator', activeIndicator)
   // console.log('activeIndicator', props.indicators[activeIndicator])
   //
@@ -37,13 +30,6 @@ const Index = (props) => {
   // console.log('activeStatements', props.indicators[activeIndicator].sessions[activeStatements])
   // console.log('activeStatements', props.totalSessions)
   
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prevTimer) => prevTimer + 1)
-    }, 1000)
-    
-    return () => clearInterval(interval)
-  }, [isTestStarted, timer])
   
   const formatTime = (timeInSeconds) => {
     const hours = Math.floor(timeInSeconds / 3600)
@@ -69,50 +55,30 @@ const Index = (props) => {
     tests
   })
   
+  useEffect(() => {
+    let interval = null
+    
+    if (isTestStarted) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => {
+          const newTime = prevTimer + 1
+          form.setData('time', newTime)
+          return newTime
+        })
+      }, 1000)
+    } else if (!isTestStarted && timer !== 0) {
+      clearInterval(interval)
+    }
+    
+    return () => clearInterval(interval)
+  }, [isTestStarted, timer, form])
+  
   console.log(form.data)
+  console.log(timer)
   
   return (
     <AppLayout title="Tes MBTI" activeNav="Tes MBTI" authed={props.auth.user}
                meta={props.meta}>
-      <Modal opened={opened} onClose={close}
-             title="Apakah anda yakin memulai tes?"
-             centered
-      >
-        <SimpleGrid cols={2}>
-          <Button variant="outline" color="red" onClick={
-            () => {
-              close()
-              setIsTestStarted(false)
-            }
-          }>Tidak</Button>
-          <Button variant="filled"
-                  onClick={
-                    () => {
-                      close()
-                      setIsTestStarted(true)
-                    }
-                  }>Ya</Button>
-        </SimpleGrid>
-      </Modal>
-      
-      <Modal opened={finishModalOpened} onClose={closeFinishModal}
-             title="Apakah anda yakin selesai tes?"
-             centered
-      >
-        <SimpleGrid cols={2}>
-          <Button variant="outline" color="red"
-                  onClick={closeFinishModal}>Tidak</Button>
-          <Button variant="filled"
-                  onClick={
-                    () => {
-                      closeFinishModal()
-                      setIsTestStarted(false)
-                      setTimer(0)
-                    }
-                  }>Ya</Button>
-        </SimpleGrid>
-      </Modal>
-      
       {
         isTestStarted && (
           <Box px={16}>
@@ -135,7 +101,10 @@ const Index = (props) => {
             </Group>
             
             
-            <Box>
+            <form onSubmit={(e) => {
+              e.preventDefault()
+              console.log(form.data)
+            }}>
               <Title mt={16} align="center">
                 {props.indicators[activeIndicator].name}
               </Title>
@@ -146,6 +115,18 @@ const Index = (props) => {
                     <Radio.Group
                       label={statement.name}
                       withAsterisk
+                      onChange={(value) => {
+                        form.setData('tests', form.data.tests.map((test) => {
+                          if (test.statement_id === statement.id) {
+                            return {
+                              statement_id: statement.id,
+                              choice_id: value
+                            }
+                          }
+                          return test
+                        }))
+                      }}
+                      value={form.data.tests.find((test) => test.statement_id === statement.id).choice_id}
                     >
                       <Group mt="xs" style={{
                         display: 'flex',
@@ -162,9 +143,9 @@ const Index = (props) => {
                   </List.Item>
                 ))}
               </List>
-            </Box>
+            </form>
             
-            <Group mt={32} justify="center">
+            <Group mt={32} justify="flex-end">
               {sessionProgress !== 1 &&
                 <Button onClick={
                   () => {
@@ -183,7 +164,9 @@ const Index = (props) => {
               
               {
                 sessionProgress === props.totalSessions && (
-                  <Button onClick={openFinishModal}>Selesai</Button>
+                  <Button type="submit" onClick={() => {
+                    setIsTestStarted(false)
+                  }}>Selesai</Button>
                 )
               }
               
@@ -205,8 +188,6 @@ const Index = (props) => {
                   >Selanjutnya</Button>
                 )
               }
-            
-            
             </Group>
           </Box>
         )
@@ -239,7 +220,9 @@ const Index = (props) => {
                       animated />
             
             <Center>
-              <Button mx="auto" onClick={open}>Mulai Test</Button>
+              <Button mx="auto" onClick={() => {
+                setIsTestStarted(true)
+              }}>Mulai Test</Button>
             </Center>
           </Box>
         )
