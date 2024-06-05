@@ -4,7 +4,9 @@
   
   use App\Http\Requests\StoreTestRequest;
   use App\Http\Requests\UpdateTestRequest;
+  use App\Models\Choice;
   use App\Models\Indicator;
+  use App\Models\Statement;
   use App\Models\Test;
   
   class TestController extends Controller
@@ -15,7 +17,26 @@
     public function index()
     {
       return Inertia('Test/Index', [
-        'indicators' => Indicator::with('statements')->get(),
+        'indicators' => Indicator::all()->map(function ($indicator) {
+          $indicator->sessions = $indicator->statements
+            ->chunk(2)
+            ->map(function ($chunk) {
+              return $chunk->values();
+            })
+            ->toArray();
+          
+          return $indicator;
+        }),
+        'statements' => Statement::all(),
+        'totalSessions' => Indicator::all()->map(function ($indicator) {
+          $indicator->sessions = $indicator->statements->chunk(2)->map(function ($chunk) {
+            return $chunk->values();
+          })->toArray();
+          return $indicator;
+        })->reduce(function ($carry, $indicator) {
+          return $carry + count($indicator->sessions);
+        }, 0),
+        'choices' => Choice::all(),
       ]);
     }
     

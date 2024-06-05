@@ -10,29 +10,32 @@ const Dashboard = (props) => {
         <Center bg="blue.1" mb={32} w="100%" style={{
           borderRadius: 16
         }}>
-          <h1>Selamat Datang Mahasiswa!</h1>
+          <h1>Selamat Datang di Beranda {props.auth.user.role}</h1>
         </Center>
         
-        <h2>Aturan Pengerjaan Test MBTI Persona</h2>
-        
-        <List type="ordered">
-          <List.Item>Hasil Test MBTIerupakan cerminan dari kepribadian
-                     anda</List.Item>
-          <List.Item>Jawablah setiap item pertanyaan dengan jujur sesuai
-                     dengan diri anda masing-masing</List.Item>
-          <List.Item>Setiap item pertanyaan wajib dijawab, sekalipun anda tidak
-                     menyukainya</List.Item>
-          <List.Item>Apabila telah selesai mengerjakan soal dan ingin
-                     melihat ke soal berikutnya, maka bisa dipilih button
-                     'selanjutnya'</List.Item>
-          <List.Item>Button 'sebelumnya' digunakan apabila ingin
-                     melihat jawaban sebelumnya</List.Item>
-          <List.Item>Button 'selanjutnya' hanya bisa dipilih apabila semua item
-                     pertanyaan telah dijawab seluruhnya</List.Item>
-        </List>
+        {props.auth.user.role === 'Mahasiswa' && (
+          <>
+            <h2>Aturan Pengerjaan Test MBTI Persona</h2>
+            
+            <List type="ordered">
+              <List.Item>Hasil Test MBTIerupakan cerminan dari kepribadian
+                         anda</List.Item>
+              <List.Item>Jawablah setiap item pertanyaan dengan jujur sesuai
+                         dengan diri anda masing-masing</List.Item>
+              <List.Item>Setiap item pertanyaan wajib dijawab, sekalipun anda
+                         tidak
+                         menyukainya</List.Item>
+              <List.Item>Apabila telah selesai mengerjakan soal dan ingin
+                         melihat ke soal berikutnya, maka bisa dipilih button
+                         'selanjutnya'</List.Item>
+              <List.Item>Button 'sebelumnya' digunakan apabila ingin
+                         melihat jawaban sebelumnya</List.Item>
+              <List.Item>Button 'selanjutnya' hanya bisa dipilih apabila semua
+                         item
+                         pertanyaan telah dijawab seluruhnya</List.Item>
+            </List></>
+        )}
       </Box>
-    
-    
     </AppLayout>
   )
 }
