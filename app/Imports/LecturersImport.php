@@ -24,14 +24,13 @@
         'phone_number' => $row['nomor_telepon'],
         'role' => $row['status'],
         'email' => $row['email'],
-        'password' => $row['email'],
+        'password' => $row['nidn'],
       ]);
       
       // Create a new Lecturer instance with the id of the newly created User
       Lecturer::create([
         'user_id' => $user->id,
         'academic_year' => $row['tahun_ajaran'],
-        // Add other necessary fields here
       ]);
       
       return $user;

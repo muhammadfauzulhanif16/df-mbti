@@ -7,6 +7,7 @@
   use App\Models\Indicator;
   use App\Models\Statement;
   use App\Models\Test;
+  use Exception;
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Auth;
   
@@ -46,12 +47,25 @@
      */
     public function store(Request $request)
     {
-      dd($request->all());
-      foreach ($request->choices as $choice) {
-        Test::create([
-          'user_id' => Auth::user()->id,
-          'statement_id' => $choice['statement_id'],
-          'choice_id' => $choice['choice_id'],
+//      dd($request->all());
+      try {
+        foreach ($request->tests as $test) {
+          Test::create([
+            'user_id' => Auth::id(),
+            'indicator_id' => $request->indicator_id,
+            'statement_id' => $test['statement_id'],
+            'choice_id' => $test['choice_id'],
+          ]);
+        }
+        
+        return to_route('tests.index')->with('meta', [
+          'status' => true,
+          'title' => 'Tes telah selesai',
+        ]);
+      } catch (Exception $e) {
+        return to_route('tests.index')->with('meta', [
+          'status' => true,
+          'title' => $e->getMessage(),
         ]);
       }
     }

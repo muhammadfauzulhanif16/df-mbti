@@ -23,7 +23,7 @@
         'phone_number' => $row['nomor_telepon'],
         'role' => 'Mahasiswa',
         'email' => $row['email'],
-        'password' => $row['email'],
+        'password' => $row['nim'],
       ]);
       
       Student::create([
