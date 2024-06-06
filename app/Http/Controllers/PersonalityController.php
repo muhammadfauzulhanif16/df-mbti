@@ -2,6 +2,7 @@
   
   namespace App\Http\Controllers;
   
+  use App\Imports\PersonalityImport;
   use App\Models\Personality;
   use Exception;
   use Illuminate\Http\Request;
@@ -24,20 +25,29 @@
      */
     public function store(Request $request)
     {
-//      dd($request->all());
       try {
-        Personality::create([
-          'name' => $request->name,
-          'description' => $request->description,
-          'job' => $request->job,
-          'detail' => $request->detail,
-        ]);
-        
-        return redirect()->route('personalities.index')->with('meta', [
-          'status' => true,
-          'title' => 'Berhasil menambahkan tipe kepribadian',
-          'message' => "Kepribadian '{$request->name}' berhasil ditambahkan!"
-        ]);
+        if ($request->hasFile('file')) {
+          (new PersonalityImport)->import($request->file('file'));
+          
+          return redirect()->route('personalities.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan tipe kepribadian',
+            'message' => "Tipe kepribadian berhasil ditambahkan!"
+          ]);
+        } else {
+          Personality::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'job' => $request->job,
+            'detail' => $request->detail,
+          ]);
+          
+          return redirect()->route('personalities.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan tipe kepribadian',
+            'message' => "Kepribadian '{$request->name}' berhasil ditambahkan!"
+          ]);
+        }
       } catch (Exception $e) {
         return redirect()->route('personalities.index')->with('meta', [
           'status' => false,

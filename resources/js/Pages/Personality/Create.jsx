@@ -1,6 +1,14 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import { Button, Center, Text, TextInput, Title } from '@mantine/core'
+import {
+  Button,
+  Center,
+  Divider,
+  FileButton,
+  Text,
+  TextInput,
+  Title
+} from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import { RichTextEditor } from '@mantine/tiptap'
@@ -25,6 +33,16 @@ const Create = (props) => {
           form.post(route('personalities.store'))
         }}>
           <Title align="center" mb={32}>Tambah Data Tipe Kepribadian</Title>
+          
+          
+          <FileButton variant="light" color="green" w="100%"
+                      onChange={(file) => form.setData('file', file)}
+                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            {(props) =>
+              <Button {...props}>{form.data.file ? form.data.file.name : 'Pilih file excel'}</Button>}
+          </FileButton>
+          
+          <Divider my={16} label="Atau" labelPosition="center" />
           
           <TextInput
             mb={16}
@@ -103,10 +121,7 @@ const Create = (props) => {
             </Button>
             <Button
               fullWidth
-              disabled={
-                form.data.basic_trait_id === '' ||
-                form.data.name === ''
-              }
+              
               loading={form.processing}
               type="submit"
             >
