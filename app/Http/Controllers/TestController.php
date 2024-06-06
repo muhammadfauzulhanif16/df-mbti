@@ -19,26 +19,7 @@
     public function index()
     {
       return Inertia('Test/Index', [
-        'indicators' => Indicator::all()->map(function ($indicator) {
-          $indicator->sessions = $indicator->statements
-            ->chunk(2)
-            ->map(function ($chunk) {
-              return $chunk->values();
-            })
-            ->toArray();
-          
-          return $indicator;
-        }),
-        'statements' => Statement::all(),
-        'totalSessions' => Indicator::all()->map(function ($indicator) {
-          $indicator->sessions = $indicator->statements->chunk(2)->map(function ($chunk) {
-            return $chunk->values();
-          })->toArray();
-          return $indicator;
-        })->reduce(function ($carry, $indicator) {
-          return $carry + count($indicator->sessions);
-        }, 0),
-        'choices' => Choice::all(),
+        'meta' => session('meta'),
       ]);
     }
     
@@ -75,7 +56,28 @@
      */
     public function create()
     {
-      //
+      return Inertia('Test/Create', [
+        'indicators' => Indicator::all()->map(function ($indicator) {
+          $indicator->sessions = $indicator->statements
+            ->chunk(2)
+            ->map(function ($chunk) {
+              return $chunk->values();
+            })
+            ->toArray();
+          
+          return $indicator;
+        }),
+        'statements' => Statement::all(),
+        'totalSessions' => Indicator::all()->map(function ($indicator) {
+          $indicator->sessions = $indicator->statements->chunk(2)->map(function ($chunk) {
+            return $chunk->values();
+          })->toArray();
+          return $indicator;
+        })->reduce(function ($carry, $indicator) {
+          return $carry + count($indicator->sessions);
+        }, 0),
+        'choices' => Choice::all(),
+      ]);
     }
     
     /**
