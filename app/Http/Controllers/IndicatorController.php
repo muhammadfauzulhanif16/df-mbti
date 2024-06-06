@@ -51,7 +51,7 @@
       } catch (Exception $e) {
         return to_route('indicators.index')->with('meta', [
           'status' => false,
-          'title' => 'Gagal menambahkan indikator',
+          'title' => 'Gagal menambahkan soal',
           'message' => $e->getMessage(),
         ]);
       }
@@ -101,13 +101,13 @@
         
         return to_route('indicators.index')->with('meta', [
           'status' => true,
-          'title' => 'Berhasil memperbarui indikator',
-          'message' => "Indikator '{$request->name}' berhasil diperbarui!"
+          'title' => 'Berhasil memperbarui soal',
+          'message' => "Soal '{$request->name}' berhasil diperbarui!"
         ]);
       } catch (Exception $e) {
         return to_route('indicators.index')->with('meta', [
           'status' => false,
-          'title' => 'Gagal memperbarui indikator',
+          'title' => 'Gagal memperbarui soal',
           'message' => $e->getMessage(),
         ]);
       }

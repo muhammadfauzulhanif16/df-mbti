@@ -17,7 +17,7 @@ const Create = (props) => {
     code: '',
     name: ''
   })
-  
+  console.log(props)
   return (
     <AppLayout title="Tambah Kategori Soal" activeNav="Kategori Soal"
                authed={props.auth.user} meta={props.meta}>

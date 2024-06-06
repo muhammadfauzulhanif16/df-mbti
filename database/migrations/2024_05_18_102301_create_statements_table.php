@@ -13,8 +13,8 @@
       Schema::create('statements', function (Blueprint $table) {
         $table->uuid('id')->primary();
         $table->string('name');
-        $table->foreignUuid('indicator_id')->constrained();
-        $table->foreignUuid('basic_trait_id')->constrained();
+        $table->foreignUuid('indicator_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+        $table->foreignUuid('basic_trait_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         $table->timestamps();
       });
     }

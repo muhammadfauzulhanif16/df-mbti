@@ -5,6 +5,7 @@ import {
   Center,
   Divider,
   FileButton,
+  List,
   Text,
   TextInput,
   Title
@@ -23,7 +24,7 @@ const Create = (props) => {
     job: '',
     detail: ''
   })
-  
+  console.log(props)
   return (
     <AppLayout title="Tambah Tipe Kepribadian" activeNav="Kepribadian"
                authed={props.auth.user} meta={props.meta}>
@@ -32,6 +33,15 @@ const Create = (props) => {
           e.preventDefault()
           form.post(route('personalities.store'))
         }}>
+          <Title order={6}>Keterangan Nama Tipe Kepribadian:</Title>
+          <List mb={16} style={{
+            display: 'flex',
+            gap: 32
+          }}>
+            {props.basic_traits.map((basic_trait) => (
+              <List.Item>{`${basic_trait.name} (${basic_trait.code})`}</List.Item>))}
+          </List>
+          
           <Title align="center" mb={32}>Tambah Data Tipe Kepribadian</Title>
           
           

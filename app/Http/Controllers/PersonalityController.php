@@ -3,6 +3,7 @@
   namespace App\Http\Controllers;
   
   use App\Imports\PersonalityImport;
+  use App\Models\BasicTrait;
   use App\Models\Personality;
   use Exception;
   use Illuminate\Http\Request;
@@ -64,6 +65,7 @@
     {
       return Inertia('Personality/Create', [
         'meta' => session('meta'),
+        'basic_traits' => BasicTrait::all(),
       ]);
     }
     

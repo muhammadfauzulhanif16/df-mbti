@@ -12,9 +12,9 @@
     {
       Schema::create('tests', function (Blueprint $table) {
         $table->uuid('id')->primary();
-        $table->foreignUuid('user_id')->constrained();
-        $table->foreignUuid('statement_id')->constrained();
-        $table->foreignUuid('choice_id')->constrained();
+        $table->foreignUuid('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+        $table->foreignUuid('statement_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+        $table->foreignUuid('choice_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         $table->timestamps();
       });
     }

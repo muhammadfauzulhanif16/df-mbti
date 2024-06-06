@@ -4,7 +4,6 @@
   
   use App\Models\User;
   use Illuminate\Database\Eloquent\Factories\Factory;
-  use Illuminate\Support\Facades\Hash;
   
   /**
    * @extends Factory<User>
@@ -24,16 +23,15 @@
     {
       $gender = $this->faker->randomElement(['male', 'female']);
       $full_name = $this->faker->name($gender);
-//      $gender = $gender === 'male' ? 'Laki-laki' : 'Perempuan';
+      $id_number = $this->faker->randomNumber(5, true) . $this->faker->randomNumber(5, true);
       
       return [
         'full_name' => $this->faker->name,
-        'id_number' => $this->faker->randomNumber(5, true) . $this->faker->randomNumber(5, true),
+        'id_number' => $id_number,
         'avatar' => $this->faker->imageUrl(640, 480, $full_name, false,),
         'phone_number' => $this->faker->phoneNumber,
-//        'role' => 'student',
         'email' => strtolower(str_replace(' ', '.', $full_name)) . '@mbti.id',
-        'password' => Hash::make(strtolower(str_replace(' ', '.', $full_name)) . '@mbti.id'),
+        'password' => $id_number,
       ];
     }
     

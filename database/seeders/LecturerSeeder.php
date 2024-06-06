@@ -13,7 +13,7 @@
      */
     public function run(): void
     {
-      $roles = ['Ketua Program Studi', 'Dosen Pembimbing Akademik'];
+      $roles = ['Kepala Program Studi', 'Dosen PA'];
       
       User::factory(16)->create()->each(function ($user) use ($roles) {
         $user->role = fake()->randomElement($roles);
