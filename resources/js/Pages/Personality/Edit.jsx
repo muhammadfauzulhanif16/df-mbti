@@ -1,8 +1,12 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import { Button, Center, Textarea, TextInput, Title } from '@mantine/core'
+import { Button, Center, Text, TextInput, Title } from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
+import { RichTextEditor } from '@mantine/tiptap'
+import { useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import Placeholder from '@tiptap/extension-placeholder'
 
 const Edit = (props) => {
   const form = useForm({
@@ -11,7 +15,7 @@ const Edit = (props) => {
     job: props.personality.job,
     detail: props.personality.detail
   })
-  
+  console.log(form.data)
   return (
     <AppLayout title="Tambah Tipe Kepribadian" activeNav="Kepribadian"
                authed={props.auth.user} meta={props.meta}>
@@ -24,35 +28,69 @@ const Edit = (props) => {
           
           <TextInput
             value={form.data.name}
+            mb={16}
             withAsterisk
             label="Nama Tipe Kepribadian"
             placeholder="Masukkan nama tipe kepribadian..."
             onChange={(e) => form.setData('name', e.target.value)}
           />
           
-          <TextInput
-            value={form.data.description}
-            withAsterisk
-            label="Deskripsi"
-            placeholder="Masukkan Deskripsi..."
-            onChange={(e) => form.setData('description', e.target.value)}
-          />
+          <Text fz={14}>Deskripsi</Text>
+          <RichTextEditor
+            mb={16}
+            styles={{
+              content: {
+                border: '1px solid #dcdcdc'
+              }
+            }}
+            editor={useEditor({
+              extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
+              content: form.data.description,
+              onUpdate: ({ editor }) => {
+                form.setData('description', editor.getHTML())
+              }
+            })}>
+            <RichTextEditor.Content
+            />
+          </RichTextEditor>
           
-          <TextInput
-            value={form.data.job}
-            withAsterisk
-            label="Saran Pekerjaan"
-            placeholder="Masukkan saran pekerjaan..."
-            onChange={(e) => form.setData('job', e.target.value)}
-          />
+          <Text fz={14}>Saran Pekerjaan</Text>
+          <RichTextEditor
+            mb={16}
+            styles={{
+              content: {
+                border: '1px solid #dcdcdc'
+              }
+            }}
+            editor={useEditor({
+              extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
+              content: form.data.job,
+              onUpdate: ({ editor }) => {
+                form.setData('job', editor.getHTML())
+              }
+            })}>
+            <RichTextEditor.Content
+            />
+          </RichTextEditor>
           
-          <Textarea
-            value={form.data.detail}
-            withAsterisk
-            label="Detail Pekerjaan"
-            placeholder="Masukkan detail pekerjaan..."
-            onChange={(e) => form.setData('detail', e.target.value)}
-          />
+          <Text fz={14}>Detail Pekerjaan</Text>
+          <RichTextEditor
+            mb={16}
+            styles={{
+              content: {
+                border: '1px solid #dcdcdc'
+              }
+            }}
+            editor={useEditor({
+              extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
+              content: form.data.detail,
+              onUpdate: ({ editor }) => {
+                form.setData('detail', editor.getHTML())
+              }
+            })}>
+            <RichTextEditor.Content
+            />
+          </RichTextEditor>
           
           <Button.Group mt={32}>
             <Button
