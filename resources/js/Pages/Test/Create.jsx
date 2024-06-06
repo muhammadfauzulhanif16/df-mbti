@@ -61,18 +61,6 @@ export const Create = (props) => {
         e.preventDefault()
         // console.log('submit', form.data)
         form.post(route('tests.store'))
-        
-        setTimer(0)
-        setActiveIndicator(0)
-        setSessionProgress(1)
-        setActiveStatements(0)
-        form.data.time = 0
-        form.data.tests = form.data.tests.map((test) => {
-          return {
-            statement_id: test.statement_id,
-            choice_id: ''
-          }
-        })
       }}>
         <Box px={16}>
           <Progress.Root radius="xl" size="xl">

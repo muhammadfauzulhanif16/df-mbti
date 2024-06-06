@@ -17,11 +17,11 @@
     {
       User::create([
         'full_name' => 'Admin',
-        'role' => 'Admin',
-        'email' => 'admin@mbti.id',
-        'password' => Hash::make('admin@mbti.id'),
+        'role' => 'Staff TU',
+        'email' => 'stafftu@mbti.id',
+        'password' => Hash::make('stafftu@mbti.id'),
       ]);
-//      
+//
 //      $this->call([
 //        LecturerSeeder::class,
 //        StudentSeeder::class,
