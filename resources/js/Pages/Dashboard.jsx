@@ -10,7 +10,7 @@ const Dashboard = (props) => {
         <Center bg="blue.1" mb={32} w="100%" style={{
           borderRadius: 16
         }}>
-          <h1>Selamat Datang di Beranda {props.auth.user.role}</h1>
+          <h1>Selamat Datang di Beranda {props.auth.user.full_name}</h1>
         </Center>
         
         {props.auth.user.role === 'Mahasiswa' && (

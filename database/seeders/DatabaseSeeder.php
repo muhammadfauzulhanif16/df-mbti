@@ -16,8 +16,8 @@
     public function run(): void
     {
       User::create([
-        'full_name' => 'Admin',
-        'role' => 'Staff TU',
+        'full_name' => 'Staff TU',
+        'role' => 'Admin',
         'email' => 'stafftu@mbti.id',
         'password' => Hash::make('stafftu@mbti.id'),
       ]);
