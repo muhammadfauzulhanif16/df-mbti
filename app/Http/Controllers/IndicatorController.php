@@ -2,6 +2,7 @@
   
   namespace App\Http\Controllers;
   
+  use App\Imports\IndicatorsImport;
   use App\Models\BasicTrait;
   use App\Models\Indicator;
   use Exception;
@@ -28,15 +29,25 @@
     public function store(Request $request)
     {
       try {
-        Indicator::create([
-          'name' => $request->name
-        ]);
-        
-        return to_route('indicators.index')->with('meta', [
-          'status' => true,
-          'title' => 'Berhasil menambahkan indikator',
-          'message' => "Indikator '{$request->name}' berhasil ditambahkan!"
-        ]);
+        if ($request->hasFile('file')) {
+          (new IndicatorsImport)->import($request->file('file'));
+          
+          return to_route('indicators.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan indikator',
+            'message' => "Indikator berhasil ditambahkan!"
+          ]);
+        } else {
+          Indicator::create([
+            'name' => $request->name
+          ]);
+          
+          return to_route('indicators.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan indikator',
+            'message' => "Indikator '{$request->name}' berhasil ditambahkan!"
+          ]);
+        }
       } catch (Exception $e) {
         return to_route('indicators.index')->with('meta', [
           'status' => false,

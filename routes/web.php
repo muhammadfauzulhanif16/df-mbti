@@ -23,7 +23,7 @@
     })->name('dashboard');
     
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile');
-    Route::put('profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
     
     Route::group(['prefix' => 'lecturers'], function () {
       Route::get('', [LecturerController::class, 'index'])->name('lecturers.index');

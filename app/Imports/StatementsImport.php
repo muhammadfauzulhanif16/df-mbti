@@ -2,14 +2,14 @@
   
   namespace App\Imports;
   
-  use App\Models\Indicator;
+  use App\Models\Statement;
   use Illuminate\Database\Eloquent\Model;
   use Maatwebsite\Excel\Concerns\Importable;
   use Maatwebsite\Excel\Concerns\ToModel;
   use Maatwebsite\Excel\Concerns\WithHeadingRow;
   use Maatwebsite\Excel\Concerns\WithProgressBar;
   
-  class IndicatorsImport implements ToModel, WithHeadingRow, WithProgressBar
+  class StatementsImport implements ToModel, WithHeadingRow, WithProgressBar
   {
     use Importable;
     
@@ -20,8 +20,8 @@
      */
     public function model(array $row)
     {
-      return new Indicator([
-        'name' => $row['nama'],
+      return new Statement([
+        //
       ]);
     }
   }

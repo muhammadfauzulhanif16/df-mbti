@@ -10,7 +10,6 @@
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Hash;
   use Inertia\Inertia;
-  use Maatwebsite\Excel\Facades\Excel;
   
   class LecturerController extends Controller
   {
@@ -22,6 +21,7 @@
       return Inertia::render('Lecturer/Index', [
         'meta' => session('meta'),
         'lecturers' => Lecturer::with('user')->get()->map(function ($lecturer) {
+          $lecturer->avatar = $lecturer->user->avatar ? asset('storage/' . $lecturer->user->avatar) : null;
           $lecturer['students'] = Student::with('user')->where('supervisor_id', $lecturer->user_id)->get();
           return $lecturer;
         })
@@ -35,7 +35,8 @@
     {
       try {
         if ($request->hasFile('file')) {
-          Excel::import(new LecturersImport, $request->file('file'));
+//          dd($request->file('file')->getClientOriginalName());
+          (new LecturersImport)->import($request->file('file'));
           
           return to_route('lecturers.index')->with('meta', [
             'status' => true,

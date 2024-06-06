@@ -5,11 +5,15 @@
   use App\Models\Lecturer;
   use App\Models\User;
   use Illuminate\Database\Eloquent\Model;
+  use Maatwebsite\Excel\Concerns\Importable;
   use Maatwebsite\Excel\Concerns\ToModel;
   use Maatwebsite\Excel\Concerns\WithHeadingRow;
+  use Maatwebsite\Excel\Concerns\WithProgressBar;
   
-  class LecturersImport implements ToModel, WithHeadingRow
+  class LecturersImport implements ToModel, WithHeadingRow, WithProgressBar
   {
+    use Importable;
+    
     /**
      * @param array $row
      *
@@ -18,6 +22,7 @@
     public function model(array $row)
     {
       // Create a new User instance and save it
+      
       $user = User::create([
         'full_name' => $row['nama_lengkap'],
         'id_number' => $row['nidn'],

@@ -2,6 +2,7 @@
   
   namespace App\Http\Controllers;
   
+  use App\Imports\ChoicesImport;
   use App\Models\Choice;
   use App\Models\Statement;
   use Exception;
@@ -28,16 +29,26 @@
     public function store(Request $request)
     {
       try {
-        Choice::create([
-          'name' => $request->name,
-          'value' => $request->value,
-        ]);
-        
-        return redirect()->route('choices.index')->with('meta', [
-          'status' => true,
-          'title' => 'Berhasil menambahkan pilihan',
-          'message' => "Pilihan '{$request->name}' berhasil ditambahkan!"
-        ]);
+        if ($request->hasFile('file')) {
+          (new ChoicesImport)->import($request->file('file'));
+          
+          return redirect()->route('choices.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan pilihan',
+            'message' => "Pilihan berhasil ditambahkan!"
+          ]);
+        } else {
+          Choice::create([
+            'name' => $request->name,
+            'value' => $request->value,
+          ]);
+          
+          return redirect()->route('choices.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan pilihan',
+            'message' => "Pilihan '{$request->name}' berhasil ditambahkan!"
+          ]);
+        }
       } catch (Exception $e) {
         return redirect()->route('choices.index')->with('meta', [
           'status' => false,

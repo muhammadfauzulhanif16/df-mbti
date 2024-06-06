@@ -1,11 +1,20 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import { Button, Center, NumberInput, TextInput, Title } from '@mantine/core'
+import {
+  Button,
+  Center,
+  Divider,
+  FileButton,
+  NumberInput,
+  TextInput,
+  Title
+} from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Create = (props) => {
   const form = useForm({
+    file: null,
     name: '',
     value: ''
   })
@@ -19,6 +28,15 @@ const Create = (props) => {
           form.post(route('choices.store'))
         }}>
           <Title align="center" mb={32}>Tambah Jawaban</Title>
+          
+          <FileButton variant="light" color="green" w="100%"
+                      onChange={(file) => form.setData('file', file)}
+                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            {(props) =>
+              <Button {...props}>{form.data.file ? form.data.file.name : 'Pilih file excel'}</Button>}
+          </FileButton>
+          
+          <Divider my={16} label="Atau" labelPosition="center" />
           
           <TextInput
             withAsterisk
@@ -48,10 +66,7 @@ const Create = (props) => {
             </Button>
             <Button
               fullWidth
-              disabled={
-                form.data.name === '' ||
-                form.data.value === ''
-              }
+              
               loading={form.processing}
               type="submit"
             >

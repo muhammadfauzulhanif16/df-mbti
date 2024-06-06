@@ -2,6 +2,7 @@
   
   namespace App\Http\Controllers;
   
+  use App\Imports\BasicTraitsImport;
   use App\Models\BasicTrait;
   use Exception;
   use Illuminate\Http\Request;
@@ -26,16 +27,26 @@
     public function store(Request $request)
     {
       try {
-        BasicTrait::create([
-          'code' => $request->code,
-          'name' => $request->name
-        ]);
-        
-        return to_route('basic-traits.index')->with('meta', [
-          'status' => true,
-          'title' => 'Berhasil menambahkan kategori soal',
-          'message' => "Kategori soal '{$request->name}' berhasil ditambahkan!"
-        ]);
+        if ($request->hasFile('file')) {
+          (new BasicTraitsImport)->import($request->file('file'));
+          
+          return to_route('basic-traits.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan kategori soal',
+            'message' => "Kategori soal berhasil ditambahkan!"
+          ]);
+        } else {
+          BasicTrait::create([
+            'code' => $request->code,
+            'name' => $request->name
+          ]);
+          
+          return to_route('basic-traits.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan kategori soal',
+            'message' => "Kategori soal '{$request->name}' berhasil ditambahkan!"
+          ]);
+        }
       } catch (Exception $e) {
         return to_route('basic-traits.index')->with('meta', [
           'status' => false,

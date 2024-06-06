@@ -57,7 +57,7 @@ const Profile = (props) => {
             w="fit-content"
             onDrop={(acceptedFile) => form.setData('avatar', acceptedFile[0])}>
             <Avatar
-              alt="it's me"
+              alt={form.data.full_name}
               size={160}
               src={form.data.avatar instanceof File ? URL.createObjectURL(form.data.avatar) : form.data.avatar}
             />

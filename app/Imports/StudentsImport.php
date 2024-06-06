@@ -5,11 +5,15 @@
   use App\Models\Student;
   use App\Models\User;
   use Illuminate\Database\Eloquent\Model;
+  use Maatwebsite\Excel\Concerns\Importable;
   use Maatwebsite\Excel\Concerns\ToModel;
   use Maatwebsite\Excel\Concerns\WithHeadingRow;
+  use Maatwebsite\Excel\Concerns\WithProgressBar;
   
-  class StudentsImport implements ToModel, WithHeadingRow
+  class StudentsImport implements ToModel, WithHeadingRow, WithProgressBar
   {
+    use Importable;
+    
     /**
      * @param array $row
      *
