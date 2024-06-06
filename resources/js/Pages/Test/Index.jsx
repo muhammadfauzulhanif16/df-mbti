@@ -73,7 +73,7 @@ const Index = (props) => {
     return () => clearInterval(interval)
   }, [isTestStarted, timer, form])
   
-  console.log(form.data)
+  console.log('diluar', form.data)
   console.log(timer)
   
   return (
@@ -81,30 +81,44 @@ const Index = (props) => {
                meta={props.meta}>
       {
         isTestStarted && (
-          <Box px={16}>
-            <Progress.Root radius="xl" size="xl">
-              <Tooltip label={`${
-                100 / props.totalSessions * sessionProgress
-              }}%`}>
-                <Progress.Section value={
+          <form onSubmit={(e) => {
+            e.preventDefault()
+            // console.log('submit', form.data)
+            form.post(route('tests.store'))
+            
+            setIsTestStarted(false)
+            setTimer(0)
+            setActiveIndicator(0)
+            setSessionProgress(1)
+            setActiveStatements(0)
+            form.data.time = 0
+            form.data.tests = form.data.tests.map((test) => {
+              return {
+                statement_id: test.statement_id,
+                choice_id: ''
+              }
+            })
+          }}>
+            <Box px={16}>
+              <Progress.Root radius="xl" size="xl">
+                <Tooltip label={`${
                   100 / props.totalSessions * sessionProgress
-                }>
-                  <Progress.Label>{
+                }}%`}>
+                  <Progress.Section value={
                     100 / props.totalSessions * sessionProgress
-                  }%</Progress.Label>
-                </Progress.Section>
-              </Tooltip>
-            </Progress.Root>
-            
-            <Group justify="space-between" my={32}>
-              <p>Waktu: {formatTime(timer)}</p>
-            </Group>
-            
-            
-            <form onSubmit={(e) => {
-              e.preventDefault()
-              console.log(form.data)
-            }}>
+                  }>
+                    <Progress.Label>{
+                      100 / props.totalSessions * sessionProgress
+                    }%</Progress.Label>
+                  </Progress.Section>
+                </Tooltip>
+              </Progress.Root>
+              
+              <Group justify="space-between" my={32}>
+                <p>Waktu: {formatTime(timer)}</p>
+              </Group>
+              
+              
               <Title mt={16} align="center">
                 {props.indicators[activeIndicator].name}
               </Title>
@@ -143,53 +157,53 @@ const Index = (props) => {
                   </List.Item>
                 ))}
               </List>
-            </form>
-            
-            <Group mt={32} justify="flex-end">
-              {sessionProgress !== 1 &&
-                <Button onClick={
-                  () => {
-                    if (activeStatements === 0) {
-                      setActiveIndicator(activeIndicator - 1)
-                      setSessionProgress(sessionProgress - 1)
-                      setActiveStatements(props.indicators[activeIndicator - 1].sessions.length - 1)
-                    } else {
-                      setActiveStatements(activeStatements - 1)
-                      setSessionProgress(sessionProgress - 1)
-                    }
-                  }
-                }
-                        disabled={sessionProgress === 0}
-                >Kembali</Button>}
               
-              {
-                sessionProgress === props.totalSessions && (
-                  <Button type="submit" onClick={() => {
-                    setIsTestStarted(false)
-                  }}>Selesai</Button>
-                )
-              }
-              
-              {
-                sessionProgress !== props.totalSessions && (
+              <Group mt={32} justify="flex-end">
+                {sessionProgress !== 1 &&
                   <Button onClick={
                     () => {
-                      if (activeStatements === props.indicators[activeIndicator].sessions.length - 1) {
-                        setActiveIndicator(activeIndicator + 1)
-                        setSessionProgress(sessionProgress + 1)
-                        setActiveStatements(0)
+                      if (activeStatements === 0) {
+                        setActiveIndicator(activeIndicator - 1)
+                        setSessionProgress(sessionProgress - 1)
+                        setActiveStatements(props.indicators[activeIndicator - 1].sessions.length - 1)
                       } else {
-                        setActiveStatements(activeStatements + 1)
-                        setSessionProgress(sessionProgress + 1)
+                        setActiveStatements(activeStatements - 1)
+                        setSessionProgress(sessionProgress - 1)
                       }
                     }
                   }
-                          disabled={sessionProgress === props.totalSessions}
-                  >Selanjutnya</Button>
-                )
-              }
-            </Group>
-          </Box>
+                          disabled={sessionProgress === 0}
+                  >Kembali</Button>}
+                
+                
+                {
+                  sessionProgress !== props.totalSessions && (
+                    <Button onClick={
+                      () => {
+                        if (activeStatements === props.indicators[activeIndicator].sessions.length - 1) {
+                          setActiveIndicator(activeIndicator + 1)
+                          setSessionProgress(sessionProgress + 1)
+                          setActiveStatements(0)
+                        } else {
+                          setActiveStatements(activeStatements + 1)
+                          setSessionProgress(sessionProgress + 1)
+                        }
+                      }
+                    }
+                            disabled={sessionProgress === props.totalSessions}
+                    >Selanjutnya</Button>
+                  )
+                }
+                
+                {
+                  sessionProgress === props.totalSessions && (
+                    <Button type="submit">Selesai</Button>
+                  )
+                }
+              </Group>
+            </Box>
+          </form>
+        
         )
       }
       

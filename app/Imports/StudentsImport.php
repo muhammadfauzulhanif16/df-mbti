@@ -28,7 +28,7 @@
       
       Student::create([
         'user_id' => $user->id,
-        'academic_year' => $row['tahun_akademik'],
+        'academic_year' => $row['tahun_ajaran'],
         'supervisor_id' => User::where('full_name', $row['dosen_pembimbing_akademik'])->first()->id,
       ]);
       

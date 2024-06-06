@@ -2,12 +2,13 @@
   
   namespace App\Http\Controllers;
   
-  use App\Http\Requests\StoreTestRequest;
   use App\Http\Requests\UpdateTestRequest;
   use App\Models\Choice;
   use App\Models\Indicator;
   use App\Models\Statement;
   use App\Models\Test;
+  use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth;
   
   class TestController extends Controller
   {
@@ -41,17 +42,24 @@
     }
     
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created resource in storage.
      */
-    public function create()
+    public function store(Request $request)
     {
-      //
+      dd($request->all());
+      foreach ($request->choices as $choice) {
+        Test::create([
+          'user_id' => Auth::user()->id,
+          'statement_id' => $choice['statement_id'],
+          'choice_id' => $choice['choice_id'],
+        ]);
+      }
     }
     
     /**
-     * Store a newly created resource in storage.
+     * Show the form for creating a new resource.
      */
-    public function store(StoreTestRequest $request)
+    public function create()
     {
       //
     }
