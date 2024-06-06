@@ -34,8 +34,8 @@
           
           return to_route('indicators.index')->with('meta', [
             'status' => true,
-            'title' => 'Berhasil menambahkan indikator',
-            'message' => "Indikator berhasil ditambahkan!"
+            'title' => 'Berhasil menambahkan soal',
+            'message' => "Soal berhasil ditambahkan!"
           ]);
         } else {
           Indicator::create([
@@ -44,8 +44,8 @@
           
           return to_route('indicators.index')->with('meta', [
             'status' => true,
-            'title' => 'Berhasil menambahkan indikator',
-            'message' => "Indikator '{$request->name}' berhasil ditambahkan!"
+            'title' => 'Berhasil menambahkan soal',
+            'message' => "Soal '{$request->name}' berhasil ditambahkan!"
           ]);
         }
       } catch (Exception $e) {

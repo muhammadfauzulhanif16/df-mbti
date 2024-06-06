@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {
   Button,
-  FileButton,
   Group,
   SimpleGrid,
   Stack,
@@ -11,7 +10,6 @@ import {
 import { IconPlus, IconUser } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
-import { useForm } from '@inertiajs/react'
 
 const Index = (props) => {
   const [search, setSearch] = useState('')
@@ -19,12 +17,6 @@ const Index = (props) => {
   const indicators = props.indicators.filter(indicator =>
     indicator.name.toLowerCase().includes(search.toLowerCase())
   )
-  
-  
-  const form = useForm({
-    file: null
-  })
-  
   
   const THList = ['#', 'Soal', 'Aksi']
   
@@ -34,8 +26,7 @@ const Index = (props) => {
       <Stack p={16}>
         <SimpleGrid cols={{
           base: 1,
-          xs: 2,
-          sm: 3
+          xs: 2
         }} justify="space-between">
           <TextInput
             leftSection={<IconUser />}
@@ -50,13 +41,6 @@ const Index = (props) => {
           >
             Tambah Soal
           </Button>
-          
-          <FileButton variant="light" color="green" w="100%"
-                      onChange={(file) => form.setData('file', file)}
-                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-            {(props) =>
-              <Button {...props}>{form.data.file ? form.data.file.name : 'Pilih file excel'}</Button>}
-          </FileButton>
         </SimpleGrid>
         
         <Table.ScrollContainer>
