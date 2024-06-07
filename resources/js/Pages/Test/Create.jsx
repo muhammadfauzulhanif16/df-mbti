@@ -30,7 +30,7 @@ export const Create = (props) => {
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`
   }
   
-  const tests = props.statements.map((statement) => (
+  const answers = props.statements.map((statement) => (
     {
       statement_id: statement.id,
       choice_id: ''
@@ -39,7 +39,7 @@ export const Create = (props) => {
   
   const form = useForm({
     time: timer,
-    tests
+    answers
   })
   
   useEffect(() => {
@@ -86,39 +86,50 @@ export const Create = (props) => {
             {props.indicators[activeIndicator].name}
           </Title>
           
-          <List type="ordered">
-            {props.indicators[activeIndicator].sessions[activeStatements]?.map((statement) => (
-              <List.Item key={statement.id}>
-                <Radio.Group
-                  label={statement.name}
-                  withAsterisk
-                  onChange={(value) => {
-                    form.setData('tests', form.data.tests.map((test) => {
-                      if (test.statement_id === statement.id) {
-                        return {
-                          statement_id: statement.id,
-                          choice_id: value
+          <List>
+            {props.indicators[activeIndicator].sessions[activeStatements]?.map((statement) => {
+              let indexStatement = 0
+              props.indicators.map((indicator, index) => {
+                if (index !== activeIndicator) {
+                  indexStatement = 0
+                } else {
+                  indexStatement++
+                }
+              })
+              
+              return (
+                <List.Item key={statement.id}>
+                  <Radio.Group
+                    label={statement.name}
+                    withAsterisk
+                    onChange={(value) => {
+                      form.setData('answers', form.data.answers.map((test) => {
+                        if (test.statement_id === statement.id) {
+                          return {
+                            statement_id: statement.id,
+                            choice_id: value
+                          }
                         }
-                      }
-                      return test
-                    }))
-                  }}
-                  value={form.data.tests.find((test) => test.statement_id === statement.id).choice_id}
-                >
-                  <Group mt="xs" style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    gap: 16
-                  }}>
-                    {props.choices.map((choice) => (
-                      <Radio key={choice.id} value={choice.id}
-                             label={choice.name} />
-                    ))}
-                  </Group>
-                </Radio.Group>
-              </List.Item>
-            ))}
+                        return test
+                      }))
+                    }}
+                    value={form.data.answers.find((test) => test.statement_id === statement.id).choice_id}
+                  >
+                    <Group mt="xs" style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: 16
+                    }}>
+                      {props.choices.map((choice) => (
+                        <Radio key={choice.id} value={choice.id}
+                               label={choice.name} />
+                      ))}
+                    </Group>
+                  </Radio.Group>
+                </List.Item>
+              )
+            })}
           </List>
           
           <Group mt={32} justify="flex-end">
@@ -160,7 +171,9 @@ export const Create = (props) => {
             
             {
               sessionProgress === props.totalSessions && (
-                <Button type="submit">Selesai</Button>
+                <Button type="submit" color="red" disabled={
+                  form.data.answers.some((answer) => answer.choice_id === '')
+                }>Selesai</Button>
               )
             }
           </Group>

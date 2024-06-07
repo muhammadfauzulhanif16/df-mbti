@@ -3,6 +3,7 @@
   namespace App\Http\Controllers;
   
   use App\Http\Requests\UpdateTestRequest;
+  use App\Models\Answer;
   use App\Models\Choice;
   use App\Models\Indicator;
   use App\Models\Statement;
@@ -28,14 +29,17 @@
      */
     public function store(Request $request)
     {
-//      dd($request->all());
       try {
-        foreach ($request->tests as $test) {
-          Test::create([
-            'user_id' => Auth::id(),
-            'indicator_id' => $request->indicator_id,
-            'statement_id' => $test['statement_id'],
-            'choice_id' => $test['choice_id'],
+        $test = Test::create([
+          'user_id' => Auth::id(),
+          'time' => gmdate('H:i:s', $request->time),
+        ]);
+        
+        foreach ($request->answers as $answer) {
+          Answer::create([
+            'test_id' => $test->id,
+            'statement_id' => $answer['statement_id'],
+            'choice_id' => $answer['choice_id'],
           ]);
         }
         

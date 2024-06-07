@@ -10,5 +10,6 @@
   {
     use HasFactory, HasUuids;
     
-    protected $fillable = ['user_id', 'statement_id', 'choice_id'];
+    protected $fillable = ['user_id', 'time'];
   }
+ 

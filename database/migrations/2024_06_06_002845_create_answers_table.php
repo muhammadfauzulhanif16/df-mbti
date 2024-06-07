@@ -11,8 +11,7 @@
     public function up(): void
     {
       Schema::create('answers', function (Blueprint $table) {
-        $table->uuid('id')->primary();
-        $table->foreignUuid('user_id')->constrained();
+        $table->foreignUuid('test_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         $table->foreignUuid('statement_id')->constrained();
         $table->foreignUuid('choice_id')->constrained();
         $table->timestamps();
