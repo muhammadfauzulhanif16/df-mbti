@@ -90,7 +90,7 @@ export const NavBar = (props) => {
       {
         icon: <IconUser />,
         label: 'Hasil',
-        route: ''
+        route: 'results.index'
       },
       {
         icon: <IconUser />,
