@@ -20,23 +20,6 @@ const Create = (props) => {
         }}>
           <Title align="center" mb={32}>Ubah Data Soal</Title>
           
-          <Select
-            label="Kategori Soal"
-            placeholder="Masukkan kategori soal..."
-            clearable
-            mb={16}
-            withAsterisk
-            value={form.data.basic_trait_id}
-            searchable
-            nothingFoundMessage="Tidak ada kategori soal..."
-            checkIconPosition="right"
-            data={props.basic_traits.map((basic_trait) => ({
-              value: basic_trait.id,
-              label: basic_trait.name
-            }))}
-            onChange={(value) => form.setData('basic_trait_id', value)}
-          />
-          
           <TextInput
             withAsterisk
             label="Nama Soal"

@@ -22,4 +22,9 @@
     {
       return Carbon::parse($value)->format('d-m-Y H:i:s');
     }
+
+    public function statements()
+    {
+      return $this->hasMany(Statement::class);
+    }
   }

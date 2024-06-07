@@ -82,11 +82,11 @@ export const Create = (props) => {
           </Group>
           
           
-          <Title mt={16} align="center">
+          <Title mt={16} mb={32} align="center">
             {props.indicators[activeIndicator].name}
           </Title>
           
-          <List>
+          <List style={{ display: 'flex', flexDirection: 'column', gap: 32}}>
             {props.indicators[activeIndicator].sessions[activeStatements]?.map((statement) => {
               let indexStatement = 0
               props.indicators.map((indicator, index) => {
@@ -132,7 +132,7 @@ export const Create = (props) => {
             })}
           </List>
           
-          <Group mt={32} justify="flex-end">
+          <Group mt={32} justify="center">
             {sessionProgress !== 1 &&
               <Button onClick={
                 () => {

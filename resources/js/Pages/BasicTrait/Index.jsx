@@ -5,6 +5,7 @@ import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
+  console.log(props)
   const [search, setSearch] = useState('')
   
   const basicTraits = props.basic_traits.filter(basic_trait =>
@@ -61,6 +62,7 @@ const Index = (props) => {
                       <Button variant="outline" color="yellow"
                               onClick={() => router.get(route('basic-traits.edit', basicTrait))}>Ubah</Button>
                       <Button variant="outline" color="red"
+                      disabled={basicTrait.statements}
                               onClick={() => router.delete(route('basic-traits.destroy', basicTrait))}>Hapus</Button>
                     </Button.Group>
                   </Table.Td>

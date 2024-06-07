@@ -17,7 +17,7 @@
     {
       return Inertia::render('BasicTrait/Index', [
         'meta' => session('meta'),
-        'basic_traits' => BasicTrait::all()
+        'basic_traits' => BasicTrait::all()->load('statements')
       ]);
     }
     
