@@ -27,6 +27,8 @@
         StudentSeeder::class,
         BasicTraitSeeder::class,
         PersonalitySeeder::class,
+        IndicatorSeeder::class,
+        ChoiceSeeder::class,
       ]);
     }
   }

@@ -14,6 +14,7 @@ import { IconMail, IconPassword } from '@tabler/icons-react'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Epersona = '/epersona.jpg'
+const Unsada = '/unsada.png'
 
 const Login = (props) => {
   const form = useForm({
@@ -34,7 +35,7 @@ const Login = (props) => {
             form.post(route('login'))
           }}>
             <Image
-              src="https://i.imgur.com/3eTKJe2.png"
+              src={Unsada}
               w={80}
               mx="auto"
               mb={32}

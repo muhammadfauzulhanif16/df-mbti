@@ -2,7 +2,6 @@
   
   namespace Database\Seeders;
   
-  use App\Models\Indicator;
   use Illuminate\Database\Seeder;
   
   class IndicatorSeeder extends Seeder
@@ -12,12 +11,28 @@
      */
     public function run(): void
     {
-      $indicators = ['Pemusatan perhatian', 'Memahami informasi dari luar', 'Menarik kesimpulan & keputusan', 'Pola hidup'];
+//      $indicators = ['Pemusatan perhatian', 'Memahami informasi dari luar', 'Menarik kesimpulan & keputusan', 'Pola hidup'];
       
-      foreach ($indicators as $indicator) {
-        Indicator::create([
-          'name' => $indicator,
-        ]);
-      }
+      $indicators = [
+        [
+          'name' => 'Pemusatan perhatian',
+          'basic_trait' => 'Introvert',
+          'statements' => [
+            'Saya merasa lebih energik setelah menghabiskan waktu sendirian atau dengan sedikit orang yang saya kenal baik.', 'Saya lebih suka berpikir sebelum berbicara dalam diskusi kelompok.', 'Saya cenderung menghindari situasi sosial yang ramai atau bising.', 'Saya sering merenung atau memikirkan hal-hal yang telah terjadi di masa lalu.', 'Saya lebih suka bekerja sendiri daripada bekerja dalam tim.'
+          ]
+        ],
+        'name' => 'Pemusatan perhatian',
+        'basic_trait' => 'Introvert',
+        'statements' => [
+          'Saya merasa lebih energik setelah menghabiskan waktu sendirian atau dengan sedikit orang yang saya kenal baik.', 'Saya lebih suka berpikir sebelum berbicara dalam diskusi kelompok.', 'Saya cenderung menghindari situasi sosial yang ramai atau bising.', 'Saya sering merenung atau memikirkan hal-hal yang telah terjadi di masa lalu.', 'Saya lebih suka bekerja sendiri daripada bekerja dalam tim.'
+        ]
+      ];
+
+
+//      foreach ($indicators as $indicator) {
+//        Indicator::create([
+//          'name' => $indicator,
+//        ]);
+//      }
     }
   }
