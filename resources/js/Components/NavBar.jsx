@@ -14,6 +14,7 @@ import {
   IconUsers
 } from '@tabler/icons-react'
 import { useDisclosure } from '@mantine/hooks'
+const Unsada = '/unsada.png'
 
 export const NavBar = (props) => {
   const [opened, { open, close }] = useDisclosure(false)
@@ -148,7 +149,7 @@ export const NavBar = (props) => {
         zIndex: 2,
         borderBottom: '1px solid #DEE2E6'
       }}>
-      <Image src="https://i.imgur.com/3eTKJe2.png" w={48} />
+      <Image src={Unsada} w={48} />
       
       <ActionIcon
         variant="filled"
