@@ -1,5 +1,6 @@
 import { AppLayout } from '@/Layouts/AppLayout'
-import { Flex, Table, Title } from '@mantine/core'
+import { Button, Flex, Table, Title } from '@mantine/core'
+import { router } from '@inertiajs/core'
 
 export const Index = (props) => {
   console.log(props)
@@ -26,12 +27,15 @@ export const Index = (props) => {
           
           <Table.Tbody>
             {props.tests.map((test, id) => (
-              <Table.Tr key={test.id}>
+              <Table.Tr key={id}>
                 <Table.Td>{id + 1}</Table.Td>
                 <Table.Td>{test.allMaxBasicTraitCodes}</Table.Td>
                 <Table.Td>{test.created_at}</Table.Td>
                 <Table.Td>{test.time}</Table.Td>
-                {/*<Table.Td>{test.mass}</Table.Td>*/}
+                <Table.Td>
+                  <Button
+                    onClick={() => router.get(route('results.show', test.id))}>Detail</Button>
+                </Table.Td>
               </Table.Tr>
             ))}
           </Table.Tbody>

@@ -61,6 +61,7 @@
         $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
         
         return [
+          'id' => $test->id,
           'test' => $test,
           'indicators' => $groupedIndicators->values()->all(),
           'allMaxBasicTraitCodes' => $allMaxBasicTraitCodesString,
@@ -93,9 +94,56 @@
     /**
      * Display the specified resource.
      */
-    public function show(Result $result)
+    public function show(Test $test)
     {
-      //
+      $groupedIndicators = $test->load('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
+        ->answers->groupBy('statement.indicator.name');
+      
+      $allMaxBasicTraitCodes = [];
+      
+      $groupedIndicators->transform(function ($indicatorGroup, $indicatorName) use (&$allMaxBasicTraitCodes) {
+        $groupedBasicTraits = $indicatorGroup->groupBy('statement.basicTrait.name');
+        
+        $totalIndicatorValue = 0;
+        
+        $groupedBasicTraits->transform(function ($basicTraitGroup, $basicTraitName) use (&$totalIndicatorValue) {
+          $totalBasicTraitValue = $basicTraitGroup->sum('choice.value');
+          $totalIndicatorValue += $totalBasicTraitValue;
+          
+          return [
+            'name' => $basicTraitName,
+            'totalValue' => $totalBasicTraitValue,
+          ];
+        });
+        
+        $maxBasicTrait = $groupedBasicTraits->sortByDesc('totalValue')->first();
+        $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
+        
+        $allMaxBasicTraitCodes[] = $maxBasicTraitCode;
+        
+        return [
+          'name' => $indicatorName,
+          'totalValue' => $totalIndicatorValue,
+          'maxBasicTrait' => $maxBasicTrait,
+          'maxBasicTraitCode' => $maxBasicTraitCode,
+          'basic_traits' => $groupedBasicTraits->values()->all(),
+        ];
+      });
+      
+      $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
+      
+      $groupedResult = [
+        'id' => $test->id,
+        'test' => $test,
+        'indicators' => $groupedIndicators->values()->all(),
+        'allMaxBasicTraitCodes' => $allMaxBasicTraitCodesString,
+        'time' => $test->time,
+        'created_at' => $test->created_at->format('d/m/Y'),
+      ];
+      
+      return Inertia::render('Result/Show', [
+        'test' => $groupedResult,
+      ]);
     }
     
     /**
