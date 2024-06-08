@@ -105,7 +105,7 @@
       Route::get('{test}/edit', [TestController::class, 'edit'])->name('tests.edit');
       Route::put('{test}', [TestController::class, 'update'])->name('tests.update');
       Route::delete('{test}', [TestController::class, 'destroy'])->name('tests.destroy');
-      Route::get('export', [TestController::class, 'export'])->name('tests.export');
+//      Route::get('export', [TestController::class, 'export'])->name('tests.export');
     });
     
     Route::group(['prefix' => 'results'], function () {

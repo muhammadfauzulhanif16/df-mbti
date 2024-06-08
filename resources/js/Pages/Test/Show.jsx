@@ -1,6 +1,5 @@
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
-import { Box, Button, Flex, Progress, Stack, Text, Title } from '@mantine/core'
-import { router } from '@inertiajs/core'
+import { Box, Flex, Progress, Stack, Text, Title } from '@mantine/core'
 
 const Show = (props) => {
   console.log(props)
@@ -55,8 +54,8 @@ const Show = (props) => {
         </Stack>
       </Box>
       
-      <Button
-        onClick={() => router.get('/tests/export')}>download</Button>
+      {/*<Button*/}
+      {/*  onClick={() => router.get('/tests/export')}>download</Button>*/}
     </AppLayout>
   )
 }

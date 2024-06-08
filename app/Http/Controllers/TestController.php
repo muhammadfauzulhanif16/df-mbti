@@ -13,7 +13,6 @@
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Auth;
   use Inertia\Inertia;
-  use function Spatie\LaravelPdf\Support\pdf;
   
   class TestController extends Controller
   {
@@ -174,12 +173,12 @@
     {
       //
     }
-    
-    public function export()
-    {
-      return pdf()
-        ->view('pdf.invoice', compact('invoice'))
-        ->name('invoice-2023-04-10.pdf')
-        ->download();
-    }
+
+//    public function export()
+//    {
+//      return pdf()
+//        ->view('pdf.invoice', compact('invoice'))
+//        ->name('invoice-2023-04-10.pdf')
+//        ->download();
+//    }
   }
