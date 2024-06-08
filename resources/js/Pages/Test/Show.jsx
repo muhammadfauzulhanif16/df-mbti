@@ -1,13 +1,14 @@
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
-import { Box, Flex, Progress, Stack, Text, Title } from '@mantine/core'
+import { Box, Button, Flex, Progress, Stack, Text, Title } from '@mantine/core'
+import { router } from '@inertiajs/core'
 
 const Show = (props) => {
   console.log(props)
   
   return (
     <AppLayout
-      title="Hasil"
-      activeNav="Hasil"
+      title="Tes MBTI"
+      activeNav="Tes MBTI"
       authed={props.auth.user}
       meta={props.meta}
     >
@@ -53,6 +54,9 @@ const Show = (props) => {
         
         </Stack>
       </Box>
+      
+      <Button
+        onClick={() => router.get('/tests/export')}>download</Button>
     </AppLayout>
   )
 }

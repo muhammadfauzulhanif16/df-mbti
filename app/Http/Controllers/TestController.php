@@ -4,6 +4,7 @@
   
   use App\Http\Requests\UpdateTestRequest;
   use App\Models\Answer;
+  use App\Models\BasicTrait;
   use App\Models\Choice;
   use App\Models\Indicator;
   use App\Models\Statement;
@@ -11,6 +12,8 @@
   use Exception;
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Auth;
+  use Inertia\Inertia;
+  use function Spatie\LaravelPdf\Support\pdf;
   
   class TestController extends Controller
   {
@@ -43,7 +46,7 @@
           ]);
         }
         
-        return to_route('tests.index')->with('meta', [
+        return to_route('tests.show', $test->id)->with('meta', [
           'status' => true,
           'title' => 'Tes telah selesai',
         ]);
@@ -89,7 +92,63 @@
      */
     public function show(Test $test)
     {
-      //
+      $groupedIndicators = $test->load('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
+        ->answers->groupBy('statement.indicator.name');
+      
+      $allMaxBasicTraitCodes = [];
+      
+      $groupedIndicators->transform(function ($indicatorGroup, $indicatorName) use (&$allMaxBasicTraitCodes) {
+        $groupedBasicTraits = $indicatorGroup->groupBy('statement.basicTrait.name');
+        
+        $totalIndicatorValue = 0;
+        
+        $groupedBasicTraits->transform(function ($basicTraitGroup, $basicTraitName) use (&$totalIndicatorValue) {
+          $totalBasicTraitValue = $basicTraitGroup->sum('choice.value');
+          $totalIndicatorValue += $totalBasicTraitValue;
+          
+          return [
+            'name' => $basicTraitName,
+            'totalValue' => $totalBasicTraitValue,
+          ];
+        });
+        
+        $maxBasicTrait = $groupedBasicTraits->sortByDesc('totalValue')->first();
+        $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
+
+//        $maxTotalValue = $groupedBasicTraits->max('totalValue');
+//        $maxBasicTraits = $groupedBasicTraits->filter(function ($basicTrait) use ($maxTotalValue) {
+//          return $basicTrait['totalValue'] == $maxTotalValue;
+//        });
+//
+//        $maxBasicTrait = $maxBasicTraits->random();
+//        $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
+        
+        $allMaxBasicTraitCodes[] = $maxBasicTraitCode;
+        
+        return [
+          'name' => $indicatorName,
+          'totalValue' => $totalIndicatorValue,
+          'maxBasicTrait' => $maxBasicTrait,
+          'maxBasicTraitCode' => $maxBasicTraitCode,
+          'basic_traits' => $groupedBasicTraits->values()->all(),
+        ];
+      });
+      
+      $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
+      
+      $groupedResult = [
+        'id' => $test->id,
+        'test' => $test,
+        'indicators' => $groupedIndicators->values()->all(),
+        'allMaxBasicTraitCodes' => $allMaxBasicTraitCodesString,
+        'time' => $test->time,
+        'created_at' => $test->created_at->format('d/m/Y'),
+      ];
+      
+      return Inertia::render('Test/Show', [
+        'test' => $groupedResult,
+        'meta' => session('meta'),
+      ]);
     }
     
     /**
@@ -114,5 +173,13 @@
     public function destroy(Test $test)
     {
       //
+    }
+    
+    public function export()
+    {
+      return pdf()
+        ->view('pdf.invoice', compact('invoice'))
+        ->name('invoice-2023-04-10.pdf')
+        ->download();
     }
   }

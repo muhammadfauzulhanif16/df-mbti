@@ -101,9 +101,11 @@
       Route::get('', [TestController::class, 'index'])->name('tests.index');
       Route::get('create', [TestController::class, 'create'])->name('tests.create');
       Route::post('', [TestController::class, 'store'])->name('tests.store');
+      Route::get('{test}', [TestController::class, 'show'])->name('tests.show');
       Route::get('{test}/edit', [TestController::class, 'edit'])->name('tests.edit');
       Route::put('{test}', [TestController::class, 'update'])->name('tests.update');
       Route::delete('{test}', [TestController::class, 'destroy'])->name('tests.destroy');
+      Route::get('export', [TestController::class, 'export'])->name('tests.export');
     });
     
     Route::group(['prefix' => 'results'], function () {
