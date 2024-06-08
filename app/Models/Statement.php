@@ -17,4 +17,9 @@
     {
       return $this->belongsTo(BasicTrait::class);
     }
+    
+    public function indicator()
+    {
+      return $this->belongsTo(Indicator::class);
+    }
   }

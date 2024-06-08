@@ -11,5 +11,10 @@
     use HasFactory, HasUuids;
     
     protected $fillable = ['user_id', 'time'];
+    
+    public function answers()
+    {
+      return $this->hasMany(Answer::class);
+    }
   }
  

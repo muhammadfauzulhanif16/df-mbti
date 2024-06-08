@@ -63,7 +63,7 @@ export const Create = (props) => {
         form.post(route('tests.store'))
       }}>
         <Box px={16}>
-          <Progress.Root radius="xl" size="xl">
+          <Progress.Root radius="xl" size="xl" my={16}>
             <Tooltip label={`${
               100 / props.totalSessions * sessionProgress
             }}%`}>
@@ -77,16 +77,13 @@ export const Create = (props) => {
             </Tooltip>
           </Progress.Root>
           
-          <Group justify="space-between" my={32}>
-            <p>Waktu: {formatTime(timer)}</p>
-          </Group>
+          <p>Waktu: {formatTime(timer)}</p>
           
-          
-          <Title mt={16} mb={32} align="center">
+          <Title align="center" m={16}>
             {props.indicators[activeIndicator].name}
           </Title>
           
-          <List style={{ display: 'flex', flexDirection: 'column', gap: 32}}>
+          <List style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {props.indicators[activeIndicator].sessions[activeStatements]?.map((statement) => {
               let indexStatement = 0
               props.indicators.map((indicator, index) => {

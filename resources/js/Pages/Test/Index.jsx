@@ -1,22 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box, Button, Center, List, Progress } from '@mantine/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import { router } from '@inertiajs/core'
 
 const Index = (props) => {
   console.log(props)
-  
-  const [isTestStarted, setIsTestStarted] = useState(false)
-  
-  
-  // console.log('activeIndicator', activeIndicator)
-  // console.log('activeIndicator', props.indicators[activeIndicator])
-  //
-  // console.log('sessionProgress', sessionProgress)
-  // console.log('activeStatements', activeStatements)
-  // console.log('activeStatements', props.indicators[activeIndicator].sessions[activeStatements])
-  // console.log('activeStatements', props.totalSessions)
-  
   
   return (
     <AppLayout title="Tes MBTI" activeNav="Tes MBTI" authed={props.auth.user}
