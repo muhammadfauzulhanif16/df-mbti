@@ -34,6 +34,9 @@ const Show = (props) => {
                       }
                     >
                       <Progress.Label
+                        style={{
+                          lineHeight: '32px'
+                        }}
                         fz={16}>{basic_trait.name}</Progress.Label>
                     </Progress.Section>
                   ))}
