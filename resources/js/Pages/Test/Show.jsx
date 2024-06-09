@@ -48,7 +48,7 @@ const Show = (props) => {
                     }}>CETAK</Button>
           )}
           
-          <Title order={3} align="center" mb={16}>Hasil Tipe Kepribadian</Title>
+          <Title size={20} align="center" mb={16}>Hasil Tipe Kepribadian</Title>
           
           <Flex gap={16}>
             <Stack w="50%">
@@ -127,7 +127,7 @@ const Show = (props) => {
               </div>
               
               <div>
-                <Text fz={14}>Sarang Pekerjaan</Text>
+                <Text fz={14}>Saran Pekerjaan</Text>
                 <div
                   style={{
                     padding: '8px 16px',
