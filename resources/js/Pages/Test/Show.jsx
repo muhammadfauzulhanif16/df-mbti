@@ -48,7 +48,7 @@ const Show = (props) => {
                     }}>CETAK</Button>
           )}
           
-          <Title size={20} align="center" mb={16}>Hasil Tipe Kepribadian</Title>
+          <Title size={30} align="center" mb={16}>Hasil Tipe Kepribadian</Title>
           
           <Flex gap={16}>
             <Stack w="50%">
