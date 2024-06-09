@@ -126,7 +126,10 @@ export const Create = (props) => {
               >Selesai</Button>
             ) : (
               <Button
-                onClick={() => setActiveIndicator(activeIndicator + 1)}
+                onClick={() => {
+                  setActiveIndicator(activeIndicator + 1)
+                  window.scrollTo(0, 0)
+                }}
               >Selanjutnya</Button>
             )}
           </Group>
