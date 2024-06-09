@@ -10,7 +10,7 @@ const Index = (props) => {
     guide.personality.toLowerCase().includes(search.toLowerCase())
   )
   console.log(props)
-  const THList = ['#', 'Tipe Kepribadian', 'Saran Pengembangan', 'Opsi']
+  const THList = ['#', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Saran Pengembangan', 'Opsi']
   
   return (
     <AppLayout title="Panduan" activeNav="Panduan"
@@ -53,6 +53,12 @@ const Index = (props) => {
                   <Table.Td style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{guide.personality}</Table.Td>
+                  <Table.Td
+                    style={{ whiteSpace: 'nowrap' }}>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: guide.job }}
+                    />
+                  </Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>
                     <div

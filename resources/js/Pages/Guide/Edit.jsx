@@ -51,7 +51,7 @@ const Edit = (props) => {
             />
           </RichTextEditor>
           
-          <Text fz={14}>Saran Pengembangan</Text>
+          <Text fz={14} mt={16}>Saran Pengembangan</Text>
           <RichTextEditor
             styles={{
               content: {
