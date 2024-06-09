@@ -63,26 +63,19 @@
      */
     public function create()
     {
+      $indicators = Indicator::with('statements')->get();
+      
       return Inertia('Test/Create', [
-        'indicators' => Indicator::all()->map(function ($indicator) {
-          $indicator->sessions = $indicator->statements
-            ->chunk(2)
-            ->map(function ($chunk) {
-              return $chunk->values();
-            })
-            ->toArray();
-          
-          return $indicator;
-        }),
+        'indicators' => $indicators,
         'statements' => Statement::all(),
-        'totalSessions' => Indicator::all()->map(function ($indicator) {
-          $indicator->sessions = $indicator->statements->chunk(2)->map(function ($chunk) {
-            return $chunk->values();
-          })->toArray();
-          return $indicator;
-        })->reduce(function ($carry, $indicator) {
-          return $carry + count($indicator->sessions);
-        }, 0),
+//        'totalSessions' => Indicator::all()->map(function ($indicator) {
+//          $indicator->sessions = $indicator->statements->chunk(2)->map(function ($chunk) {
+//            return $chunk->values();
+//          })->toArray();
+//          return $indicator;
+//        })->reduce(function ($carry, $indicator) {
+//          return $carry + count($indicator->sessions);
+//        }, 0),
         'choices' => Choice::all(),
       ]);
     }

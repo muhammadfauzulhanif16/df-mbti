@@ -16,7 +16,7 @@ import { AppLayout } from '@/Layouts/AppLayout.jsx'
 const Index = (props) => {
   const [search, setSearch] = useState('')
   const [academicYear, setAcademicYear] = useState('')
-  const [supervisor, setSupervisor] = useState(props.auth.user.role === 'Dosen Pembimbing Akademik' ? props.auth.user.full_name : '')
+  const [supervisor, setSupervisor] = useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.full_name : '')
   
   const students = props.students.filter(student => (
     (!search || student.user.full_name.toLowerCase().includes(search.toLowerCase())) &&
@@ -24,8 +24,10 @@ const Index = (props) => {
     (!supervisor || student.supervisor.full_name === supervisor)
   ))
   
-  const THList = ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Ajaran', 'Email', 'Nomor Telepon', 'DPA', 'Aksi']
-  
+  const THList = props.auth.user.role === 'Admin'
+    ? ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Ajaran', 'Email', 'Nomor Telepon', 'DPA', 'Aksi']
+    : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Email', 'Tipe Kepribadian', 'Aksi']
+  console.log(props)
   return (
     <AppLayout title="Mahasiswa" activeNav="Mahasiswa" authed={props.auth.user}
                meta={props.meta}>
@@ -56,7 +58,7 @@ const Index = (props) => {
               clearable
               searchable
               value={supervisor}
-              disabled={props.auth.user.role === 'Dosen Pembimbing Akademik'}
+              disabled={props.auth.user.role === 'Dosen PA'}
               nothingFoundMessage="Tidak ada dosen pembimbing"
               checkIconPosition="right"
               placeholder="Dosen Pembimbing"
@@ -125,15 +127,20 @@ const Index = (props) => {
                     style={{ whiteSpace: 'nowrap' }}>{student.user.id_number}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{student.user.full_name}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{student.academic_year}</Table.Td>
+                  {props.auth.user.role === 'Admin' && (<Table.Td
+                    style={{ whiteSpace: 'nowrap' }}>{student.academic_year}</Table.Td>)}
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{student.user.email}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{student.user.phone_number
-                  }</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{student.supervisor.full_name}</Table.Td>
+                  {props.auth.user.role === 'Admin' ? (<>
+                    <Table.Td
+                      style={{ whiteSpace: 'nowrap' }}>{student.user.phone_number
+                    }</Table.Td>
+                    <Table.Td
+                      style={{ whiteSpace: 'nowrap' }}>{student.supervisor.full_name}</Table.Td></>) : (
+                    <Table.Td
+                      style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0]?.allMaxBasicTraitCodes : '-'}</Table.Td>
+                  )}
+                  
                   <Table.Td>
                     {props.auth.user.role === 'Admin' ? (
                       <Button.Group>

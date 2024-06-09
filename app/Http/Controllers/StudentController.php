@@ -3,8 +3,10 @@
   namespace App\Http\Controllers;
   
   use App\Imports\StudentsImport;
+  use App\Models\BasicTrait;
   use App\Models\Lecturer;
   use App\Models\Student;
+  use App\Models\Test;
   use App\Models\User;
   use Exception;
   use Illuminate\Http\Request;
@@ -19,12 +21,69 @@
      */
     public function index()
     {
+      $students = Student::with('user')->get();
+      
+      $students = $students->map(function ($student) {
+        $results = Test::where('user_id', $student->user_id)
+          ->with('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
+          ->orderBy('created_at', 'desc')
+          ->get();
+        
+        $tests = $results->map(function ($test) {
+          $groupedIndicators = $test->answers->groupBy('statement.indicator.name');
+          
+          $allMaxBasicTraitCodes = [];
+          
+          $groupedIndicators->transform(function ($indicatorGroup, $indicatorName) use (&$allMaxBasicTraitCodes) {
+            $groupedBasicTraits = $indicatorGroup->groupBy('statement.basicTrait.name');
+            
+            $totalIndicatorValue = 0;
+            
+            $groupedBasicTraits->transform(function ($basicTraitGroup, $basicTraitName) use (&$totalIndicatorValue) {
+              $totalBasicTraitValue = $basicTraitGroup->sum('choice.value');
+              $totalIndicatorValue += $totalBasicTraitValue;
+              
+              return [
+                'name' => $basicTraitName,
+                'totalValue' => $totalBasicTraitValue,
+              ];
+            });
+            
+            $maxBasicTrait = $groupedBasicTraits->sortByDesc('totalValue')->first();
+            $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
+            
+            $allMaxBasicTraitCodes[] = $maxBasicTraitCode;
+            
+            return [
+              'name' => $indicatorName,
+              'totalValue' => $totalIndicatorValue,
+              'maxBasicTrait' => $maxBasicTrait,
+              'maxBasicTraitCode' => $maxBasicTraitCode,
+              'basic_traits' => $groupedBasicTraits->values()->all(),
+            ];
+          });
+          
+          $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
+          
+          return [
+            'id' => $test->id,
+            'test' => $test,
+            'indicators' => $groupedIndicators->values()->all(),
+            'allMaxBasicTraitCodes' => $allMaxBasicTraitCodesString,
+            'time' => $test->time,
+            'created_at' => $test->created_at->format('d/m/Y'),
+          ];
+        });
+        
+        $student['supervisor'] = User::find($student->supervisor_id);
+        $student['tests'] = $tests; // Add this line to include the tests data for each student
+        
+        return $student;
+      });
+      
       return Inertia::render('Student/Index', [
         'meta' => session('meta'),
-        'students' => Student::with('user')->get()->map(function ($student) {
-          $student['supervisor'] = User::find($student->supervisor_id);
-          return $student;
-        }),
+        'students' => $students,
         'lecturers' => Lecturer::with('user')->get(),
       ]);
     }
