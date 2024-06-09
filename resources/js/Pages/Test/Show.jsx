@@ -75,14 +75,14 @@ const Show = (props) => {
               </div>
               
               <div>
-                <Text fz={14}>Waktu Pengerjaan</Text>
+                <Text fz={14}>Tanggal Pengerjaan</Text>
                 <div
                   style={{
                     padding: '8px 16px',
                     border: '1px solid #dcdcdc',
                     fontSize: 14
                   }}
-                  dangerouslySetInnerHTML={{ __html: form.data.time }}
+                  dangerouslySetInnerHTML={{ __html: form.data.created_at }}
                 />
               </div>
               
