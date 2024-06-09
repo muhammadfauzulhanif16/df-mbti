@@ -147,8 +147,7 @@ export const NavBar = (props) => {
       pos="sticky"
       top={0}
       style={{
-        zIndex: 2,
-        borderBottom: '1px solid #DEE2E6'
+        zIndex: 2
       }}>
       <Image src={Unsada} w={48} />
       

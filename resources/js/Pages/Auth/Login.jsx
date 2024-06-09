@@ -25,7 +25,10 @@ const Login = (props) => {
   return (
     <AppLayout title="Masuk Akun" authed={props.auth.user} meta={props.meta}>
       <Stack h="100vh" gap={0}>
-        <Group h={80} px={16}>
+        <Group h={80} px={16} style={{
+          borderBottom: '1px solid #e1e1e1',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+        }}>
           <Image h={48} w={48} src={Epersona} />
           <Title>E-Persona</Title>
         </Group>
