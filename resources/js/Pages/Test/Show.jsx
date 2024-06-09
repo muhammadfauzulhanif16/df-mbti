@@ -198,7 +198,7 @@ const Show = (props) => {
       
       
       {!isPrint && (
-        <Group justify="end" p={16}>
+        <Group justify="center" p={16}>
           {isDetail ? (
             <Button onClick={() => setIsDetail(false)}>Kembali</Button>
           ) : (
