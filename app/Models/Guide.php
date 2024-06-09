@@ -13,5 +13,6 @@
     protected $fillable = [
       'personality',
       'development',
+      'job',
     ];
   }

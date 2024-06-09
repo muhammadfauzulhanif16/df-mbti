@@ -28,6 +28,7 @@
         Guide::create([
           'personality' => $request->personality,
           'development' => $request->development,
+          'job' => $request->job,
         ]);
         
         return redirect()->route('guides.index')->with('meta', [
@@ -82,6 +83,7 @@
         $guide->update([
           'personality' => $request->personality,
           'development' => $request->development,
+          'job' => $request->job,
         ]);
         
         return redirect()->route('guides.index')->with('meta', [

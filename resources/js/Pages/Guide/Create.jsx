@@ -11,8 +11,10 @@ import Placeholder from '@tiptap/extension-placeholder'
 const Create = (props) => {
   const form = useForm({
     personality: '',
-    development: ''
+    development: '',
+    job: ''
   })
+  
   return (
     <AppLayout title="Tambah Panduan" activeNav="Panduan"
                authed={props.auth.user} meta={props.meta}>
@@ -30,6 +32,24 @@ const Create = (props) => {
             placeholder="Masukkan tipe kepribadian..."
             onChange={(e) => form.setData('personality', e.target.value)}
           />
+          
+          <Text fz={14}>Saran Pekerjaan</Text>
+          <RichTextEditor
+            styles={{
+              content: {
+                border: '1px solid #dcdcdc'
+              }
+            }}
+            editor={useEditor({
+              extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
+              content: form.data.job,
+              onUpdate: ({ editor }) => {
+                form.setData('job', editor.getHTML())
+              }
+            })}>
+            <RichTextEditor.Content
+            />
+          </RichTextEditor>
           
           <Text fz={14}>Saran Pengembangan</Text>
           <RichTextEditor

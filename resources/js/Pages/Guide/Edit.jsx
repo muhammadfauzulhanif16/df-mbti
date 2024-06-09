@@ -11,7 +11,8 @@ import Placeholder from '@tiptap/extension-placeholder'
 const Edit = (props) => {
   const form = useForm({
     personality: props.guide.personality,
-    development: props.guide.development
+    development: props.guide.development,
+    job: props.guide.job
   })
   
   return (
@@ -32,7 +33,25 @@ const Edit = (props) => {
             onChange={(e) => form.setData('personality', e.target.value)}
           />
           
-          <Text fz={14}>Saran Pengembangan </Text>
+          <Text fz={14}>Saran Pekerjaan</Text>
+          <RichTextEditor
+            styles={{
+              content: {
+                border: '1px solid #dcdcdc'
+              }
+            }}
+            editor={useEditor({
+              extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
+              content: form.data.job,
+              onUpdate: ({ editor }) => {
+                form.setData('development', editor.getHTML())
+              }
+            })}>
+            <RichTextEditor.Content
+            />
+          </RichTextEditor>
+          
+          <Text fz={14}>Saran Pengembangan</Text>
           <RichTextEditor
             styles={{
               content: {
@@ -49,7 +68,6 @@ const Edit = (props) => {
             <RichTextEditor.Content
             />
           </RichTextEditor>
-          
           <Button.Group mt={32}>
             <Button
               variant="outline"

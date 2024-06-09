@@ -89,8 +89,8 @@ const Show = (props) => {
             
             <Stack>
               {props.test.indicators.map((indicator, id) => (<>
-                  <Stack key={id}>
-                    <Title align="center" order={3}>
+                  <Stack key={id} style={{ border: '1px solid black' }}>
+                    <Title align="center" order={3} bg="blue.2">
                       {indicator.name}
                     </Title>
                     

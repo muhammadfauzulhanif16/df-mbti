@@ -80,7 +80,8 @@ export const Create = (props) => {
           <List style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
                 type="ordered">
             {props.indicators[activeIndicator].statements.map((statement) => (
-              <List.Item key={statement.id}>
+              <List.Item key={statement.id}
+                         style={{ border: '1px solid #000', padding: 16 }}>
                 <Radio.Group
                   label={statement.name}
                   withAsterisk
