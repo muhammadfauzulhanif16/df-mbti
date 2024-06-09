@@ -134,7 +134,7 @@ const Show = (props) => {
                     border: '1px solid #dcdcdc',
                     fontSize: 14
                   }}
-                  dangerouslySetInnerHTML={{ __html: form.data.detail }}
+                  dangerouslySetInnerHTML={{ __html: form.data.job }}
                 />
               </div>
             </Stack>
