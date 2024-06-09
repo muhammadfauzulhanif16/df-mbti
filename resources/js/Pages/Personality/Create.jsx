@@ -30,20 +30,11 @@ const Create = (props) => {
             gap: 32
           }}>
             {props.basic_traits.map((basic_trait) => (
-              <List.Item>{`${basic_trait.name} (${basic_trait.code})`}</List.Item>))}
+              <List.Item
+                key={basic_trait.id}>{`${basic_trait.name} (${basic_trait.code})`}</List.Item>))}
           </List>
           
           <Title align="center" mb={32}>Tambah Data Tipe Kepribadian</Title>
-          
-          
-          {/*<FileButton variant="light" color="green" w="100%"*/}
-          {/*            onChange={(file) => form.setData('file', file)}*/}
-          {/*            accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">*/}
-          {/*  {(props) =>*/}
-          {/*    <Button {...props}>{form.data.file ? form.data.file.name : 'Pilih file excel'}</Button>}*/}
-          {/*</FileButton>*/}
-          
-          {/*<Divider my={16} label="Atau" labelPosition="center" />*/}
           
           <TextInput
             mb={16}

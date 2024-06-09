@@ -118,9 +118,6 @@
       // Route::delete('{test.blade.php}', [TestController::class, 'destroy'])->name('tests.destroy');
     });
     
-    Route::get('/export-pdf', [PDFController::class, 'exportPDF']);
-    Route::get('/export-pdf-page', [PDFController::class, 'showExportPage']);
-    
     Route::get('/guide', function () {
       return Inertia::render('Guide/index');
     })->name('guide');

@@ -23,16 +23,6 @@ const Create = (props) => {
         }}>
           <Title align="center" mb={32}>Masukan Saran Pengembangan</Title>
           
-          
-          {/*<FileButton variant="light" color="green" w="100%"*/}
-          {/*            onChange={(file) => form.setData('file', file)}*/}
-          {/*            accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">*/}
-          {/*  {(props) =>*/}
-          {/*    <Button {...props}>{form.data.file ? form.data.file.name : 'Pilih file excel'}</Button>}*/}
-          {/*</FileButton>*/}
-          
-          {/*<Divider my={16} label="Atau" labelPosition="center" />*/}
-          
           <TextInput
             mb={16}
             withAsterisk

@@ -2,7 +2,6 @@
   
   namespace App\Http\Controllers;
   
-  use App\Imports\GuideImport;
   use App\Models\Guide;
   use Exception;
   use Illuminate\Http\Request;
@@ -26,26 +25,16 @@
     public function store(Request $request)
     {
       try {
-        if ($request->hasFile('file')) {
-          (new GuideImport)->import($request->file('file'));
-          
-          return redirect()->route('guides.index')->with('meta', [
-            'status' => true,
-            'title' => 'Berhasil menambahkan panduan',
-            'message' => "Panduan berhasil ditambahkan!"
-          ]);
-        } else {
-          Guide::create([
-            'personality' => $request->personality,
-            'development' => $request->development,
-          ]);
-          
-          return redirect()->route('guides.index')->with('meta', [
-            'status' => true,
-            'title' => 'Berhasil menambahkan panduan',
-            'message' => "Panduan '{$request->title}' berhasil ditambahkan!"
-          ]);
-        }
+        Guide::create([
+          'personality' => $request->personality,
+          'development' => $request->development,
+        ]);
+        
+        return redirect()->route('guides.index')->with('meta', [
+          'status' => true,
+          'title' => 'Berhasil menambahkan panduan',
+          'message' => "Panduan '{$request->title}' berhasil ditambahkan!"
+        ]);
       } catch (Exception $e) {
         return redirect()->route('guides.index')->with('meta', [
           'status' => false,

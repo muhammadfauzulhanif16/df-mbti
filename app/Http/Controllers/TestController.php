@@ -176,17 +176,4 @@
     {
       //
     }
-    
-    public function export_pdf()
-    {
-      return 'export pdf';
-//      $html = view('app.blade')->render();
-//
-//      $pdfPath = storage_path('app/public/invoice.pdf');
-//
-//      Browsershot::html($html)
-//        ->save($pdfPath);
-//
-//      return response()->download($pdfPath);
-    }
   }
