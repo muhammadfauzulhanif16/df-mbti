@@ -77,11 +77,9 @@ const Show = (props) => {
                 </Flex>
               </Stack>
             ))}
-          
           </Stack>
         </Box>
-      
-      ) : isDetail === 1 ?
+      ) : (props.auth.user.role !== 'Mahasiswa' && isDetail === 1) ?
         (
           <Box p={16}>
             <Title size={30} align="center" mb={16}>Hasil Tipe
@@ -260,7 +258,7 @@ const Show = (props) => {
           }
           
           {
-            isDetail < 2 && (
+            (props.auth.user.role !== 'Mahasiswa' ? isDetail < 2 : isDetail < 1) && (
               <Button
                 onClick={() => setIsDetail(isDetail + 1)}>Selanjutnya</Button>
             )
