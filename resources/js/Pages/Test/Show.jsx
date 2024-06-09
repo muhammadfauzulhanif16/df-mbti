@@ -103,7 +103,7 @@ const Show = (props) => {
             
             <Stack w="50%">
               <div>
-                <Text fz={14}>Hasil Tipe Kepribadian</Text>
+                <Text fz={14}>Tipe Kepribadian</Text>
                 <div
                   style={{
                     padding: '8px 16px',
