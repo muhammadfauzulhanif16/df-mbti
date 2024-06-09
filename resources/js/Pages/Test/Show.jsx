@@ -11,6 +11,7 @@ import {
 } from '@mantine/core'
 import React, { useState } from 'react'
 import { useForm } from '@inertiajs/react'
+import { IconPrinter } from '@tabler/icons-react'
 
 const Show = (props) => {
   console.log(props)
@@ -36,14 +37,15 @@ const Show = (props) => {
       {isDetail ? (
         <Box p={16}>
           {!isPrint && (
-            <Button mb={16} variant="subtle" onClick={() => {
-              setIsPrint(true)
-              
-              setTimeout(() => {
-                window.print()
-                setIsPrint(false)
-              }, 1000)
-            }}>CETAK</Button>
+            <Button leftSection={<IconPrinter />} mb={16} variant="subtle"
+                    onClick={() => {
+                      setIsPrint(true)
+                      
+                      setTimeout(() => {
+                        window.print()
+                        setIsPrint(false)
+                      }, 1000)
+                    }}>CETAK</Button>
           )}
           
           <Title order={4} align="center" mb={16}>Hasil Tipe Kepribadian</Title>
