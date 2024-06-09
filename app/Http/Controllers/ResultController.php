@@ -5,6 +5,7 @@
   use App\Http\Requests\StoreResultRequest;
   use App\Http\Requests\UpdateResultRequest;
   use App\Models\BasicTrait;
+  use App\Models\Personality;
   use App\Models\Result;
   use App\Models\Test;
   use Illuminate\Support\Facades\Auth;
@@ -141,8 +142,11 @@
         'created_at' => $test->created_at->format('d/m/Y'),
       ];
       
-      return Inertia::render('Result/Show', [
+      return Inertia::render('Test/Show', [
         'test' => $groupedResult,
+        'user' => $test->where('id', $test->id)->first()->user,
+        'personality' => Personality::where('name', $allMaxBasicTraitCodesString)->first(),
+        'meta' => session('meta'),
       ]);
     }
     

@@ -114,14 +114,6 @@
         
         $maxBasicTrait = $groupedBasicTraits->sortByDesc('totalValue')->first();
         $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
-
-//        $maxTotalValue = $groupedBasicTraits->max('totalValue');
-//        $maxBasicTraits = $groupedBasicTraits->filter(function ($basicTrait) use ($maxTotalValue) {
-//          return $basicTrait['totalValue'] == $maxTotalValue;
-//        });
-//
-//        $maxBasicTrait = $maxBasicTraits->random();
-//        $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
         
         $allMaxBasicTraitCodes[] = $maxBasicTraitCode;
         
