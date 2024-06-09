@@ -113,6 +113,7 @@
           
           return [
             'name' => $basicTraitName,
+            'statements' => $basicTraitGroup,
             'totalValue' => $totalBasicTraitValue,
           ];
         });
@@ -142,7 +143,7 @@
         'created_at' => $test->created_at->format('d/m/Y'),
       ];
       
-      return Inertia::render('Test/Show', [
+      return Inertia::render('Result/Show', [
         'test' => $groupedResult,
         'user' => $test->where('id', $test->id)->first()->user,
         'personality' => Personality::where('name', $allMaxBasicTraitCodesString)->first(),
