@@ -124,7 +124,7 @@ export const NavBar = (props) => {
       {
         icon: <IconUsers />,
         label: 'Grafik',
-        route: ''
+        route: 'chart.index'
       },
       {
         icon: <IconInfoCircle />,

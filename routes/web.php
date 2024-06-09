@@ -1,6 +1,7 @@
 <?php
   
   use App\Http\Controllers\BasicTraitController;
+  use App\Http\Controllers\ChartController;
   use App\Http\Controllers\ChoiceController;
   use App\Http\Controllers\GuideController;
   use App\Http\Controllers\IndicatorController;
@@ -43,7 +44,7 @@
       Route::get('{user}/edit', [StudentController::class, 'edit'])->name('students.edit');
       Route::put('{user}', [StudentController::class, 'update'])->name('students.update');
       Route::delete('{user}', [StudentController::class, 'destroy'])->name('students.destroy');
-      Route::get('{user}/tests/', [StudentController::class, 'tests_index'])->name('students.tests.index');
+      Route::get('{user}/tests', [StudentController::class, 'tests_index'])->name('students.tests.index');
     });
     
     Route::group(['prefix' => 'indicators'], function () {
@@ -109,14 +110,14 @@
       Route::delete('{test}', [TestController::class, 'destroy'])->name('tests.destroy');
       
     });
-//    Route::get('/export', [TestController::class, 'export_pdf'])->name('tests.export');
+    
     Route::group(['prefix' => 'results'], function () {
       Route::get('', [ResultController::class, 'index'])->name('results.index');
       Route::get('{test}', [ResultController::class, 'show'])->name('results.show');
-      // Route::post('', [TestController::class, 'store'])->name('tests.store');
-      // Route::get('{test.blade.php}/edit', [TestController::class, 'edit'])->name('tests.edit');
-      // Route::put('{test.blade.php}', [TestController::class, 'update'])->name('tests.update');
-      // Route::delete('{test.blade.php}', [TestController::class, 'destroy'])->name('tests.destroy');
+    });
+    
+    Route::group(['prefix' => 'chart'], function () {
+      Route::get('', [ChartController::class, 'index'])->name('chart.index');
     });
     
     Route::get('/guide', function () {

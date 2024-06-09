@@ -10,7 +10,7 @@
   {
     use HasFactory, HasUuids;
     
-    protected $fillable = ['user_id', 'time'];
+    protected $fillable = ['user_id', 'time', 'personality'];
     
     public function answers()
     {
