@@ -117,7 +117,10 @@ export const Create = (props) => {
           <Group mt={32} justify="center">
             {activeIndicator > 0 && (
               <Button
-                onClick={() => setActiveIndicator(activeIndicator - 1)}>Sebelumnya</Button>
+                onClick={() => {
+                  setActiveIndicator(activeIndicator - 1)
+                  window.scrollTo(0, 0)
+                }}>Sebelumnya</Button>
             )}
             
             {props.indicators.length - 1 === activeIndicator ? (
