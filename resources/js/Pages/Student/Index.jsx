@@ -151,10 +151,8 @@ const Index = (props) => {
                       </Button.Group>
                     ) : (
                       <Button variant="outline" color="yellow"
-                              onClick={() => router.delete(route(''))}>Detail</Button>
+                              onClick={() => router.get(route('students.tests.index', student.user_id))}>Detail</Button>
                     )}
-                  
-                  
                   </Table.Td>
                 </Table.Tr>
               ))}

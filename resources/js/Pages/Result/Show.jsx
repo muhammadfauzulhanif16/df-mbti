@@ -30,7 +30,7 @@ const Show = (props) => {
   
   return (
     <AppLayout
-      title={!isPrint && 'Tes MBTI'}
+      title="Tes MBTI"
       activeNav={!isPrint && 'Tes MBTI'}
       authed={!isPrint && props.auth.user}
       isPrint>

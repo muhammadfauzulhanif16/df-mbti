@@ -217,4 +217,62 @@
         ]);
       }
     }
+    
+    public function tests_index(User $user)
+    {
+      $results = Test::where('user_id', $user->id)
+        ->with('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
+        ->orderBy('created_at', 'desc')
+        ->get();
+      
+      $groupedResults = $results->map(function ($test) {
+        $groupedIndicators = $test->answers->groupBy('statement.indicator.name');
+        
+        $allMaxBasicTraitCodes = [];
+        
+        $groupedIndicators->transform(function ($indicatorGroup, $indicatorName) use (&$allMaxBasicTraitCodes) {
+          $groupedBasicTraits = $indicatorGroup->groupBy('statement.basicTrait.name');
+          
+          $totalIndicatorValue = 0;
+          
+          $groupedBasicTraits->transform(function ($basicTraitGroup, $basicTraitName) use (&$totalIndicatorValue) {
+            $totalBasicTraitValue = $basicTraitGroup->sum('choice.value');
+            $totalIndicatorValue += $totalBasicTraitValue;
+            
+            return [
+              'name' => $basicTraitName,
+              'totalValue' => $totalBasicTraitValue,
+            ];
+          });
+          
+          $maxBasicTrait = $groupedBasicTraits->sortByDesc('totalValue')->first();
+          $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
+          
+          $allMaxBasicTraitCodes[] = $maxBasicTraitCode;
+          
+          return [
+            'name' => $indicatorName,
+            'totalValue' => $totalIndicatorValue,
+            'maxBasicTrait' => $maxBasicTrait,
+            'maxBasicTraitCode' => $maxBasicTraitCode,
+            'basic_traits' => $groupedBasicTraits->values()->all(),
+          ];
+        });
+        
+        $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
+        
+        return [
+          'id' => $test->id,
+          'test' => $test,
+          'indicators' => $groupedIndicators->values()->all(),
+          'allMaxBasicTraitCodes' => $allMaxBasicTraitCodesString,
+          'time' => $test->time,
+          'created_at' => $test->created_at->format('d/m/Y'),
+        ];
+      });
+      
+      return Inertia('Student/Tests', [
+        'tests' => $groupedResults,
+      ]);
+    }
   }

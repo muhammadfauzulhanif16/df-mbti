@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from '@inertiajs/react'
-import { Box, Button, Group, List, Progress, Radio, Title } from '@mantine/core'
+import {
+  Box,
+  Button,
+  Group,
+  List,
+  Progress,
+  Radio,
+  Text,
+  Title
+} from '@mantine/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 export const Create = (props) => {
@@ -52,7 +61,7 @@ export const Create = (props) => {
         form.post(route('tests.store'))
       }}>
         <Box p={16}>
-          <Progress.Root radius="xl" size="xl" my={16}>
+          <Progress.Root radius="xl" size="xl" mt={16}>
             <Progress.Section value={
               100 / props.indicators.length * (activeIndicator + 1)
             }>
@@ -62,9 +71,9 @@ export const Create = (props) => {
             </Progress.Section>
           </Progress.Root>
           
-          <p>Waktu: {formatTime(timer)}</p>
+          <Text>Waktu: {formatTime(timer)}</Text>
           
-          <Title align="center" m={16}>
+          <Title align="center" mb={16} bg="blue.2">
             {props.indicators[activeIndicator].name}
           </Title>
           

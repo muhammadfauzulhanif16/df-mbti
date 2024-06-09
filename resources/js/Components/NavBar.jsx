@@ -14,6 +14,7 @@ import {
   IconUsers
 } from '@tabler/icons-react'
 import { useDisclosure } from '@mantine/hooks'
+
 const Unsada = '/unsada.png'
 
 export const NavBar = (props) => {
@@ -24,6 +25,11 @@ export const NavBar = (props) => {
       icon: <IconHome />,
       label: 'Beranda',
       route: 'dashboard'
+    },
+    {
+      icon: <IconUser />,
+      label: 'Profil',
+      route: 'profile'
     },
     {
       icon: <IconUsers />,
@@ -61,11 +67,6 @@ export const NavBar = (props) => {
       route: 'guides.index'
     },
     {
-      icon: <IconUser />,
-      label: 'Profil',
-      route: 'profile'
-    },
-    {
       icon: <IconLogout />,
       label: 'Keluar',
       route: 'logout'
@@ -84,6 +85,11 @@ export const NavBar = (props) => {
       },
       {
         icon: <IconUser />,
+        label: 'Profil',
+        route: 'profile'
+      },
+      {
+        icon: <IconUser />,
         label: 'Tes MBTI',
         route: 'tests.index'
       },
@@ -91,11 +97,6 @@ export const NavBar = (props) => {
         icon: <IconUser />,
         label: 'Hasil',
         route: 'results.index'
-      },
-      {
-        icon: <IconUser />,
-        label: 'Profil',
-        route: 'profile'
       },
       {
         icon: <IconLogout />,
@@ -111,6 +112,11 @@ export const NavBar = (props) => {
         route: 'dashboard'
       },
       {
+        icon: <IconUser />,
+        label: 'Profil',
+        route: 'profile'
+      },
+      {
         icon: <IconUsers />,
         label: 'Mahasiswa',
         route: 'students.index'
@@ -124,11 +130,6 @@ export const NavBar = (props) => {
         icon: <IconInfoCircle />,
         label: 'Panduan',
         route: 'guide.index'
-      },
-      {
-        icon: <IconUser />,
-        label: 'Profil',
-        route: 'profile'
       },
       {
         icon: <IconLogout />,
