@@ -7,6 +7,7 @@
   use App\Models\BasicTrait;
   use App\Models\Choice;
   use App\Models\Indicator;
+  use App\Models\Personality;
   use App\Models\Statement;
   use App\Models\Test;
   use Exception;
@@ -146,6 +147,8 @@
       
       return Inertia::render('Test/Show', [
         'test' => $groupedResult,
+        'user' => $test->where('id', $test->id)->first()->user,
+        'personality' => Personality::where('name', $allMaxBasicTraitCodesString)->first(),
         'meta' => session('meta'),
       ]);
     }
@@ -173,12 +176,17 @@
     {
       //
     }
-
-//    public function export()
-//    {
-//      return pdf()
-//        ->view('pdf.invoice', compact('invoice'))
-//        ->name('invoice-2023-04-10.pdf')
-//        ->download();
-//    }
+    
+    public function export_pdf()
+    {
+      return 'export pdf';
+//      $html = view('app.blade')->render();
+//
+//      $pdfPath = storage_path('app/public/invoice.pdf');
+//
+//      Browsershot::html($html)
+//        ->save($pdfPath);
+//
+//      return response()->download($pdfPath);
+    }
   }

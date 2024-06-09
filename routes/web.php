@@ -5,6 +5,7 @@
   use App\Http\Controllers\GuideController;
   use App\Http\Controllers\IndicatorController;
   use App\Http\Controllers\LecturerController;
+  use App\Http\Controllers\PDFController;
   use App\Http\Controllers\PersonalityController;
   use App\Http\Controllers\ProfileController;
   use App\Http\Controllers\ResultController;
@@ -105,17 +106,20 @@
       Route::get('{test}/edit', [TestController::class, 'edit'])->name('tests.edit');
       Route::put('{test}', [TestController::class, 'update'])->name('tests.update');
       Route::delete('{test}', [TestController::class, 'destroy'])->name('tests.destroy');
-//      Route::get('export', [TestController::class, 'export'])->name('tests.export');
+      
     });
-    
+//    Route::get('/export', [TestController::class, 'export_pdf'])->name('tests.export');
     Route::group(['prefix' => 'results'], function () {
       Route::get('', [ResultController::class, 'index'])->name('results.index');
       Route::get('{test}', [ResultController::class, 'show'])->name('results.show');
       // Route::post('', [TestController::class, 'store'])->name('tests.store');
-      // Route::get('{test}/edit', [TestController::class, 'edit'])->name('tests.edit');
-      // Route::put('{test}', [TestController::class, 'update'])->name('tests.update');
-      // Route::delete('{test}', [TestController::class, 'destroy'])->name('tests.destroy');
+      // Route::get('{test.blade.php}/edit', [TestController::class, 'edit'])->name('tests.edit');
+      // Route::put('{test.blade.php}', [TestController::class, 'update'])->name('tests.update');
+      // Route::delete('{test.blade.php}', [TestController::class, 'destroy'])->name('tests.destroy');
     });
+    
+    Route::get('/export-pdf', [PDFController::class, 'exportPDF']);
+    Route::get('/export-pdf-page', [PDFController::class, 'showExportPage']);
     
     Route::get('/guide', function () {
       return Inertia::render('Guide/index');
