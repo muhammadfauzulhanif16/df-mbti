@@ -56,7 +56,9 @@ const Index = (props) => {
           dataKey="personalityName"
           withLegend
           xAxisLabel="Kepribadian"
-          yAxisLabel={`${props.students.length} dari ${props.totalStudents} Mahasiswa`}
+          yAxisLabel={`${
+            supervisorId ? props.students.filter((student) => student.supervisor_id === supervisorId).length : props.students.length
+          } dari ${props.totalStudents} Mahasiswa`}
           series={[{ name: 'Mahasiswa', color: 'blue' }]}
           withBarValueLabel
         />

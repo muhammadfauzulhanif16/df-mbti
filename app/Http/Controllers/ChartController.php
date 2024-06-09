@@ -22,7 +22,7 @@
         'meta' => session('meta'),
         'students' => $students,
         'totalStudents' => Student::count(),
-        'lecturers' => Lecturer::with('user')->get()
+        'lecturers' => Lecturer::with(['user', 'students'])->get()
       ]);
     }
   }
