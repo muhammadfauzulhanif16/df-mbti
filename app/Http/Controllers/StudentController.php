@@ -95,8 +95,8 @@
     {
       try {
         if ($request->hasFile('file')) {
-          $user = Excel::import(new StudentsImport, $request->file('file'));
-          dd($user);
+          Excel::import(new StudentsImport, $request->file('file'));
+          
           return to_route('students.index')->with('meta', [
             'status' => true,
             'title' => 'Berhasil menambahkan mahasiswa',
