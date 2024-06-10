@@ -19,7 +19,7 @@ const Index = (props) => {
         } else {
           acc.push({
             personalityName: personality,
-            'Mahasiswa': existingPersonality
+            'Mahasiswa': existingPersonality.totalStudents
           })
         }
       }
