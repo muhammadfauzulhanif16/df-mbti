@@ -129,7 +129,7 @@ const Show = (props) => {
           </Box>
         ) : (
           <Box p={16}>
-            {!isPrint && (
+            {(!isPrint && props.auth.user.role === 'Mahasiswa') && (
               <Button leftSection={<IconPrinter />} mb={16} variant="subtle"
                       onClick={() => {
                         setIsPrint(true)
