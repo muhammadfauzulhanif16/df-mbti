@@ -17,7 +17,10 @@ const Index = (props) => {
         if (existingPersonality) {
           existingPersonality.totalStudents += 1
         } else {
-          acc.push({ personalityName: personality, 'Mahasiswa': 1 })
+          acc.push({
+            personalityName: personality,
+            'Mahasiswa': existingPersonality
+          })
         }
       }
     }
