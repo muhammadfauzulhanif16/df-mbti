@@ -81,9 +81,10 @@ const Create = (props) => {
             error={form.errors.role}
           >
             <Group mt="xs">
-              <Radio value="Ketua Program Studi" label="Ketua Program Studi" />
-              <Radio value="Dosen Pembimbing Akademik"
-                     label="Dosen Pembimbing Akademik" />
+              <Radio value="Kepala Program Studi"
+                     label="Kepala Program Studi" />
+              <Radio value="Dosen PA"
+                     label="Dosen PA" />
             </Group>
           </Radio.Group>
           
