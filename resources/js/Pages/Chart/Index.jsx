@@ -13,9 +13,9 @@ const Index = (props) => {
     if (personality) {
       const existingPersonality = acc.find(item => item.personalityName === personality)
       if (existingPersonality) {
-        existingPersonality.["Mahasiswa"] += 1
+        existingPersonality['Mahasiswa'] += 1
       } else {
-        acc.push({ personalityName: personality, "Mahasiswa": 1 })
+        acc.push({ personalityName: personality, 'Mahasiswa': 1 })
       }
     }
     return acc
