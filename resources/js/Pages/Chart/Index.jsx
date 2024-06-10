@@ -8,7 +8,7 @@ const Index = (props) => {
   console.log(props)
   const [supervisorId, setSupervisorId] = React.useState(props.auth.user.id)
   
-  const personalities = props.students.reduce((acc, student) => {
+  const personalities = props.students?.reduce((acc, student) => {
     // Check if supervisorId is null or matches the student's supervisor_id
     if (supervisorId === null || student.supervisor_id === supervisorId) {
       const personality = student.test.personality
