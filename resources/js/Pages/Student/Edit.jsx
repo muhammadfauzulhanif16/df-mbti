@@ -130,8 +130,8 @@ const Edit = (props) => {
               leftSection={<IconCalendar />}
               withAsterisk
               value={new Date(form.data.academic_year)}
-              label="Tahun Ajaran"
-              placeholder="Masukkan tahun ajaran..."
+              label="Tahun Angkatan"
+              placeholder="Masukkan tahun angkatan..."
               onChange={(value) => {
                 if (!value) {
                   form.setError({

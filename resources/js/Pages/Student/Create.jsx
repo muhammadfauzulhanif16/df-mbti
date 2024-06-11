@@ -145,8 +145,8 @@ const Create = (props) => {
             <YearPickerInput
               leftSection={<IconCalendar />}
               withAsterisk
-              label="Tahun Ajaran"
-              placeholder="Masukkan tahun ajaran..."
+              label="Tahun Angkatan"
+              placeholder="Masukkan tahun angkatan..."
               onChange={(value) => {
                 if (!value) {
                   form.setError({
