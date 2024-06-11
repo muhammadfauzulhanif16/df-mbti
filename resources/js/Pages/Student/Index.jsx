@@ -25,7 +25,7 @@ const Index = (props) => {
   ))
   
   const THList = props.auth.user.role === 'Admin'
-    ? ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Ajaran', 'Email', 'Nomor Telepon', 'DPA', 'Aksi']
+    ? ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Email', 'Nomor Telepon', 'DPA', 'Aksi']
     : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Email', 'Tipe Kepribadian', 'Aksi']
   console.log(props)
   return (
@@ -128,7 +128,7 @@ const Index = (props) => {
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{student.user.full_name}</Table.Td>
                   {props.auth.user.role === 'Admin' && (<Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{student.academic_year}</Table.Td>)}
+                    style={{ whiteSpace: 'nowrap' }}>{student.user.id_number.substring(0, 4)}</Table.Td>)}
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{student.user.email}</Table.Td>
                   {props.auth.user.role === 'Admin' ? (<>

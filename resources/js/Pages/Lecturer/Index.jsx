@@ -19,7 +19,7 @@ const Index = (props) => {
     lecturer.user.full_name.toLowerCase().includes(search.toLowerCase())
   )
   
-  const THList = ['#', 'Foto', 'NIDN', 'Nama Lengkap', 'Status', 'Tahun Ajaran', 'Email', 'Nomor Telepon', 'Aksi']
+  const THList = ['#', 'Foto', 'NIDN', 'Nama Lengkap', 'Status', 'Email', 'Nomor Telepon', 'Aksi']
   
   return (
     <AppLayout title="Dosen" activeNav="Dosen" authed={props.auth.user}
@@ -70,8 +70,6 @@ const Index = (props) => {
                     style={{ whiteSpace: 'nowrap' }}>{lecturer.user.full_name}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{lecturer.user.role}</Table.Td>
-                  <Table.Td
-                    style={{ whiteSpace: 'nowrap' }}>{lecturer.academic_year}</Table.Td>
                   <Table.Td
                     style={{ whiteSpace: 'nowrap' }}>{lecturer.user.email}</Table.Td>
                   <Table.Td
