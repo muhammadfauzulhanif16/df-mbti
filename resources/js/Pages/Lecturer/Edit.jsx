@@ -36,7 +36,9 @@ const Edit = (props) => {
     <AppLayout title="Ubah Dosen" activeNav="Dosen" authed={props.auth.user}
                meta={props.meta}>
       <Center h="100vh" p={16}>
-        <form onSubmit={(e) => {
+        <form style={{
+          width: '50%'
+        }} onSubmit={(e) => {
           e.preventDefault()
           form.put(route('lecturers.update', props.user))
         }}>
@@ -50,9 +52,10 @@ const Edit = (props) => {
             onChange={(value) => form.setData('role', value)}
           >
             <Group mt="xs">
-              <Radio value="Ketua Program Studi" label="Ketua Program Studi" />
-              <Radio value="Dosen Pembimbing Akademik"
-                     label="Dosen Pembimbing Akademik" />
+              <Radio value="Kepala Program Studi"
+                     label="Kepala Program Studi" />
+              <Radio value="Dosen PA"
+                     label="Dosen PA" />
             </Group>
           </Radio.Group>
           

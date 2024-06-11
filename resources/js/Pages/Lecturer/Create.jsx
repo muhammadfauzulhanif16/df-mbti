@@ -45,7 +45,9 @@ const Create = (props) => {
     <AppLayout title="Tambah Dosen" activeNav="Dosen" authed={props.auth.user}
                meta={props.meta}>
       <Center h="100vh" p={16}>
-        <form onSubmit={(e) => {
+        <form style={{
+          width: '50%'
+        }} onSubmit={(e) => {
           e.preventDefault()
           form.post(route('lecturers.store'))
         }}>

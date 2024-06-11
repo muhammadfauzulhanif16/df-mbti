@@ -12,7 +12,6 @@
     {
       Schema::create('lecturers', function (Blueprint $table) {
         $table->foreignUuid('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-        $table->year('academic_year');
       });
     }
     
