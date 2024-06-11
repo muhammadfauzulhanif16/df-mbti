@@ -18,7 +18,6 @@
     public function definition(): array
     {
       return [
-        'academic_year' => $this->faker->date('Y')
       ];
     }
   }

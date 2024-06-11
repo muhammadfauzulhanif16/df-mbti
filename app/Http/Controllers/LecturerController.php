@@ -55,7 +55,6 @@
           
           $user->lecturer()->create([
             'user_id' => $user->id,
-            'academic_year' => $request->academic_year,
           ]);
           
           return to_route('lecturers.index')->with('meta', [
@@ -112,10 +111,6 @@
           'role' => $request->role,
           'email' => $request->email,
           'password' => $request->password ? Hash::make($request->password) : $user->password,
-        ]);
-        
-        $user->lecturer()->update([
-          'academic_year' => $request->academic_year,
         ]);
         
         return to_route('lecturers.index')->with('meta', [

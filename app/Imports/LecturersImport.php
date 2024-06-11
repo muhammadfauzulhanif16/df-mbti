@@ -32,10 +32,8 @@
         'password' => $row['nidn'],
       ]);
       
-      // Create a new Lecturer instance with the id of the newly created User
       Lecturer::create([
         'user_id' => $user->id,
-        'academic_year' => $row['tahun_ajaran'],
       ]);
       
       return $user;

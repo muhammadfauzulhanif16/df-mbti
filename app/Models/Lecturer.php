@@ -14,7 +14,6 @@
     protected $fillable = [
       'user_id',
       'national_lecturer_id_number',
-      'academic_year',
     ];
     
     public function user()
