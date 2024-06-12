@@ -22,14 +22,16 @@
         'password' => Hash::make('stafftu@mbti.id'),
       ]);
       
-      $this->call([
-        LecturerSeeder::class,
-        StudentSeeder::class,
-        BasicTraitSeeder::class,
-        PersonalitySeeder::class,
-        IndicatorSeeder::class,
-        ChoiceSeeder::class,
-        TestSeeder::class,
-      ]);
+      if (env('APP_ENV') === 'local') {
+        $this->call([
+          LecturerSeeder::class,
+          StudentSeeder::class,
+          BasicTraitSeeder::class,
+          PersonalitySeeder::class,
+          IndicatorSeeder::class,
+          ChoiceSeeder::class,
+          TestSeeder::class,
+        ]);
+      }
     }
   }
