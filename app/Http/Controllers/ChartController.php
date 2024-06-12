@@ -11,17 +11,14 @@
   {
     public function index()
     {
-      $students = Student::with('user')->get()->map(function ($student) {
-        $student->test = Test::where('user_id', $student->user->id)->first();
-        return $student;
-      })->filter(function ($student) {
-        return $student->test !== null;
-      });
+      $tests = Test::with([
+        'student.supervisor',
+      ])->get();
       
       return Inertia::render('Chart/Index', [
         'meta' => session('meta'),
-        'students' => $students,
-        'totalStudents' => Student::count(),
+        'tests' => $tests,
+        'students' => Student::with(['user', 'supervisor'])->get(),
         'lecturers' => Lecturer::with(['user', 'students'])->get()
       ]);
     }

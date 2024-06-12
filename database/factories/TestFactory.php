@@ -1,14 +1,15 @@
 <?php
-
-namespace Database\Factories;
-
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Test>
- */
-class TestFactory extends Factory
-{
+  
+  namespace Database\Factories;
+  
+  use App\Models\Test;
+  use Illuminate\Database\Eloquent\Factories\Factory;
+  
+  /**
+   * @extends Factory<Test>
+   */
+  class TestFactory extends Factory
+  {
     /**
      * Define the model's default state.
      *
@@ -16,8 +17,8 @@ class TestFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            //
-        ];
+      return [
+        'time' => $this->faker->time(),
+      ];
     }
-}
+  }

@@ -22,4 +22,14 @@
     {
       return $this->belongsTo(User::class);
     }
+    
+    public function tests()
+    {
+      return $this->hasMany(Test::class, 'user_id', 'user_id');
+    }
+    
+    public function supervisor()
+    {
+      return $this->belongsTo(Lecturer::class, 'supervisor_id', 'user_id');
+    }
   }

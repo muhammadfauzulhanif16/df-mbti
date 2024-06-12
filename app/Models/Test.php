@@ -17,9 +17,9 @@
       return $this->hasMany(Answer::class);
     }
     
-    public function user()
+    public function student()
     {
-      return $this->belongsTo(User::class);
+      return $this->belongsTo(Student::class, 'user_id', 'user_id');
     }
   }
  

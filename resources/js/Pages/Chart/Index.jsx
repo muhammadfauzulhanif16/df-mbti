@@ -8,10 +8,9 @@ const Index = (props) => {
   console.log(props)
   const [supervisorId, setSupervisorId] = React.useState(props.auth.user.id || '')
   
-  const personalities = props.students
-    ?.filter((student) => supervisorId === '' || student.supervisor_id === supervisorId)
-    .reduce((acc, student) => {
-      const personality = student.test.personality
+  let personalities = props.tests
+    .reduce((acc, test) => {
+      const personality = test.personality
       if (personality) {
         const existingPersonality = acc.find(
           (item) => item.personalityName === personality
@@ -24,6 +23,25 @@ const Index = (props) => {
       }
       return acc
     }, [])
+  
+  if (supervisorId) {
+    personalities = props.tests
+      ?.filter((test) => supervisorId === '' || test.student.supervisor_id === supervisorId)
+      .reduce((acc, test) => {
+        const personality = test.personality
+        if (personality) {
+          const existingPersonality = acc.find(
+            (item) => item.personalityName === personality
+          )
+          if (existingPersonality) {
+            existingPersonality['Mahasiswa'] += 1
+          } else {
+            acc.push({ personalityName: personality, 'Mahasiswa': 1 })
+          }
+        }
+        return acc
+      }, [])
+  }
   
   return (
     <AppLayout
@@ -58,8 +76,8 @@ const Index = (props) => {
           withLegend
           xAxisLabel="Kepribadian"
           yAxisLabel={`${
-            supervisorId ? props.students.filter((student) => student.supervisor_id === supervisorId).length : props.students.length
-          } dari ${props.totalStudents} Mahasiswa`}
+            supervisorId ? props.tests.filter((test) => test.student.supervisor_id === supervisorId).length : props.tests.length
+          } dari ${supervisorId ? props.students.filter((student) => student.supervisor_id === supervisorId).length : props.students.length} Mahasiswa`}
           series={[{ name: 'Mahasiswa', color: 'blue' }]}
           withBarValueLabel
         />

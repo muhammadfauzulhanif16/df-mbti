@@ -16,12 +16,12 @@ import { AppLayout } from '@/Layouts/AppLayout.jsx'
 const Index = (props) => {
   const [search, setSearch] = useState('')
   const [academicYear, setAcademicYear] = useState('')
-  const [supervisor, setSupervisor] = useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.full_name : '')
-  
+  const [supervisorId, setSupervisorId] = useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.id : '')
+  console.log(supervisorId)
   const students = props.students.filter(student => (
     (!search || student.user.full_name.toLowerCase().includes(search.toLowerCase())) &&
     (!academicYear || student.academic_year === academicYear) &&
-    (!supervisor || student.supervisor.full_name === supervisor)
+    (!supervisorId || student.supervisor_id === supervisorId)
   ))
   
   const THList = props.auth.user.role === 'Admin'
@@ -57,13 +57,16 @@ const Index = (props) => {
               leftSection={<IconUser />}
               clearable
               searchable
-              value={supervisor}
+              value={supervisorId}
               disabled={props.auth.user.role === 'Dosen PA'}
               nothingFoundMessage="Tidak ada dosen pembimbing"
               checkIconPosition="right"
               placeholder="Dosen Pembimbing"
-              data={props.lecturers.map(lecturer => lecturer.user.full_name)}
-              onChange={(value) => setSupervisor(value)}
+              data={props.lecturers.map(lecturer => ({
+                label: lecturer.user.full_name,
+                value: lecturer.user.id
+              }))}
+              onChange={(value) => setSupervisorId(value)}
             />
           </Grid.Col>
           
@@ -138,7 +141,7 @@ const Index = (props) => {
                     <Table.Td
                       style={{ whiteSpace: 'nowrap' }}>{student.supervisor.full_name}</Table.Td></>) : (
                     <Table.Td
-                      style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0]?.allMaxBasicTraitCodes : '-'}</Table.Td>
+                      style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0].personality : '-'}</Table.Td>
                   )}
                   
                   <Table.Td>
