@@ -23,7 +23,7 @@
     {
       return Inertia::render('Student/Index', [
         'meta' => session('meta'),
-        'students' => Student::with(['user', 'supervisor', 'tests'])->get(),
+        'students' => Student::with(['user', 'supervisor.user', 'tests'])->get(),
         'lecturers' => Lecturer::with('user')->get(),
       ]);
     }

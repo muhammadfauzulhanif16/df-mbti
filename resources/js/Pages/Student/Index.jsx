@@ -139,7 +139,7 @@ const Index = (props) => {
                       style={{ whiteSpace: 'nowrap' }}>{student.user.phone_number
                     }</Table.Td>
                     <Table.Td
-                      style={{ whiteSpace: 'nowrap' }}>{student.supervisor.full_name}</Table.Td></>) : (
+                      style={{ whiteSpace: 'nowrap' }}>{student.supervisor.user.full_name}</Table.Td></>) : (
                     <Table.Td
                       style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0].personality : '-'}</Table.Td>
                   )}
