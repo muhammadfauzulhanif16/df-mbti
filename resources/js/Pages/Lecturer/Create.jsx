@@ -284,7 +284,7 @@ const Create = (props) => {
           </Button>
           <Button h={48}
                   px={16} styles={{ section: { marginRight: 12 } }} radius={32}
-                  disabled={form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'file' && !value)}
+                  disabled={form.data.file ? false : form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'file' && !value)}
                   fullWidth
                   loading={form.processing}
                   type="submit"

@@ -241,7 +241,6 @@ const Edit = (props) => {
                 error: { marginTop: 8 }
               }}
               leftSection={<IconPassword />}
-              withAsterisk
               label="Kata Sandi (Bawaan: NIDN)"
               placeholder="Masukkan kata sandi..."
             />
