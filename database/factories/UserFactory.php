@@ -23,15 +23,14 @@
     {
       $gender = $this->faker->randomElement(['male', 'female']);
       $full_name = $this->faker->name($gender);
-      $id_number = $this->faker->randomNumber(5, true) . $this->faker->randomNumber(5, true);
       
       return [
-        'full_name' => $this->faker->name,
-        'id_number' => $id_number,
+        'full_name' => $full_name,
+        'id_number' => $this->faker->randomNumber(5, true) . $this->faker->randomNumber(5, true),
         'avatar' => $this->faker->imageUrl(640, 480, $full_name, false,),
         'phone_number' => $this->faker->phoneNumber,
         'email' => strtolower(str_replace(' ', '.', $full_name)) . '@mbti.id',
-        'password' => $id_number,
+        'password' => $this->faker->randomNumber(5, true) . $this->faker->randomNumber(5, true),
       ];
     }
     

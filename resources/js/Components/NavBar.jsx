@@ -141,13 +141,15 @@ export const NavBar = (props) => {
   
   return (
     <Group
+      h={80}
       p={16}
       justify="space-between"
       bg="white"
       pos="sticky"
       top={0}
       style={{
-        zIndex: 2
+        zIndex: 2,
+        borderBottom: '1px solid #f0f0f0'
       }}>
       <Image src={Unsada} w={48} />
       
@@ -206,6 +208,8 @@ export const NavBar = (props) => {
       >
         {NavList.map((nav, id) => (
           <Button
+            px={16}
+            radius={32} h={48}
             disabled={nav.disabled}
             color="gray"
             leftSection={nav.icon}

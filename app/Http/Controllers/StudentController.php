@@ -23,7 +23,10 @@
     {
       return Inertia::render('Student/Index', [
         'meta' => session('meta'),
-        'students' => Student::with(['user', 'supervisor.user', 'tests'])->get(),
+        'students' => Student::with(['user', 'supervisor.user', 'tests'])->get()->map(function ($student) {
+          $student->avatar = $student->user->avatar ? asset('storage/' . $student->user->avatar) : null;
+          return $student;
+        })->sortBy('user.full_name')->values(),
         'lecturers' => Lecturer::with('user')->get(),
       ]);
     }

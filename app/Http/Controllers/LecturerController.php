@@ -24,7 +24,7 @@
           $lecturer->avatar = $lecturer->user->avatar ? asset('storage/' . $lecturer->user->avatar) : null;
           $lecturer['students'] = Student::with('user')->where('supervisor_id', $lecturer->user_id)->get();
           return $lecturer;
-        })
+        })->sortBy('user.full_name')->values(),
       ]);
     }
     

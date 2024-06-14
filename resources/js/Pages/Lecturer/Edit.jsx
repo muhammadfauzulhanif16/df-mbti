@@ -2,11 +2,10 @@ import React from 'react'
 import { useForm } from '@inertiajs/react'
 import {
   Button,
-  Center,
+  Flex,
   Grid,
   Group,
   NumberInput,
-  PasswordInput,
   Radio,
   TextInput,
   Title
@@ -27,125 +26,251 @@ const Edit = (props) => {
     full_name: props.user.full_name,
     national_lecturer_id_number: props.user.id_number,
     phone_number: props.user.phone_number,
-    academic_year: props.user.lecturer.academic_year,
     email: props.user.email,
     password: ''
   })
   
   return (
-    <AppLayout title="Ubah Dosen" activeNav="Dosen" authed={props.auth.user}
-               meta={props.meta}>
-      <Center h="100vh" p={16}>
-        <form style={{
-          width: '50%'
-        }} onSubmit={(e) => {
-          e.preventDefault()
-          form.put(route('lecturers.update', props.user))
-        }}>
-          <Title align="center" mb={32}>Ubah Data Dosen</Title>
+    <form onSubmit={(e) => {
+      e.preventDefault()
+      form.put(route('lecturers.update', props.user))
+    }}>
+      <AppLayout title="Ubah Dosen" activeNav="Dosen" authed={props.auth.user}
+                 meta={props.meta}>
+        <Title align="center" mb={32}>Ubah Data Dosen</Title>
+        
+        <Radio.Group
+          styles={{
+            label: { marginBottom: 8 }, error: { marginTop: 8 }
+          }}
+          mb={16}
+          value={form.data.role}
+          label="Status"
+          withAsterisk
+          onChange={(value) => {
+            form.setData('role', value)
+            
+            if (!value) {
+              form.setError({
+                role:
+                  'Status tidak boleh kosong.'
+              })
+            } else {
+              form.clearErrors('role')
+            }
+          }}
+          error={form.errors.role}
+        >
+          <Group mt="xs">
+            <Radio value="Kepala Program Studi"
+                   label="Kepala Program Studi" />
+            <Radio value="Dosen PA"
+                   label="Dosen PA" />
+          </Group>
+        </Radio.Group>
+        
+        <Grid grow>
+          <Grid.Col span={6}>
+            <TextInput
+              styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 }
+              }}
+              leftSection={<IconUser />}
+              withAsterisk
+              label="Nama Lengkap"
+              placeholder="Masukkan nama lengkap..."
+              onChange={(e) => {
+                const value = e.target.value.replace(/\b\w/g, char => char.toUpperCase()).replace(/\B\w/g, char => char.toLowerCase())
+                form.setData('full_name', value)
+                
+                if (!value) {
+                  form.setError({
+                    full_name:
+                      'Nama lengkap tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('full_name')
+                }
+              }}
+              value={form.data.full_name}
+              error={form.errors.full_name}
+            />
+          </Grid.Col>
           
-          <Radio.Group
-            mb={16}
-            value={form.data.role}
-            label="Status"
-            withAsterisk
-            onChange={(value) => form.setData('role', value)}
+          <Grid.Col span={6}>
+            <NumberInput
+              styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 }
+              }}
+              leftSection={<IconId />}
+              withAsterisk value={form.data.national_lecturer_id_number}
+              label="NIDN"
+              hideControls
+              placeholder="Masukkan NIDN..."
+              onChange={(value) => {
+                form.setData('national_lecturer_id_number', value)
+                
+                if (!value) {
+                  form.setError({
+                    national_lecturer_id_number:
+                      'NIDN tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('national_lecturer_id_number')
+                }
+                
+                if (value.toString().length < 10 || value.toString().length > 10) {
+                  form.setError({
+                    national_lecturer_id_number:
+                      'NIDN harus 10 digit.'
+                  })
+                } else {
+                  form.clearErrors('national_lecturer_id_number')
+                }
+              }}
+              error={form.errors.national_lecturer_id_number}
+            />
+          </Grid.Col>
+          
+          <Grid.Col span={6}>
+            <NumberInput
+              styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 }
+              }}
+              leftSection={<IconPhone />}
+              withAsterisk
+              label="Nomor Telepon"
+              hideControls
+              placeholder="Masukkan nomor telepon..."
+              onChange={(value) => {
+                form.setData('phone_number', value.toString())
+                
+                if (!value) {
+                  form.setError({
+                    phone_number:
+                      'Nomor telepon tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('phone_number')
+                }
+                
+                if (value.toString().length < 10 || value.toString().length > 13) {
+                  form.setError({
+                    phone_number:
+                      'Nomor telepon harus 10-13 digit.'
+                  })
+                } else {
+                  form.clearErrors('phone_number')
+                }
+              }}
+              error={form.errors.phone_number}
+              value={form.data.phone_number}
+            />
+          </Grid.Col>
+          
+          <Grid.Col span={6}>
+            <TextInput
+              styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 }
+              }} value={form.data.email}
+              leftSection={<IconMail />}
+              withAsterisk
+              type="email"
+              label="Email"
+              placeholder="Masukkan email..."
+              onChange={(e) => {
+                form.setData('email', e.target.value.toLowerCase())
+                
+                if (!e.target.value) {
+                  form.setError({
+                    email:
+                      'Email tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('email')
+                }
+              }}
+              error={form.errors.email}
+            />
+          </Grid.Col>
+          
+          <Grid.Col span={6}>
+            <TextInput
+              type="password"
+              styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 }
+              }}
+              leftSection={<IconPassword />}
+              withAsterisk
+              label="Kata Sandi (Bawaan: NIDN)"
+              placeholder="Masukkan kata sandi..."
+            />
+          </Grid.Col>
+        </Grid>
+        
+        <Flex mt={24} gap={16}>
+          <Button h={48}
+                  px={16} styles={{ section: { marginRight: 12 } }} radius={32}
+                  variant="outline"
+                  color="red"
+                  disabled={form.processing}
+                  fullWidth
+                  onClick={() => router.get(route('lecturers.index'))}
           >
-            <Group mt="xs">
-              <Radio value="Kepala Program Studi"
-                     label="Kepala Program Studi" />
-              <Radio value="Dosen PA"
-                     label="Dosen PA" />
-            </Group>
-          </Radio.Group>
-          
-          <Grid grow>
-            <Grid.Col span={6}>
-              <TextInput
-                leftSection={<IconUser />}
-                withAsterisk
-                label="Nama Lengkap"
-                value={form.data.full_name}
-                placeholder="Masukkan nama lengkap..."
-                onChange={(e) => {
-                  const value = e.target.value.replace(/\b\w/g, char => char.toUpperCase()).replace(/\B\w/g, char => char.toLowerCase())
-                  form.setData('full_name', value)
-                }}
-              />
-            </Grid.Col>
-            
-            <Grid.Col span={6}>
-              <NumberInput
-                leftSection={<IconId />}
-                withAsterisk
-                label="NIDN"
-                hideControls
-                value={form.data.national_lecturer_id_number}
-                placeholder="Masukkan NIDN..."
-                onChange={(value) => form.setData('national_lecturer_id_number', value)}
-              />
-            </Grid.Col>
-            
-            <Grid.Col span={6}>
-              <NumberInput
-                leftSection={<IconPhone />}
-                withAsterisk
-                label="Nomor Telepon"
-                hideControls
-                value={form.data.phone_number}
-                placeholder="Masukkan nomor telepon..."
-                onChange={(value) => form.setData('phone_number', value)}
-              />
-            </Grid.Col>
-            
-            <Grid.Col span={6}>
-              <TextInput
-                leftSection={<IconMail />}
-                withAsterisk
-                type="email"
-                value={form.data.email}
-                label="Email"
-                placeholder="Masukkan email..."
-                onChange={(e) => form.setData('email', e.target.value.toLowerCase())}
-              />
-            </Grid.Col>
-            
-            <Grid.Col span={6}>
-              <PasswordInput
-                leftSection={<IconPassword />}
-                value={form.data.password}
-                label="Kata Sandi"
-                placeholder="Masukkan kata sandi..."
-                onChange={(e) => form.setData('password', e.target.value)}
-              />
-            </Grid.Col>
-          </Grid>
-          
-          <Button.Group mt={32}>
-            <Button
-              variant="outline"
-              color="red"
-              disabled={form.processing}
-              fullWidth
-              onClick={() => router.get(route('lecturers.index'))}
-            >
-              Batal
-            </Button>
-            <Button
-              fullWidth
-              disabled={
-                form.data.role === '' || form.data.full_name === '' || form.data.national_lecturer_id_number === '' ||
-                form.data.phone_number === '' || form.data.academic_year === '' || form.data.email === ''
-              }
-              loading={form.processing}
-              type="submit"
-            >
-              Simpan
-            </Button>
-          </Button.Group>
-        </form>
-      </Center>
-    </AppLayout>
+            Batal
+          </Button>
+          <Button h={48}
+                  px={16} styles={{ section: { marginRight: 12 } }} radius={32}
+                  disabled={form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'password' && !value)}
+                  fullWidth
+                  loading={form.processing}
+                  type="submit"
+          >
+            Simpan
+          </Button>
+        </Flex>
+      </AppLayout>
+    </form>
   )
 }
 
