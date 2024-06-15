@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import { BarChart } from '@mantine/charts'
-import { Select, Stack } from '@mantine/core'
+import { Select } from '@mantine/core'
 import { IconUser } from '@tabler/icons-react'
 
 const Index = (props) => {
@@ -50,38 +50,46 @@ const Index = (props) => {
       authed={props.auth.user}
       meta={props.meta}
     >
-      <Stack p={16}>
-        <Select
-          leftSection={<IconUser />}
-          clearable
-          searchable
-          value={supervisorId}
-          disabled={props.auth.user.role === 'Dosen PA'}
-          nothingFoundMessage="Tidak ada dosen pembimbing"
-          checkIconPosition="right"
-          placeholder="Dosen Pembimbing"
-          data={props.lecturers.map(lecturer => ({
-            value: lecturer.user.id,
-            label: lecturer.user.full_name
-          }))}
-          onChange={(value) => setSupervisorId(value)}
-        />
-        
-        <BarChart
-          h="100vh"
-          tickLine="xy"
-          gridAxis="xy"
-          data={personalities}
-          dataKey="personalityName"
-          withLegend
-          xAxisLabel="Kepribadian"
-          yAxisLabel={`${
-            supervisorId ? props.tests.filter((test) => test.student.supervisor_id === supervisorId).length : props.tests.length
-          } dari ${supervisorId ? props.students.filter((student) => student.supervisor_id === supervisorId).length : props.students.length} Mahasiswa`}
-          series={[{ name: 'Mahasiswa', color: 'blue' }]}
-          withBarValueLabel
-        />
-      </Stack>
+      <Select styles={{
+        label: { marginBottom: 8 },
+        input: {
+          height: 48,
+          borderRadius: 32,
+          paddingLeft: 50,
+          paddingRight: 16
+        },
+        section: { marginLeft: 0, width: 48, height: 48 },
+        error: { marginTop: 8 }
+      }}
+              leftSection={<IconUser />}
+              clearable mb={16}
+              searchable
+              value={supervisorId}
+              disabled={props.auth.user.role === 'Dosen PA'}
+              nothingFoundMessage="Tidak ada dosen pembimbing"
+              checkIconPosition="right"
+              placeholder="Dosen Pembimbing"
+              data={props.lecturers.map(lecturer => ({
+                value: lecturer.user.id,
+                label: lecturer.user.full_name
+              }))}
+              onChange={(value) => setSupervisorId(value)}
+      />
+      
+      <BarChart
+        h="100vh"
+        tickLine="xy"
+        gridAxis="xy"
+        data={personalities}
+        dataKey="personalityName"
+        withLegend
+        xAxisLabel="Kepribadian"
+        yAxisLabel={`${
+          supervisorId ? props.tests.filter((test) => test.student.supervisor_id === supervisorId).length : props.tests.length
+        } dari ${supervisorId ? props.students.filter((student) => student.supervisor_id === supervisorId).length : props.students.length} Mahasiswa`}
+        series={[{ name: 'Mahasiswa', color: 'blue' }]}
+        withBarValueLabel
+      />
     </AppLayout>
   )
 }
