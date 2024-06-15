@@ -5,6 +5,7 @@
   use App\Models\Guide;
   use Exception;
   use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth;
   
   class GuideController extends Controller
   {
@@ -13,9 +14,13 @@
      */
     public function index()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia('Guide/Index', [
         'meta' => session('meta'),
         'guides' => Guide::all(),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -50,8 +55,12 @@
      */
     public function create()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia('Guide/Create', [
         'meta' => session('meta'),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -68,9 +77,13 @@
      */
     public function edit(Guide $guide)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia('Guide/Edit', [
         'meta' => session('meta'),
         'guide' => $guide,
+        'auth' => ['user' => $authedUser],
       ]);
     }
     

@@ -72,7 +72,7 @@ const Edit = (props) => {
             }
           }}
           editor={useEditor({
-            extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Masukkan deskripsi' })],
+            extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Masukkan deskripsi...' })],
             content: form.data.description,
             onUpdate: ({ editor }) => {
               form.setData('description', editor.getHTML())
@@ -135,7 +135,7 @@ const Edit = (props) => {
             }
           }}
           editor={useEditor({
-            extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Masukkan saran pekerjaan' })],
+            extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Masukkan saran pekerjaan...' })],
             content: form.data.job,
             onUpdate: ({ editor }) => {
               form.setData('job', editor.getHTML())
@@ -198,7 +198,7 @@ const Edit = (props) => {
             }
           }}
           editor={useEditor({
-            extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Masukkan rincian pekerjaan' })],
+            extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Masukkan rincian pekerjaan...' })],
             content: form.data.detail,
             onUpdate: ({ editor }) => {
               form.setData('detail', editor.getHTML())
