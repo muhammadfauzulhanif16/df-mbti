@@ -1,5 +1,5 @@
 import { AppLayout } from '@/Layouts/AppLayout'
-import { Button, Flex, Table, Title } from '@mantine/core'
+import { Box, Button, Table, Title } from '@mantine/core'
 import { router } from '@inertiajs/core'
 
 export const Index = (props) => {
@@ -11,36 +11,65 @@ export const Index = (props) => {
       authed={props.auth.user}
       meta={props.meta}
     >
-      <Flex p={32} justify="center" align="center" direction="column">
-        <Title mb={32}>Hasil Test Sebelumnya</Title>
-        
-        <Table>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>No</Table.Th>
-              <Table.Th>Tipe Kepribadian</Table.Th>
-              <Table.Th>Tanggal</Table.Th>
-              <Table.Th>Waktu Selesai</Table.Th>
-              <Table.Th></Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          
-          <Table.Tbody>
-            {props.tests.map((test, id) => (
-              <Table.Tr key={id}>
-                <Table.Td>{id + 1}</Table.Td>
-                <Table.Td>{test.allMaxBasicTraitCodes}</Table.Td>
-                <Table.Td>{test.created_at}</Table.Td>
-                <Table.Td>{test.time}</Table.Td>
-                <Table.Td>
-                  <Button
-                    onClick={() => router.get(route('results.show', test.id))}>Detail</Button>
-                </Table.Td>
+      <Title mb={32} align="center">Hasil Test Sebelumnya</Title>
+      
+      <Box
+        style={{
+          borderRadius: 20,
+          border: '1px solid #E9ECEF'
+        }}>
+        <Table.ScrollContainer>
+          <Table highlightOnHover withColumnBorders
+                 styles={{
+                   table: {
+                     borderRadius: 16
+                   },
+                   thead: {
+                     borderRadius: 16
+                   }
+                 }}>
+            <Table.Thead h={64}>
+              <Table.Tr>
+                <Table.Th px={16} py={0}
+                          style={{ whiteSpace: 'nowrap' }}>No</Table.Th>
+                <Table.Th px={16} py={0}
+                          style={{ whiteSpace: 'nowrap' }}>Tipe
+                                                           Kepribadian</Table.Th>
+                <Table.Th px={16} py={0}
+                          style={{ whiteSpace: 'nowrap' }}>Tanggal</Table.Th>
+                <Table.Th px={16} py={0}
+                          style={{ whiteSpace: 'nowrap' }}>Waktu
+                                                           Selesai</Table.Th>
+                <Table.Th px={16} py={0}
+                          style={{ whiteSpace: 'nowrap' }}>Opsi</Table.Th>
               </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
-      </Flex>
+            </Table.Thead>
+            
+            <Table.Tbody>
+              {props.tests.map((test, id) => (
+                <Table.Tr key={id} h={64}>
+                  <Table.Td px={16} py={0}
+                            style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
+                  <Table.Td px={16} py={0}
+                            style={{ whiteSpace: 'nowrap' }}>{test.allMaxBasicTraitCodes}</Table.Td>
+                  <Table.Td px={16} py={0}
+                            style={{ whiteSpace: 'nowrap' }}>{test.created_at}</Table.Td>
+                  <Table.Td px={16} py={0}
+                            style={{ whiteSpace: 'nowrap' }}>{test.time}</Table.Td>
+                  <Table.Td px={16} py={0}
+                            style={{ whiteSpace: 'nowrap' }}>
+                    <Button px={16} h={48}
+                            radius={32}
+                            styles={{ section: { marginRight: 16 } }}
+                            variant="outline"
+                            onClick={() => router.get(route('tests.show', test.id))}>Rincian</Button>
+                  </Table.Td>
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
+        </Table.ScrollContainer>
+      </Box>
     </AppLayout>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Center, List, Progress } from '@mantine/core'
+import { Box, Button, Center, List, Progress, Title } from '@mantine/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import { router } from '@inertiajs/core'
 
@@ -11,7 +11,9 @@ const Index = (props) => {
                meta={props.meta}>
       
       <Box px={16}>
-        <h2 align="center">Aturan Pengerjaan Test MBTI Persona</h2>
+        <Title order={2} fz={34} mb={32} align="center">Aturan Pengerjaan Test
+                                                        MBTI
+                                                        Persona</Title>
         
         <List type="ordered">
           <List.Item>Hasil Test MBTI merupakan cerminan dari kepribadian
@@ -35,8 +37,11 @@ const Index = (props) => {
                   animated />
         
         <Center>
-          <Button mx="auto" onClick={() => router.get(route('tests.create'))}>Mulai
-                                                                              Test</Button>
+          <Button h={48}
+                  radius={32} px={16}
+                  styles={{ section: { marginRight: 16 } }} mx="auto"
+                  onClick={() => router.get(route('tests.create'))}>Mulai
+                                                                    Test</Button>
         </Center>
       </Box>
     </AppLayout>

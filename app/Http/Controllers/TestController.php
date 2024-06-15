@@ -22,8 +22,12 @@
      */
     public function index()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia('Test/Index', [
         'meta' => session('meta'),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -104,11 +108,15 @@
      */
     public function create()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       $indicators = Indicator::with('statements')->get();
       
       return Inertia('Test/Create', [
         'indicators' => $indicators,
         'statements' => Statement::all(),
+        'auth' => ['user' => $authedUser],
 //        'totalSessions' => Indicator::all()->map(function ($indicator) {
 //          $indicator->sessions = $indicator->statements->chunk(2)->map(function ($chunk) {
 //            return $chunk->values();
@@ -134,6 +142,10 @@
      */
     public function show(Test $test)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
+      
       $groupedIndicators = $test->load('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
         ->answers->groupBy('statement.indicator.name');
       
@@ -180,10 +192,30 @@
       ];
       
       return Inertia::render('Test/Show', [
-        'test' => $groupedResult,
-        'user' => $test->where('id', $test->id)->first()->user,
-        'personality' => Personality::where('name', $allMaxBasicTraitCodesString)->first(),
+        'test' => $test,
+        'indicators' => $test->load('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
+          ->answers
+          ->groupBy('statement.indicator.name')
+          ->map(function ($answers, $indicatorName) {
+            return [
+              'name' => $indicatorName,
+              'basic_traits' => $answers->groupBy('statement.basicTrait.name')
+                ->map(function ($answers, $basicTraitName) {
+                  return [
+                    'name' => $basicTraitName,
+                    'totalValue' => $answers->sum('choice.value'),
+                  ];
+                })
+                ->values()
+                ->toArray(),
+              'totalValue' => $answers->sum('choice.value'),
+            ];
+          })
+          ->values()
+          ->toArray(),
+        'personality' => Personality::where('name', $test->personality)->first(),
         'meta' => session('meta'),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     

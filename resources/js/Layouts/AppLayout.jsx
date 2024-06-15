@@ -35,7 +35,7 @@ export const AppLayout = (props) => {
     >
       <Head title={props.title} />
       
-      {props.authed &&
+      {!props.isPrint && props.authed &&
         <NavBar activeNav={props.activeNav} authed={props.authed} />}
       
       <Box

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from '@inertiajs/react'
 import {
-  Box,
   Button,
   Group,
   List,
@@ -11,6 +10,11 @@ import {
   Title
 } from '@mantine/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
+import {
+  IconArrowNarrowLeft,
+  IconArrowNarrowRight,
+  IconLogout
+} from '@tabler/icons-react'
 
 export const Create = (props) => {
   console.log(props)
@@ -54,92 +58,99 @@ export const Create = (props) => {
   }, [timer, form])
   
   return (
-    <AppLayout title="Tes MBTI" activeNav="Tes MBTI" authed={props.auth.user}
-               meta={props.meta}>
-      <form onSubmit={(e) => {
-        e.preventDefault()
-        form.post(route('tests.store'))
-      }}>
-        <Box p={16}>
-          <Progress.Root radius="xl" size="xl" mt={16}>
-            <Progress.Section value={
+    <form onSubmit={(e) => {
+      e.preventDefault()
+      form.post(route('tests.store'))
+    }}>
+      <AppLayout title="Tes MBTI" activeNav="Tes MBTI" authed={props.auth.user}
+                 meta={props.meta}>
+        
+        <Progress.Root radius="xl" size={32} mb={16}>
+          <Progress.Section value={
+            100 / props.indicators.length * (activeIndicator + 1)
+          }>
+            <Progress.Label>{
               100 / props.indicators.length * (activeIndicator + 1)
-            }>
-              <Progress.Label>{
-                100 / props.indicators.length * (activeIndicator + 1)
-              }%</Progress.Label>
-            </Progress.Section>
-          </Progress.Root>
-          
-          <Text>Waktu: {formatTime(timer)}</Text>
-          
-          <Title align="center" mb={16} bg="blue.2">
-            {props.indicators[activeIndicator].name}
-          </Title>
-          
-          <List style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
-                type="ordered">
-            {props.indicators[activeIndicator].statements.map((statement) => (
-              <List.Item key={statement.id}
-                         style={{ border: '1px solid #000', padding: 16 }}>
-                <Radio.Group
-                  label={statement.name}
-                  withAsterisk
-                  onChange={(value) => {
-                    form.setData('answers', form.data.answers.map((test) => {
-                      if (test.statement_id === statement.id) {
-                        return {
-                          statement_id: statement.id,
-                          choice_id: value
-                        }
+            }%</Progress.Label>
+          </Progress.Section>
+        </Progress.Root>
+        
+        <Text mb={32}>Waktu: {formatTime(timer)}</Text>
+        
+        <Title align="center" mb={32}>
+          {props.indicators[activeIndicator].name}
+        </Title>
+        
+        <List style={{ display: 'flex', flexDirection: 'column', gap: 32 }}
+              type="ordered">
+          {props.indicators[activeIndicator].statements.map((statement) => (
+            <List.Item key={statement.id}
+            >
+              <Radio.Group
+                label={statement.name}
+                withAsterisk
+                onChange={(value) => {
+                  form.setData('answers', form.data.answers.map((test) => {
+                    if (test.statement_id === statement.id) {
+                      return {
+                        statement_id: statement.id,
+                        choice_id: value
                       }
-                      return test
-                    }))
-                  }}
-                  value={form.data.answers.find((test) => test.statement_id === statement.id).choice_id}
-                >
-                  <Group mt="xs" style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    gap: 16
-                  }}>
-                    {props.choices.map((choice) => (
-                      <Radio key={choice.id} value={choice.id}
-                             label={choice.name} />
-                    ))}
-                  </Group>
-                </Radio.Group>
-              </List.Item>
-            ))}
-          < /List>
-          
-          <Group mt={32} justify="center">
-            {activeIndicator > 0 && (
-              <Button
-                onClick={() => {
-                  setActiveIndicator(activeIndicator - 1)
-                  window.scrollTo(0, 0)
-                }}>Sebelumnya</Button>
-            )}
-            
-            {props.indicators.length - 1 === activeIndicator ? (
-              <Button color="red" type="submit"
-                      disabled={form.data.answers.some((test) => test.choice_id === '')}
-              >Selesai</Button>
-            ) : (
-              <Button
-                onClick={() => {
-                  setActiveIndicator(activeIndicator + 1)
-                  window.scrollTo(0, 0)
+                    }
+                    return test
+                  }))
                 }}
-              >Selanjutnya</Button>
-            )}
-          </Group>
-        </Box>
-      </form>
-    
-    </AppLayout>
+                value={form.data.answers.find((test) => test.statement_id === statement.id).choice_id}
+              >
+                <Group mt="xs" style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  gap: 16
+                }}>
+                  {props.choices.map((choice) => (
+                    <Radio key={choice.id} value={choice.id}
+                           label={choice.name} />
+                  ))}
+                </Group>
+              </Radio.Group>
+            </List.Item>
+          ))}
+        < /List>
+        
+        <Group mt={32} justify="center">
+          {activeIndicator > 0 && (
+            <Button variant="subtle" px={16} h={48}
+                    radius={32} styles={{ section: { marginRight: 16 } }}
+                    leftSection={<IconArrowNarrowLeft />}
+                    onClick={() => {
+                      setActiveIndicator(activeIndicator - 1)
+                      window.scrollTo(0, 0)
+                    }}>Sebelumnya</Button>
+          )}
+          
+          {props.indicators.length - 1 === activeIndicator ? (
+            <Button px={16} h={48}
+                    radius={32} variant="subtle"
+                    rightSection={<IconLogout />}
+                    styles={{ section: { marginLeft: 16 } }} color="red"
+                    type="submit"
+                    disabled={form.data.answers.some((test) => test.choice_id === '')}
+            >Selesai</Button>
+          ) : (
+            <Button px={16} h={48}
+                    radius={32} variant="subtle"
+                    rightSection={<IconArrowNarrowRight />}
+                    styles={{ section: { marginLeft: 16 } }}
+                    onClick={() => {
+                      setActiveIndicator(activeIndicator + 1)
+                      window.scrollTo(0, 0)
+                    }}
+            >Selanjutnya</Button>
+          )}
+        </Group>
+      </AppLayout>
+    </form>
   )
 }
 
