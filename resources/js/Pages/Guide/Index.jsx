@@ -24,10 +24,10 @@ const Index = (props) => {
     <AppLayout title="Panduan" activeNav="Panduan"
                authed={props.auth.user} meta={props.meta}>
       <Stack gap={32}>
-        <SimpleGrid cols={{
+        <SimpleGrid cols={props.auth.user.role === 'Admin' && {
           base: 1,
           xs: 2
-        }} justify="space-between">
+        }} grow justify="space-between">
           <TextInput styles={{
             label: { marginBottom: 8 },
             input: {
@@ -45,13 +45,15 @@ const Index = (props) => {
                      onChange={(event) => setSearch(event.currentTarget.value)}
           />
           
-          <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
-                  radius={32}
-                  leftSection={<IconPlus />}
-                  onClick={() => router.get(route('guides.create'))}
-          >
-            Tambah Panduan
-          </Button>
+          {props.auth.user.role === 'Admin' && (
+            <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+                    radius={32}
+                    leftSection={<IconPlus />}
+                    onClick={() => router.get(route('guides.create'))}
+            >
+              Tambah Panduan
+            </Button>)}
+        
         </SimpleGrid>
         
         <Box

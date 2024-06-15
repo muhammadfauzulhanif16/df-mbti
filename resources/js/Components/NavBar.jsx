@@ -129,7 +129,7 @@ export const NavBar = (props) => {
       {
         icon: <IconInfoCircle />,
         label: 'Panduan',
-        route: 'guide.index'
+        route: 'guides.index'
       },
       {
         icon: <IconLogout />,
