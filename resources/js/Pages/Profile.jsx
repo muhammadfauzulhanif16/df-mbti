@@ -29,7 +29,7 @@ const Profile = (props) => {
     id_number: props.auth.user.id_number,
     phone_number: props.auth.user.phone_number,
     academic_year: props.auth.user.role === 'Mahasiswa' ? props.auth.user.student.academic_year : null,
-      email: props.auth.user.email,
+    email: props.auth.user.email,
     password: '',
     supervisor_id: props.auth.user.student?.supervisor_id
   })
@@ -211,7 +211,7 @@ const Profile = (props) => {
                 },
                 section: { marginLeft: 0, width: 48, height: 48 },
                 error: { marginTop: 8 }
-              }}
+              }} leftSection={<IconUser />}
                       disabled
                       label="Dosen Pembimbing Akademik"
                       value={form.data.supervisor_id}

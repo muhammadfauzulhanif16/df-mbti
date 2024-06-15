@@ -6,6 +6,7 @@
   use App\Models\BasicTrait;
   use Exception;
   use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth;
   use Inertia\Inertia;
   
   class BasicTraitController extends Controller
@@ -15,8 +16,12 @@
      */
     public function index()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('BasicTrait/Index', [
         'meta' => session('meta'),
+        'auth' => ['user' => $authedUser],
         'basic_traits' => BasicTrait::all()->load('statements')
       ]);
     }
@@ -61,7 +66,12 @@
      */
     public function create()
     {
-      return Inertia::render('BasicTrait/Create');
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
+      return Inertia::render('BasicTrait/Create', [
+        'auth' => ['user' => $authedUser],
+      ]);
     }
     
     /**
@@ -77,8 +87,12 @@
      */
     public function edit(BasicTrait $basicTrait)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('BasicTrait/Edit', [
-        'basic_trait' => $basicTrait
+        'basic_trait' => $basicTrait,
+        'auth' => ['user' => $authedUser],
       ]);
     }
     

@@ -7,6 +7,7 @@
   use App\Models\Statement;
   use Exception;
   use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth;
   use Inertia\Inertia;
   
   class StatementController extends Controller
@@ -16,10 +17,14 @@
      */
     public function index(Indicator $indicator)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Statement/Index', [
         'indicator' => $indicator,
         'statements' => Statement::with('basicTrait')->where('indicator_id', $indicator->id)->get(),
         'meta' => session('meta'),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -53,9 +58,13 @@
      */
     public function create(Indicator $indicator)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Statement/Create', [
         'basic_traits' => BasicTrait::all(),
         'indicator' => $indicator,
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -72,10 +81,14 @@
      */
     public function edit(Indicator $indicator, Statement $statement,)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Statement/Edit', [
         'basic_traits' => BasicTrait::all(),
         'statement' => $statement,
         'indicator' => $indicator,
+        'auth' => ['user' => $authedUser],
       ]);
     }
     

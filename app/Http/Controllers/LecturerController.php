@@ -8,6 +8,7 @@
   use App\Models\User;
   use Exception;
   use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth;
   use Illuminate\Support\Facades\Hash;
   use Inertia\Inertia;
   
@@ -18,7 +19,11 @@
      */
     public function index()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Lecturer/Index', [
+        'auth' => ['user' => $authedUser],
         'meta' => session('meta'),
         'lecturers' => Lecturer::with('user')->get()->map(function ($lecturer) {
           $lecturer->avatar = $lecturer->user->avatar ? asset('storage/' . $lecturer->user->avatar) : null;
@@ -77,7 +82,12 @@
      */
     public function create()
     {
-      return Inertia::render('Lecturer/Create');
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
+      return Inertia::render('Lecturer/Create', [
+        'auth' => ['user' => $authedUser],
+      ]);
     }
     
     /**
@@ -93,8 +103,12 @@
      */
     public function edit(User $user)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Lecturer/Edit', [
         'user' => $user->load('lecturer'),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     

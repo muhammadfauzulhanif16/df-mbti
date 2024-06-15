@@ -7,6 +7,7 @@
   use App\Models\Indicator;
   use Exception;
   use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth;
   use Inertia\Inertia;
   
   class IndicatorController extends Controller
@@ -16,10 +17,14 @@
      */
     public function index()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Indicator/Index', [
         'meta' => session('meta'),
         'indicators' => Indicator::with('basicTrait')->get(),
-        'basic_traits' => BasicTrait::all()
+        'basic_traits' => BasicTrait::all(),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -62,8 +67,12 @@
      */
     public function create()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Indicator/Create', [
-        'basic_traits' => BasicTrait::all()
+        'basic_traits' => BasicTrait::all(),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -72,8 +81,12 @@
      */
     public function show(Indicator $indicator)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Indicator/Show', [
-        'indicator' => $indicator
+        'indicator' => $indicator,
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -82,9 +95,13 @@
      */
     public function edit(Indicator $indicator)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Indicator/Edit', [
         'basic_traits' => BasicTrait::all(),
-        'indicator' => $indicator
+        'indicator' => $indicator,
+        'auth' => ['user' => $authedUser],
       ]);
     }
     

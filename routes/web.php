@@ -13,14 +13,20 @@
   use App\Http\Controllers\StatementController;
   use App\Http\Controllers\StudentController;
   use App\Http\Controllers\TestController;
+  use Illuminate\Support\Facades\Auth;
   use Illuminate\Support\Facades\Route;
   use Inertia\Inertia;
+  
   
   Route::fallback(fn() => to_route(auth()->check() ? 'dashboard' : 'login'));
   
   Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Dashboard', [
+        'auth' => ['user' => $authedUser],
         'meta' => session('meta'),
       ]);
     })->name('dashboard');

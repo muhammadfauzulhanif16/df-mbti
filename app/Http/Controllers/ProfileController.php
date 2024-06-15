@@ -6,6 +6,7 @@
   use App\Models\User;
   use Exception;
   use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth;
   use Illuminate\Support\Facades\Redirect;
   use Inertia\Inertia;
   
@@ -13,18 +14,18 @@
   {
     public function edit()
     {
-      $user = auth()->user();
-      $user->avatar = str_contains($user->avatar, 'https') ? $user->avatar : ($user->avatar ? asset('storage/' . $user->avatar) : null);
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
       
-      if ($user->role === 'Mahasiswa') {
-        $user->load('student');
+      if ($authedUser->role === 'Mahasiswa') {
+        $authedUser->load('student');
       } else {
-        $user->load('lecturer');
+        $authedUser->load('lecturer');
       }
       
       return Inertia::render('Profile', [
         'meta' => session('meta'),
-        'user' => $user,
+        'auth' => ['user' => $authedUser],
         'lecturers' => Lecturer::with('user')->get()
       ]);
     }
