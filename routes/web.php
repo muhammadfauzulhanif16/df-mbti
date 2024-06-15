@@ -31,7 +31,7 @@
       ]);
     })->name('dashboard');
     
-    Route::get('profile', [ProfileController::class, 'edit'])->name('profile');
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
     
     Route::group(['prefix' => 'lecturers'], function () {

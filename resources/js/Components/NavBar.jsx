@@ -1,4 +1,12 @@
-import { ActionIcon, Avatar, Button, Drawer, Group, Image } from '@mantine/core'
+import {
+  ActionIcon,
+  Avatar,
+  Button,
+  Drawer,
+  Group,
+  Image,
+  Menu
+} from '@mantine/core'
 import React from 'react'
 import { router } from '@inertiajs/core'
 import {
@@ -154,6 +162,7 @@ export const NavBar = (props) => {
       <Image src={Unsada} w={48} />
       
       <ActionIcon
+        radius={32}
         variant="filled"
         size={48}
         color="gray"
@@ -168,8 +177,8 @@ export const NavBar = (props) => {
       </ActionIcon>
       
       <Drawer
-        offset={8}
-        radius="md"
+        offset={16}
+        radius={20}
         opened={opened}
         onClose={close}
         position="right"
@@ -182,6 +191,8 @@ export const NavBar = (props) => {
         >
           {NavList.map((nav, id) => (
             <Button
+              px={16}
+              radius={32} h={48}
               disabled={nav.disabled}
               color="gray"
               justify="start"
@@ -222,13 +233,34 @@ export const NavBar = (props) => {
         ))}
       </Button.Group>
       
-      <Avatar
-        display={{
-          base: 'none',
-          lg: 'flex'
-        }}
-        src={props.authed.avatar}
-        alt={props.authed.full_name} />
+      
+      <Menu shadow="md"
+            styles={{
+              dropdown: { padding: 8, borderRadius: 20, width: 240 },
+              item: { height: 48, borderRadius: 32 },
+              itemSection: { marginRight: 16 }
+            }}>
+        <Menu.Target style={{ cursor: 'pointer' }}>
+          <Avatar
+            display={{
+              base: 'none',
+              lg: 'flex'
+            }}
+            src={props.authed.avatar}
+            alt={props.authed.full_name} />
+        </Menu.Target>
+        
+        <Menu.Dropdown>
+          <Menu.Item leftSection={<IconUser />} px={16} py={0}
+                     onClick={() => router.get(route('profile.edit'))}>Profil
+                                                                       Saya</Menu.Item>
+          <Menu.Item leftSection={<IconLogout />} color="red" px={16} py={0}
+                     onClick={() => router.post(route('logout'))}>Keluar
+                                                                  Akun</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    
+    
     </Group>
   )
 }
