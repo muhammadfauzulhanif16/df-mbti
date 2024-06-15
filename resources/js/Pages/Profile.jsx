@@ -5,7 +5,6 @@ import {
   Button,
   Grid,
   NumberInput,
-  PasswordInput,
   Select,
   TextInput,
   Title
@@ -29,8 +28,8 @@ const Profile = (props) => {
     full_name: props.auth.user.full_name,
     id_number: props.auth.user.id_number,
     phone_number: props.auth.user.phone_number,
-    academic_year: props.auth.user.role === 'Admin' ? null : props.auth.user.role === 'Mahasiswa' ? props.auth.user.student.academic_year : props.auth.user.lecturer.academic_year,
-    email: props.auth.user.email,
+    academic_year: props.auth.user.role === 'Mahasiswa' ? props.auth.user.student.academic_year : null,
+      email: props.auth.user.email,
     password: '',
     supervisor_id: props.auth.user.student?.supervisor_id
   })
@@ -63,28 +62,48 @@ const Profile = (props) => {
         
         <Grid grow my={32}>
           <Grid.Col span={6}>
-            <TextInput
-              leftSection={<IconUser />}
-              withAsterisk
-              label="Nama Lengkap"
-              placeholder="Masukkan nama lengkap..."
-              mb={16}
-              value={form.data.full_name}
-              onChange={(e) => form.setData('full_name', e.target.value)}
+            <TextInput styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 }
+            }}
+                       leftSection={<IconUser />}
+                       withAsterisk
+                       label="Nama Lengkap"
+                       placeholder="Masukkan nama lengkap..."
+                       mb={16}
+                       value={form.data.full_name}
+                       onChange={(e) => form.setData('full_name', e.target.value)}
             />
           </Grid.Col>
           
           {props.auth.user.role !== 'Admin' && (
             <Grid.Col span={6}>
-              <NumberInput
-                leftSection={<IconId />}
-                withAsterisk
-                label="NIDN"
-                disabled
-                value={form.data.id_number}
-                hideControls
-                placeholder={`Masukkan ${props.auth.user.role === 'Mahasiswa' ? 'NIM' : 'NIDN'}`}
-                onChange={(value) => form.setData('id_number', value)}
+              <NumberInput styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 }
+              }}
+                           leftSection={<IconId />}
+                           withAsterisk
+                           label="NIDN"
+                           disabled
+                           value={form.data.id_number}
+                           hideControls
+                           placeholder={`Masukkan ${props.auth.user.role === 'Mahasiswa' ? 'NIM' : 'NIDN'}`}
+                           onChange={(value) => form.setData('id_number', value)}
               />
             </Grid.Col>
           )}
@@ -92,76 +111,128 @@ const Profile = (props) => {
           
           {props.auth.user.role !== 'Admin' && (
             <Grid.Col span={6}>
-              <NumberInput
-                leftSection={<IconPhone />}
-                withAsterisk
-                label="Nomor Telepon"
-                value={form.data.phone_number}
-                hideControls
-                placeholder="Masukkan nomor telepon..."
-                onChange={(value) => form.setData('phone_number', value.toString())}
+              <NumberInput styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 }
+              }}
+                           leftSection={<IconPhone />}
+                           withAsterisk
+                           label="Nomor Telepon"
+                           value={form.data.phone_number}
+                           hideControls
+                           placeholder="Masukkan nomor telepon..."
+                           onChange={(value) => form.setData('phone_number', value.toString())}
               />
             </Grid.Col>
           )}
           
           {props.auth.user.role === 'Mahasiswa' && (
             <Grid.Col span={6}>
-              <YearPickerInput
-                leftSection={<IconCalendar />}
-                withAsterisk
-                disabled
-                value={new Date(form.data.academic_year)}
-                label="Tahun Angkatan"
-                placeholder="Masukkan tahun angkatan..."
-                onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
+              <YearPickerInput styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 }
+              }}
+                               leftSection={<IconCalendar />}
+                               withAsterisk
+                               disabled
+                               value={new Date(form.data.academic_year)}
+                               label="Tahun Angkatan"
+                               placeholder="Masukkan tahun angkatan..."
+                               onChange={(value) => form.setData('academic_year', value.getFullYear().toString())}
               />
             </Grid.Col>
           )}
           
           <Grid.Col span={6}>
-            <TextInput
-              leftSection={<IconMail />}
-              withAsterisk
-              type="email"
-              value={form.data.email}
-              label="Email"
-              placeholder="Masukkan email..."
-              onChange={(e) => form.setData('email', e.target.value.toLowerCase())}
+            <TextInput styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 }
+            }}
+                       leftSection={<IconMail />}
+                       withAsterisk
+                       type="email"
+                       value={form.data.email}
+                       label="Email"
+                       placeholder="Masukkan email..."
+                       onChange={(e) => form.setData('email', e.target.value.toLowerCase())}
             />
           </Grid.Col>
           
           <Grid.Col span={6}>
-            <PasswordInput
-              leftSection={<IconPassword />}
+            <TextInput type="password" styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 }
+            }}
+                       leftSection={<IconPassword />}
               // value={form.data.national_lecturer_id_number}
-              label="Kata Sandi"
-              placeholder="Masukkan kata sandi..."
-              onChange={(e) => form.setData('password', e.target.value)}
+                       label="Kata Sandi"
+                       placeholder="Masukkan kata sandi..."
+                       onChange={(e) => form.setData('password', e.target.value)}
             />
           </Grid.Col>
           
           {form.data.supervisor_id && (
             <Grid.Col>
-              <Select
-                disabled
-                label="Dosen Pembimbing Akademik"
-                value={form.data.supervisor_id}
-                searchable
-                checkIconPosition="right"
-                data={props.lecturers.map((lecturer) => ({
-                  label: lecturer.user.full_name,
-                  value: lecturer.user.id
-                }))}
+              <Select styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 }
+              }}
+                      disabled
+                      label="Dosen Pembimbing Akademik"
+                      value={form.data.supervisor_id}
+                      searchable
+                      checkIconPosition="right"
+                      data={props.lecturers.map((lecturer) => ({
+                        label: lecturer.user.full_name,
+                        value: lecturer.user.id
+                      }))}
               />
             </Grid.Col>
           )}
         
         </Grid>
         
-        <Button
-          fullWidth
-          loading={form.processing}
-          type="submit"
+        <Button px={16} h={48}
+                radius={32}
+                styles={{ section: { marginRight: 16 } }}
+                fullWidth
+                loading={form.processing}
+                type="submit"
         >
           Simpan
         </Button>

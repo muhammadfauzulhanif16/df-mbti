@@ -18,7 +18,7 @@ const Dashboard = (props) => {
             <h2>Aturan Pengerjaan Test MBTI Persona</h2>
             
             <List type="ordered">
-              <List.Item>Hasil Test MBTIerupakan cerminan dari kepribadian
+              <List.Item>Hasil Test MBTI merupakan cerminan dari kepribadian
                          anda</List.Item>
               <List.Item>Jawablah setiap item pertanyaan dengan jujur sesuai
                          dengan diri anda masing-masing</List.Item>
