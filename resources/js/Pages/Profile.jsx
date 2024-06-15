@@ -98,7 +98,7 @@ const Profile = (props) => {
               }}
                            leftSection={<IconId />}
                            withAsterisk
-                           label="NIDN"
+                           label={props.auth.user.role === 'Mahasiswa' ? 'NIM' : 'NIDN'}
                            disabled
                            value={form.data.id_number}
                            hideControls
