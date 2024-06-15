@@ -17,8 +17,11 @@ const Index = (props) => {
   const guides = props.guides.filter(guide =>
     guide.personality.toLowerCase().includes(search.toLowerCase())
   )
-  console.log(props)
-  const THList = ['#', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Saran Pengembangan', 'Opsi']
+  const isAdmin = props.auth.user.role === 'Admin'
+  const THList = ['#', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Saran Pengembangan']
+  if (isAdmin) {
+    THList.push('Opsi')
+  }
   
   return (
     <AppLayout title="Panduan" activeNav="Panduan"
