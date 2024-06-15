@@ -94,7 +94,7 @@ export const NavBar = (props) => {
       {
         icon: <IconUser />,
         label: 'Profil',
-        route: 'profile'
+        route: 'profile.edit'
       },
       {
         icon: <IconUser />,
@@ -122,7 +122,7 @@ export const NavBar = (props) => {
       {
         icon: <IconUser />,
         label: 'Profil',
-        route: 'profile'
+        route: 'profile.edit'
       },
       {
         icon: <IconUsers />,
