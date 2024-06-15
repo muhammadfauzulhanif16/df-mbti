@@ -286,7 +286,7 @@ const Edit = (props) => {
                   color="red"
                   disabled={form.processing}
                   fullWidth
-                  onClick={() => router.get(route('lecturers.index'))}
+                  onClick={() => router.get(route('students.index'))}
           >
             Batal
           </Button>

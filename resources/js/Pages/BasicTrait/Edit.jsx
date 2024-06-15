@@ -69,6 +69,7 @@ const Edit = (props) => {
             Batal
           </Button>
           <Button h={48}
+                  disabled={form.hasErrors || Object.entries(form.data).some((value) => !value)}
                   px={16} styles={{ section: { marginRight: 12 } }} radius={32}
                   fullWidth
                   loading={form.processing}

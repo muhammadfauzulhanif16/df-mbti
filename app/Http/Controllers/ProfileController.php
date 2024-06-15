@@ -54,10 +54,6 @@
             'academic_year' => $request->academic_year,
             'supervisor_id' => $request->supervisor_id,
           ]);
-        } else {
-          $user->lecturer()->update([
-            'academic_year' => $request->academic_year,
-          ]);
         }
         
         return Redirect::to('/profile')->with('meta', [
@@ -69,7 +65,7 @@
         return Redirect::back()->with('meta', [
           'status' => false,
           'title' => 'Gagal memperbarui profil',
-          'message' => 'Terjadi kesalahan saat memperbarui profil Anda!'
+          'message' => $e->getMessage()
         ]);
       }
     }
