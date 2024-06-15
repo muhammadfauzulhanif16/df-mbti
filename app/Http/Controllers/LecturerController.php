@@ -26,7 +26,8 @@
         'auth' => ['user' => $authedUser],
         'meta' => session('meta'),
         'lecturers' => Lecturer::with('user')->get()->map(function ($lecturer) {
-          $lecturer->avatar = $lecturer->user->avatar ? asset('storage/' . $lecturer->user->avatar) : null;
+          $lecturer->user->avatar = str_contains($lecturer->user->avatar, 'https') ? $lecturer->user->avatar : ($lecturer->user->avatar ? asset('storage/' . $lecturer->user->avatar) : null);
+          
           $lecturer['students'] = Student::with('user')->where('supervisor_id', $lecturer->user_id)->get();
           return $lecturer;
         })->sortBy('user.full_name')->values(),

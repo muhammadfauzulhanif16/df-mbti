@@ -15,6 +15,7 @@ import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
+  console.log(props)
   const [search, setSearch] = useState('')
   const lecturers = props.lecturers.filter(lecturer =>
     lecturer.user.full_name.toLowerCase().includes(search.toLowerCase())

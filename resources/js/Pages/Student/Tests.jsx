@@ -34,7 +34,7 @@ export const Index = (props) => {
                 <Table.Td>{test.time}</Table.Td>
                 <Table.Td>
                   <Button
-                    onClick={() => router.get(route('results.show', test.id))}>Detail</Button>
+                    onClick={() => router.get(route('tests.show', test.id))}>Detail</Button>
                 </Table.Td>
               </Table.Tr>
             ))}

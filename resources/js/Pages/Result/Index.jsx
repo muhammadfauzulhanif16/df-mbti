@@ -51,11 +51,14 @@ export const Index = (props) => {
                   <Table.Td px={16} py={0}
                             style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
                   <Table.Td px={16} py={0}
-                            style={{ whiteSpace: 'nowrap' }}>{test.allMaxBasicTraitCodes}</Table.Td>
+                            style={{ whiteSpace: 'nowrap' }}>{test.personality}</Table.Td>
+                  <Table.Td px={16} py={0} style={{ whiteSpace: 'nowrap' }}>
+                    {new Date(test.created_at).toLocaleDateString('id-ID').split('/').join('-')}
+                  </Table.Td>
                   <Table.Td px={16} py={0}
-                            style={{ whiteSpace: 'nowrap' }}>{test.created_at}</Table.Td>
-                  <Table.Td px={16} py={0}
-                            style={{ whiteSpace: 'nowrap' }}>{test.time}</Table.Td>
+                            style={{ whiteSpace: 'nowrap' }}>
+                    {test.time.split(':').join('.')}
+                  </Table.Td>
                   <Table.Td px={16} py={0}
                             style={{ whiteSpace: 'nowrap' }}>
                     <Button px={16} h={48}

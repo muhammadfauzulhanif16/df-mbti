@@ -29,7 +29,7 @@
         'auth' => ['user' => $authedUser],
         'meta' => session('meta'),
         'students' => Student::with(['user', 'supervisor.user', 'tests'])->get()->map(function ($student) {
-          $student->avatar = $student->user->avatar ? asset('storage/' . $student->user->avatar) : null;
+          $student->user->avatar = str_contains($student->user->avatar, 'https') ? $student->user->avatar : ($student->user->avatar ? asset('storage/' . $student->user->avatar) : null);
           return $student;
         })->sortBy('user.full_name')->values(),
         'lecturers' => Lecturer::with('user')->get(),

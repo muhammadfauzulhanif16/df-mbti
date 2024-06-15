@@ -220,7 +220,7 @@ const Index = (props) => {
                                 radius={32}
                                 styles={{ section: { marginRight: 16 } }}
                                 variant="outline" color="yellow"
-                                onClick={() => router.get(route('students.tests.index', student.user_id))}>Detail</Button>
+                                onClick={() => router.get(route('students.tests.index', student.user_id))}>Rincian</Button>
                       )}
                     </Table.Td>
                   </Table.Tr>
