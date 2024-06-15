@@ -204,6 +204,12 @@
                   return [
                     'name' => $basicTraitName,
                     'totalValue' => $answers->sum('choice.value'),
+                    'statements' => $answers->map(function ($answer) {
+                      return [
+                        'statement' => $answer->statement,
+                        'choice' => $answer->choice,
+                      ];
+                    })->unique('statement.id')->values(),
                   ];
                 })
                 ->values()

@@ -176,6 +176,10 @@
     
     public function tests_index(User $user)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
+      
       $results = Test::where('user_id', $user->id)
         ->with('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
         ->orderBy('created_at', 'desc')
@@ -228,7 +232,8 @@
       });
       
       return Inertia('Student/Tests', [
-        'tests' => $groupedResults,
+        'tests' => Test::where('user_id', $user->id)->get(),
+        'auth' => ['user' => $authedUser],
       ]);
     }
   }
