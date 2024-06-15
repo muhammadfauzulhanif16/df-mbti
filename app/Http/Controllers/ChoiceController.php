@@ -7,6 +7,7 @@
   use App\Models\Statement;
   use Exception;
   use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth;
   use Inertia\Inertia;
   
   class ChoiceController extends Controller
@@ -16,10 +17,14 @@
      */
     public function index()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Choice/Index', [
         'meta' => session('meta'),
         'statements' => Statement::all(),
         'choices' => Choice::all(),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -63,7 +68,12 @@
      */
     public function create()
     {
-      return Inertia::render('Choice/Create');
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
+      return Inertia::render('Choice/Create', [
+        'auth' => ['user' => $authedUser],
+      ]);
     }
     
     /**
@@ -79,8 +89,12 @@
      */
     public function edit(Choice $choice)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia::render('Choice/Edit', [
-        'choice' => $choice
+        'choice' => $choice,
+        'auth' => ['user' => $authedUser],
       ]);
     }
     

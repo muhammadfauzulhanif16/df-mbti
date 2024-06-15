@@ -3,6 +3,27 @@
   src: url(/fonts/Outfit/static/Outfit-Regular.ttf); /* IE9 Compat Modes */
 }
 
-.ProseMirror-focused {
-  outline: none;
+/*.tiptap .ProseMirror:focus {*/
+/*  border-color: red;*/
+/*}*/
+
+div[contenteditable="true"] {
+  min-height: 160px !important;
+}
+
+.mantine-RichTextEditor-content {
+  border-radius: 20px !important;
+}
+
+p[data-placeholder] {
+  font-size: 14px !important;
+}
+
+.mantine-RichTextEditor-root {
+  border: none !important;
+}
+
+.mantine-RichTextEditor-toolbar {
+  padding: 8px 0 !important;
+  border: none !important;
 }

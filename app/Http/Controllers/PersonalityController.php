@@ -6,6 +6,7 @@
   use App\Models\Personality;
   use Exception;
   use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth;
   
   class PersonalityController extends Controller
   {
@@ -14,9 +15,13 @@
      */
     public function index()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia('Personality/Index', [
         'meta' => session('meta'),
         'personalities' => Personality::all(),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -52,9 +57,13 @@
      */
     public function create()
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia('Personality/Create', [
         'meta' => session('meta'),
         'basic_traits' => BasicTrait::all(),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     
@@ -71,9 +80,14 @@
      */
     public function edit(Personality $personality)
     {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
       return Inertia('Personality/Edit', [
         'meta' => session('meta'),
         'personality' => $personality,
+        'basic_traits' => BasicTrait::all(),
+        'auth' => ['user' => $authedUser],
       ]);
     }
     

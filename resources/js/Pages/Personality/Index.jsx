@@ -8,7 +8,7 @@ import {
   Table,
   TextInput
 } from '@mantine/core'
-import { IconPlus, IconUser } from '@tabler/icons-react'
+import { IconArticle, IconPlus } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
@@ -17,7 +17,6 @@ const Index = (props) => {
   const personalities = props.personalities.filter(personality =>
     personality.name.toLowerCase().includes(search.toLowerCase())
   )
-  
   const THList = ['#', 'Nama Tipe Kepribadian', 'Deskripsi', 'Saran Pekerjaan', 'Aksi']
   
   return (
@@ -39,7 +38,7 @@ const Index = (props) => {
             section: { marginLeft: 0, width: 48, height: 48 },
             error: { marginTop: 8 }
           }}
-                     leftSection={<IconUser />}
+                     leftSection={<IconArticle />}
                      placeholder="Cari tipe kepribadian..."
                      value={search}
                      onChange={(event) => setSearch(event.currentTarget.value)}
