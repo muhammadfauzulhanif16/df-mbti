@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from '@inertiajs/react'
 import {
   Button,
+  Center,
   Group,
   List,
   Progress,
@@ -77,15 +78,24 @@ export const Create = (props) => {
         
         <Text mb={32}>Waktu: {formatTime(timer)}</Text>
         
-        <Title align="center" mb={32}>
-          {props.indicators[activeIndicator].name}
-        </Title>
+        <Center bg="blue.2" mb={32} py={16} style={{
+          borderRadius: 20
+        }}>
+          <Title align="center">
+            {props.indicators[activeIndicator].name}
+          </Title>
+        </Center>
         
         <List style={{ display: 'flex', flexDirection: 'column', gap: 32 }}
               type="ordered">
           {props.indicators[activeIndicator].statements.map((statement) => (
-            <List.Item key={statement.id}
-            >
+            <List.Item
+              key={statement.id}
+              style={{
+                border: '1px solid #e1e1e1',
+                borderRadius: 20,
+                padding: 16
+              }}>
               <Radio.Group
                 label={statement.name}
                 withAsterisk
