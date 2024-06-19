@@ -59,19 +59,11 @@ const Index = (props) => {
         
         <Box
           style={{
-            borderRadius: 20,
+            borderRadius: 32,
             border: '1px solid #E9ECEF'
           }}>
           <Table.ScrollContainer>
-            <Table highlightOnHover withColumnBorders
-                   styles={{
-                     table: {
-                       borderRadius: 16
-                     },
-                     thead: {
-                       borderRadius: 16
-                     }
-                   }}>
+            <Table highlightOnHover withColumnBorders>
               <Table.Thead h={64}>
                 <Table.Tr>
                   {THList.map((th, id) => (

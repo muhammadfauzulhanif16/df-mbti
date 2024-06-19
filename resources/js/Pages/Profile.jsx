@@ -1,14 +1,6 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import {
-  Avatar,
-  Button,
-  Grid,
-  NumberInput,
-  Select,
-  TextInput,
-  Title
-} from '@mantine/core'
+import { Avatar, Button, Grid, Select, TextInput, Title } from '@mantine/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import {
@@ -33,7 +25,7 @@ const Profile = (props) => {
     password: '',
     supervisor_id: props.auth.user.student?.supervisor_id
   })
-  console.log(props)
+  
   return (
     <form onSubmit={(e) => {
       e.preventDefault()
@@ -85,7 +77,7 @@ const Profile = (props) => {
           
           {props.auth.user.role !== 'Admin' && (
             <Grid.Col span={6}>
-              <NumberInput styles={{
+              <TextInput type="number" styles={{
                 label: { marginBottom: 8 },
                 input: {
                   height: 48,
@@ -96,14 +88,34 @@ const Profile = (props) => {
                 section: { marginLeft: 0, width: 48, height: 48 },
                 error: { marginTop: 8 }
               }}
-                           leftSection={<IconId />}
-                           withAsterisk
-                           label={props.auth.user.role === 'Mahasiswa' ? 'NIM' : 'NIDN'}
-                           disabled
-                           value={form.data.id_number}
-                           hideControls
-                           placeholder={`Masukkan ${props.auth.user.role === 'Mahasiswa' ? 'NIM' : 'NIDN'}`}
-                           onChange={(value) => form.setData('id_number', value)}
+                         leftSection={<IconId />}
+                         withAsterisk
+                         label={props.auth.user.role === 'Mahasiswa' ? 'NIM' : 'NIDN'}
+                         disabled
+                         value={form.data.id_number}
+                         hideControls
+                         placeholder={`Masukkan ${props.auth.user.role === 'Mahasiswa' ? 'NIM' : 'NIDN'}`}
+                         onChange={(e) => {
+                           form.setData('id_number', e.target.value.toString())
+                           
+                           if (!e.target.value) {
+                             form.setError({
+                               id_number:
+                                 `${props.auth.user.role === 'Mahasiswa' ? 'NIM' : 'NIDN'} tidak boleh kosong.`
+                             })
+                           } else {
+                             form.clearErrors('id_number')
+                           }
+                           
+                           if (e.target.value.toString().length < 10 || e.target.value.toString().length > 10) {
+                             form.setError({
+                               id_number:
+                                 `${props.auth.user.role === 'Mahasiswa' ? 'NIM' : 'NIDN'} harus 10 digit.`
+                             })
+                           } else {
+                             form.clearErrors('id_number')
+                           }
+                         }}
               />
             </Grid.Col>
           )}
@@ -111,7 +123,7 @@ const Profile = (props) => {
           
           {props.auth.user.role !== 'Admin' && (
             <Grid.Col span={6}>
-              <NumberInput styles={{
+              <TextInput type="number" styles={{
                 label: { marginBottom: 8 },
                 input: {
                   height: 48,
@@ -122,13 +134,33 @@ const Profile = (props) => {
                 section: { marginLeft: 0, width: 48, height: 48 },
                 error: { marginTop: 8 }
               }}
-                           leftSection={<IconPhone />}
-                           withAsterisk
-                           label="Nomor Telepon"
-                           value={form.data.phone_number}
-                           hideControls
-                           placeholder="Masukkan nomor telepon..."
-                           onChange={(value) => form.setData('phone_number', value.toString())}
+                         leftSection={<IconPhone />}
+                         withAsterisk
+                         label="Nomor Telepon"
+                         value={form.data.phone_number}
+                         hideControls
+                         placeholder="Masukkan nomor telepon..."
+                         onChange={(e) => {
+                           form.setData('phone_number', e.target.value.toString())
+                           
+                           if (!e.target.value) {
+                             form.setError({
+                               phone_number:
+                                 'Nomor telepon tidak boleh kosong.'
+                             })
+                           } else {
+                             form.clearErrors('phone_number')
+                           }
+                           
+                           if (e.target.value.toString().length < 10 || e.target.value.toString().length > 13) {
+                             form.setError({
+                               phone_number:
+                                 'Nomor telepon harus 10-13 digit.'
+                             })
+                           } else {
+                             form.clearErrors('phone_number')
+                           }
+                         }}
               />
             </Grid.Col>
           )}
