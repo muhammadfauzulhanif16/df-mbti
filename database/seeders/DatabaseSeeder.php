@@ -22,7 +22,7 @@
         'password' => Hash::make('stafftu@mbti.id'),
       ]);
       
-      if (env('APP_ENV') === 'local') {
+      if (env('WITH_FAKER')) {
         $this->call([
           LecturerSeeder::class,
           StudentSeeder::class,
