@@ -1,13 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Box,
-  Button,
-  Flex,
-  SimpleGrid,
-  Stack,
-  Table,
-  TextInput
-} from '@mantine/core'
+import { Box, Button, SimpleGrid, Stack, Table, TextInput } from '@mantine/core'
 import { IconInfoCircle, IconPlus } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
@@ -99,21 +91,25 @@ const Index = (props) => {
                         dangerouslySetInnerHTML={{ __html: guide.development }}
                       />
                     </Table.Td>
-                    <Table.Td px={16} py={0}
-                              style={{ whiteSpace: 'nowrap' }}>
-                      <Flex gap={16}>
-                        <Button px={16} h={48}
-                                radius={32}
-                                styles={{ section: { marginRight: 16 } }}
-                                variant="outline" color="yellow"
-                                onClick={() => router.get(route('guides.edit', guide))}>Ubah</Button>
-                        <Button px={16} h={48}
-                                radius={32}
-                                styles={{ section: { marginRight: 16 } }}
-                                variant="outline" color="red"
-                                onClick={() => router.delete(route('guides.destroy', guide))}>Hapus</Button>
-                      </Flex>
-                    </Table.Td>
+                    {
+                      props.auth.user.role === 'Admin' && (
+                        <Table.Td px={16} py={0}
+                                  style={{ whiteSpace: 'nowrap' }}>
+                          <Flex gap={16}>
+                            <Button px={16} h={48}
+                                    radius={32}
+                                    styles={{ section: { marginRight: 16 } }}
+                                    variant="outline" color="yellow"
+                                    onClick={() => router.get(route('guides.edit', guide))}>Ubah</Button>
+                            <Button px={16} h={48}
+                                    radius={32}
+                                    styles={{ section: { marginRight: 16 } }}
+                                    variant="outline" color="red"
+                                    onClick={() => router.delete(route('guides.destroy', guide))}>Hapus</Button>
+                          </Flex>
+                        </Table.Td>
+                      )
+                    }
                   </Table.Tr>
                 ))}
               </Table.Tbody>
