@@ -236,7 +236,7 @@ export const NavBar = (props) => {
       
       <Menu shadow="md"
             styles={{
-              dropdown: { padding: 8, borderRadius: 20, width: 240 },
+              dropdown: { padding: 8, borderRadius: 32, width: 240 },
               item: { height: 48, borderRadius: 32 },
               itemSection: { marginRight: 16 }
             }}>

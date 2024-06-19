@@ -3,7 +3,6 @@ import { useForm } from '@inertiajs/react'
 import {
   Button,
   Flex,
-  NumberInput,
   Select,
   SimpleGrid,
   TextInput,
@@ -62,10 +61,9 @@ const Edit = (props) => {
             value={form.data.full_name}
             placeholder="Masukkan nama lengkap..."
             onChange={(e) => {
-              const value = e.target.value.replace(/\b\w/g, char => char.toUpperCase()).replace(/\B\w/g, char => char.toLowerCase())
-              form.setData('full_name', value)
+              form.setData('full_name', e.target.value)
               
-              if (!value) {
+              if (!e.target.value) {
                 form.setError({
                   full_name:
                     'Nama lengkap tidak boleh kosong.'
@@ -77,7 +75,8 @@ const Edit = (props) => {
             error={form.errors.full_name}
           />
           
-          <NumberInput
+          <TextInput
+            type="number"
             styles={{
               label: { marginBottom: 8 },
               input: {
@@ -94,10 +93,10 @@ const Edit = (props) => {
             label="NIM"
             hideControls
             placeholder="Masukkan NIM..."
-            onChange={(value) => {
-              form.setData('student_id_number', value)
+            onChange={(e) => {
+              form.setData('student_id_number', e.target.value.toString())
               
-              if (!value) {
+              if (!e.target.value) {
                 form.setError({
                   student_id_number:
                     'NIM tidak boleh kosong.'
@@ -106,7 +105,7 @@ const Edit = (props) => {
                 form.clearErrors('student_id_number')
               }
               
-              if (value.toString().length < 10 || value.toString().length > 10) {
+              if (e.target.value.toString().length < 10 || e.target.value.toString().length > 10) {
                 form.setError({
                   student_id_number:
                     'NIM harus 10 digit.'
@@ -118,7 +117,8 @@ const Edit = (props) => {
             error={form.errors.student_id_number}
           />
           
-          <NumberInput styles={{
+          <TextInput
+            type="number" styles={{
             label: { marginBottom: 8 },
             input: {
               height: 48,
@@ -129,34 +129,34 @@ const Edit = (props) => {
             section: { marginLeft: 0, width: 48, height: 48 },
             error: { marginTop: 8 }
           }}
-                       leftSection={<IconPhone />}
-                       withAsterisk
-                       value={form.data.phone_number}
-                       label="Nomor Telepon"
-                       hideControls
-                       placeholder="Masukkan nomor telepon..."
-                       onChange={(value) => {
-                         form.setData('phone_number', value.toString())
-                         
-                         if (!value) {
-                           form.setError({
-                             phone_number:
-                               'Nomor telepon tidak boleh kosong.'
-                           })
-                         } else {
-                           form.clearErrors('phone_number')
-                         }
-                         
-                         if (value.toString().length < 10 || value.toString().length > 13) {
-                           form.setError({
-                             phone_number:
-                               'Nomor telepon harus 10-13 digit.'
-                           })
-                         } else {
-                           form.clearErrors('phone_number')
-                         }
-                       }}
-                       error={form.errors.phone_number}
+            leftSection={<IconPhone />}
+            withAsterisk
+            value={form.data.phone_number}
+            label="Nomor Telepon"
+            hideControls
+            placeholder="Masukkan nomor telepon..."
+            onChange={(e) => {
+              form.setData('phone_number', e.target.value.toString())
+              
+              if (!e.target.value) {
+                form.setError({
+                  phone_number:
+                    'Nomor telepon tidak boleh kosong.'
+                })
+              } else {
+                form.clearErrors('phone_number')
+              }
+              
+              if (e.target.value.toString().length < 10 || e.target.value.toString().length > 13) {
+                form.setError({
+                  phone_number:
+                    'Nomor telepon harus 10-13 digit.'
+                })
+              } else {
+                form.clearErrors('phone_number')
+              }
+            }}
+            error={form.errors.phone_number}
           />
           
           <YearPickerInput styles={{

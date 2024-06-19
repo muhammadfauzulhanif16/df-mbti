@@ -41,7 +41,6 @@
     {
       try {
         if ($request->hasFile('file')) {
-//          dd($request->file('file')->getClientOriginalName());
           (new LecturersImport)->import($request->file('file'));
           
           return to_route('lecturers.index')->with('meta', [
@@ -53,7 +52,7 @@
           $user = User::create([
             'full_name' => $request->full_name,
             'id_number' => $request->national_lecturer_id_number,
-            'phone_number' => "0$request->phone_number",
+            'phone_number' => $request->phone_number,
             'role' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -122,7 +121,7 @@
         $user->update([
           'full_name' => $request->full_name,
           'id_number' => $request->national_lecturer_id_number,
-          'phone_number' => "0$request->phone_number",
+          'phone_number' => $request->phone_number,
           'role' => $request->role,
           'email' => $request->email,
           'password' => $request->password ? Hash::make($request->password) : $user->password,

@@ -8,7 +8,7 @@ const Dashboard = (props) => {
                meta={props.meta}>
       <Box>
         <Center bg="blue.1" mb={32} w="100%" style={{
-          borderRadius: 16
+          borderRadius: 32
         }}>
           <h1>Selamat Datang di Beranda {props.auth.user.full_name}</h1>
         </Center>

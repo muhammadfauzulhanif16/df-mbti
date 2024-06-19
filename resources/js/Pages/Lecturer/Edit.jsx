@@ -5,7 +5,6 @@ import {
   Flex,
   Grid,
   Group,
-  NumberInput,
   Radio,
   TextInput,
   Title
@@ -88,10 +87,9 @@ const Edit = (props) => {
               label="Nama Lengkap"
               placeholder="Masukkan nama lengkap..."
               onChange={(e) => {
-                const value = e.target.value.replace(/\b\w/g, char => char.toUpperCase()).replace(/\B\w/g, char => char.toLowerCase())
-                form.setData('full_name', value)
+                form.setData('full_name', e.target.value)
                 
-                if (!value) {
+                if (!e.target.value) {
                   form.setError({
                     full_name:
                       'Nama lengkap tidak boleh kosong.'
@@ -106,7 +104,8 @@ const Edit = (props) => {
           </Grid.Col>
           
           <Grid.Col span={6}>
-            <NumberInput
+            <TextInput
+              type="number"
               styles={{
                 label: { marginBottom: 8 },
                 input: {
@@ -123,10 +122,10 @@ const Edit = (props) => {
               label="NIDN"
               hideControls
               placeholder="Masukkan NIDN..."
-              onChange={(value) => {
-                form.setData('national_lecturer_id_number', value)
+              onChange={(e) => {
+                form.setData('national_lecturer_id_number', e.target.value.toString())
                 
-                if (!value) {
+                if (!e.target.value) {
                   form.setError({
                     national_lecturer_id_number:
                       'NIDN tidak boleh kosong.'
@@ -135,7 +134,7 @@ const Edit = (props) => {
                   form.clearErrors('national_lecturer_id_number')
                 }
                 
-                if (value.toString().length < 10 || value.toString().length > 10) {
+                if (e.target.value.toString().length < 10 || e.target.value.toString().length > 10) {
                   form.setError({
                     national_lecturer_id_number:
                       'NIDN harus 10 digit.'
@@ -149,7 +148,8 @@ const Edit = (props) => {
           </Grid.Col>
           
           <Grid.Col span={6}>
-            <NumberInput
+            <TextInput
+              type="number"
               styles={{
                 label: { marginBottom: 8 },
                 input: {
@@ -166,10 +166,10 @@ const Edit = (props) => {
               label="Nomor Telepon"
               hideControls
               placeholder="Masukkan nomor telepon..."
-              onChange={(value) => {
-                form.setData('phone_number', value.toString())
+              onChange={(e) => {
+                form.setData('phone_number', e.target.value.toString())
                 
-                if (!value) {
+                if (!e.target.value) {
                   form.setError({
                     phone_number:
                       'Nomor telepon tidak boleh kosong.'
@@ -178,7 +178,7 @@ const Edit = (props) => {
                   form.clearErrors('phone_number')
                 }
                 
-                if (value.toString().length < 10 || value.toString().length > 13) {
+                if (e.target.value.toString().length < 10 || e.target.value.toString().length > 13) {
                   form.setError({
                     phone_number:
                       'Nomor telepon harus 10-13 digit.'
@@ -243,6 +243,18 @@ const Edit = (props) => {
               leftSection={<IconPassword />}
               label="Kata Sandi (Bawaan: NIDN)"
               placeholder="Masukkan kata sandi..."
+              onChange={(e) => {
+                form.setData('password', e.target.value)
+                
+                if (!e.target.value) {
+                  form.setError({
+                    password:
+                      'Kata sandi tidak boleh kosong.'
+                  })
+                } else {
+                  form.clearErrors('password')
+                }
+              }}
             />
           </Grid.Col>
         </Grid>
