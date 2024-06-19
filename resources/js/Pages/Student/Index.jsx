@@ -208,11 +208,17 @@ const Index = (props) => {
                                   onClick={() => router.delete(route('students.destroy', student))}>Hapus</Button>
                         </Flex>
                       ) : (
-                        <Button px={16} h={48}
-                                radius={32}
-                                styles={{ section: { marginRight: 16 } }}
-                                variant="outline" color="yellow"
-                                onClick={() => router.get(route('students.tests.index', student.user_id))}>Rincian</Button>
+                        <Tooltip label={
+                          !student?.tests.length && 'Mahasiswa belum melakukan tes kepribadian!'
+                        }>
+                          <Button
+                            disabled={!student?.tests.length}
+                            px={16} h={48}
+                            radius={32}
+                            styles={{ section: { marginRight: 16 } }}
+                            variant="outline" color="yellow"
+                            onClick={() => router.get(route('students.tests.index', student.user_id))}>Detail</Button>
+                        </Tooltip>
                       )}
                     </Table.Td>
                   </Table.Tr>
