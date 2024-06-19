@@ -10,7 +10,6 @@
   use App\Models\Test;
   use Illuminate\Support\Facades\Auth;
   use Inertia\Inertia;
-  use Carbon\Carbon;
   
   class ResultController extends Controller
   {
@@ -74,7 +73,7 @@
 //      });
       
       return Inertia::render('Result/Index', [
-        'tests' => Test::where('user_id', $authedUser->id)->get(),
+        'tests' => Test::where('user_id', $authedUser->id)->latest()->get(),
         'auth' => ['user' => $authedUser],
       ]);
     }

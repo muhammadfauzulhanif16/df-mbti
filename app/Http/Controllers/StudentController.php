@@ -28,7 +28,9 @@
       return Inertia::render('Student/Index', [
         'auth' => ['user' => $authedUser],
         'meta' => session('meta'),
-        'students' => Student::with(['user', 'supervisor.user', 'tests'])->get()->map(function ($student) {
+        'students' => Student::with(['user', 'supervisor.user', 'tests' => function ($query) {
+          $query->latest();
+        }])->get()->map(function ($student) {
           $student->user->avatar = str_contains($student->user->avatar, 'https') ? $student->user->avatar : ($student->user->avatar ? asset('storage/' . $student->user->avatar) : null);
           return $student;
         })->sortBy('user.full_name')->values(),
@@ -232,7 +234,7 @@
       });
       
       return Inertia('Student/Tests', [
-        'tests' => Test::where('user_id', $user->id)->get(),
+        'tests' => Test::where('user_id', $user->id)->latest()->get(),
         'auth' => ['user' => $authedUser],
       ]);
     }

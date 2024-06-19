@@ -4,7 +4,6 @@
   
   use App\Models\Lecturer;
   use App\Models\Student;
-  use App\Models\Test;
   use Illuminate\Support\Facades\Auth;
   use Inertia\Inertia;
   
@@ -15,9 +14,11 @@
       $authedUser = Auth::user();
       $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
       
-      $tests = Test::with([
-        'student.supervisor',
-      ])->get();
+      $tests = Student::has('tests')
+        ->with(['tests' => function ($query) {
+          $query->latest()->limit(1);
+        }])
+        ->get();
       
       return Inertia::render('Chart/Index', [
         'meta' => session('meta'),

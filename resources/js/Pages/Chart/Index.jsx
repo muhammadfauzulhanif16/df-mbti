@@ -9,8 +9,8 @@ const Index = (props) => {
   const [supervisorId, setSupervisorId] = React.useState(props.auth.user.id || '')
   
   let personalities = props.tests
-    .reduce((acc, test) => {
-      const personality = test.personality
+    .reduce((acc, student) => {
+      const personality = student.tests[0].personality
       if (personality) {
         const existingPersonality = acc.find(
           (item) => item.personalityName === personality
@@ -26,9 +26,9 @@ const Index = (props) => {
   
   if (supervisorId) {
     personalities = props.tests
-      ?.filter((test) => supervisorId === '' || test.student.supervisor_id === supervisorId)
-      .reduce((acc, test) => {
-        const personality = test.personality
+      ?.filter((student) => supervisorId === '' || student.supervisor_id === supervisorId)
+      .reduce((acc, student) => {
+        const personality = student.tests[0].personality
         if (personality) {
           const existingPersonality = acc.find(
             (item) => item.personalityName === personality
@@ -85,7 +85,7 @@ const Index = (props) => {
         withLegend
         xAxisLabel="Kepribadian"
         yAxisLabel={`${
-          supervisorId ? props.tests.filter((test) => test.student.supervisor_id === supervisorId).length : props.tests.length
+          supervisorId ? props.tests.filter((student) => student.supervisor_id === supervisorId).length : props.tests.length
         } dari ${supervisorId ? props.students.filter((student) => student.supervisor_id === supervisorId).length : props.students.length} Mahasiswa`}
         series={[{ name: 'Mahasiswa', color: 'blue' }]}
         withBarValueLabel

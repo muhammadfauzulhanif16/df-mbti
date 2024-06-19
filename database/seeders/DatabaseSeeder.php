@@ -30,7 +30,7 @@
           PersonalitySeeder::class,
           IndicatorSeeder::class,
           ChoiceSeeder::class,
-          TestSeeder::class,
+//          TestSeeder::class,
         ]);
       }
     }
