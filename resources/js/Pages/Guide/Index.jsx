@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
-import { Box, Button, SimpleGrid, Stack, Table, TextInput } from '@mantine/core'
+import {
+  Box,
+  Button,
+  SimpleGrid,
+  Stack,
+  Table,
+  TextInput,
+  Flex
+} from '@mantine/core'
 import { IconInfoCircle, IconPlus } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
