@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from '@inertiajs/react'
 import {
+  Box,
   Button,
   Center,
   Group,
@@ -8,13 +9,13 @@ import {
   Progress,
   Radio,
   Text,
-  Title
+  Title,
 } from '@mantine/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import {
   IconArrowNarrowLeft,
   IconArrowNarrowRight,
-  IconLogout
+  IconLogout,
 } from '@tabler/icons-react'
 
 export const Create = (props) => {
@@ -37,13 +38,13 @@ export const Create = (props) => {
   const answers = props.statements.map((statement) => (
     {
       statement_id: statement.id,
-      choice_id: ''
+      choice_id: '',
     }
   ))
   
   const form = useForm({
     time: timer,
-    answers
+    answers,
   })
   
   useEffect(() => {
@@ -65,26 +66,27 @@ export const Create = (props) => {
     }}>
       <AppLayout title="Tes MBTI" activeNav="Tes MBTI" authed={props.auth.user}
                  meta={props.meta}>
-        
-        <Progress.Root radius="xl" size={32} mb={16}>
-          <Progress.Section value={
-            100 / props.indicators.length * (activeIndicator + 1)
-          }>
-            <Progress.Label>{
+        <Box pos="sticky" top={80} bg="white" py={16} style={{ zIndex: 3 }}>
+          <Progress.Root radius="xl" size={32} mb={16}>
+            <Progress.Section value={
               100 / props.indicators.length * (activeIndicator + 1)
-            }%</Progress.Label>
-          </Progress.Section>
-        </Progress.Root>
-        
-        <Text mb={32}>Waktu: {formatTime(timer)}</Text>
-        
-        <Center bg="blue.2" mb={32} py={16} style={{
-          borderRadius: 20
-        }}>
-          <Title align="center">
-            {props.indicators[activeIndicator].name}
-          </Title>
-        </Center>
+            }>
+              <Progress.Label>{
+                100 / props.indicators.length * (activeIndicator + 1)
+              }%</Progress.Label>
+            </Progress.Section>
+          </Progress.Root>
+          
+          <Text mb={32}>Waktu: {formatTime(timer)}</Text>
+          
+          <Center bg="blue.2" mb={32} py={16} style={{
+            borderRadius: 20,
+          }}>
+            <Title align="center">
+              {props.indicators[activeIndicator].name}
+            </Title>
+          </Center>
+        </Box>
         
         <List style={{ display: 'flex', flexDirection: 'column', gap: 32 }}
               type="ordered">
@@ -94,7 +96,7 @@ export const Create = (props) => {
               style={{
                 border: '1px solid #e1e1e1',
                 borderRadius: 20,
-                padding: 16
+                padding: 16,
               }}>
               <Radio.Group
                 label={statement.name}
@@ -104,7 +106,7 @@ export const Create = (props) => {
                     if (test.statement_id === statement.id) {
                       return {
                         statement_id: statement.id,
-                        choice_id: value
+                        choice_id: value,
                       }
                     }
                     return test
@@ -116,7 +118,7 @@ export const Create = (props) => {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
-                  gap: 16
+                  gap: 16,
                 }}>
                   {props.choices.map((choice) => (
                     <Radio key={choice.id} value={choice.id}
