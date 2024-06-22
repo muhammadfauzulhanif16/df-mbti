@@ -66,7 +66,7 @@ export const Create = (props) => {
     }}>
       <AppLayout title="Tes MBTI" activeNav="Tes MBTI" authed={props.auth.user}
                  meta={props.meta}>
-        <Box pos="sticky" top={80} py={16} bg="white">
+        <Box pos="sticky" top={80} py={16} bg="white" style={{ zIndex: 2 }}>
           <Progress.Root radius="xl" size={32} mb={16}>
             <Progress.Section value={
               100 / props.indicators.length * (activeIndicator + 1)
