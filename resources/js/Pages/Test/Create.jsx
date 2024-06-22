@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from '@inertiajs/react'
 import {
+  Box,
   Button,
   Center,
   Group,
@@ -65,18 +66,20 @@ export const Create = (props) => {
     }}>
       <AppLayout title="Tes MBTI" activeNav="Tes MBTI" authed={props.auth.user}
                  meta={props.meta}>
-        <Progress.Root radius="xl" size={32} mb={16}>
-          <Progress.Section value={
-            100 / props.indicators.length * (activeIndicator + 1)
-          }>
-            <Progress.Label>{
+        <Box pos="sticky" top={80} py={16}>
+          <Progress.Root radius="xl" size={32} mb={16}>
+            <Progress.Section value={
               100 / props.indicators.length * (activeIndicator + 1)
-            }%</Progress.Label>
-          </Progress.Section>
-        </Progress.Root>
-        
-        <Text bg="white" py={16} style={{ zIndex: 2 }} pos="sticky" top={80}
-              mb={32}>Waktu: {formatTime(timer)}</Text>
+            }>
+              <Progress.Label>{
+                100 / props.indicators.length * (activeIndicator + 1)
+              }%</Progress.Label>
+            </Progress.Section>
+          </Progress.Root>
+          
+          <Text bg="white" style={{ zIndex: 2 }}
+                mb={32}>Waktu: {formatTime(timer)}</Text>
+        </Box>
         
         <Center bg="blue.2" mb={32} py={16} style={{
           borderRadius: 20,
