@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from '@inertiajs/react'
 import {
-  Box,
   Button,
   Center,
   Group,
@@ -66,27 +65,26 @@ export const Create = (props) => {
     }}>
       <AppLayout title="Tes MBTI" activeNav="Tes MBTI" authed={props.auth.user}
                  meta={props.meta}>
-        <Box pos="sticky" top={80} bg="white" py={16} style={{ zIndex: 3 }}>
-          <Progress.Root radius="xl" size={32} mb={16}>
-            <Progress.Section value={
+        <Progress.Root radius="xl" size={32} mb={16}>
+          <Progress.Section value={
+            100 / props.indicators.length * (activeIndicator + 1)
+          }>
+            <Progress.Label>{
               100 / props.indicators.length * (activeIndicator + 1)
-            }>
-              <Progress.Label>{
-                100 / props.indicators.length * (activeIndicator + 1)
-              }%</Progress.Label>
-            </Progress.Section>
-          </Progress.Root>
-          
-          <Text mb={32}>Waktu: {formatTime(timer)}</Text>
-          
-          <Center bg="blue.2" mb={32} py={16} style={{
-            borderRadius: 20,
-          }}>
-            <Title align="center">
-              {props.indicators[activeIndicator].name}
-            </Title>
-          </Center>
-        </Box>
+            }%</Progress.Label>
+          </Progress.Section>
+        </Progress.Root>
+        
+        <Text bg="white" py={16} style={{ zIndex: 2 }} pos="sticky" top={80}
+              mb={32}>Waktu: {formatTime(timer)}</Text>
+        
+        <Center bg="blue.2" mb={32} py={16} style={{
+          borderRadius: 20,
+        }}>
+          <Title align="center">
+            {props.indicators[activeIndicator].name}
+          </Title>
+        </Center>
         
         <List style={{ display: 'flex', flexDirection: 'column', gap: 32 }}
               type="ordered">
