@@ -6,16 +6,11 @@
     "build": "vite build && vite build --ssr"
   },
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
     "@headlessui/react": "^1.4.2",
     "@inertiajs/react": "^1.0.0",
     "@tailwindcss/forms": "^0.5.3",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.12",
-    "axios": "^1.6.4",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.1",
-    "globals": "^15.2.0",
     "laravel-vite-plugin": "^1.0",
     "postcss": "^8.4.38",
     "postcss-preset-mantine": "^1.15.0",
@@ -28,7 +23,6 @@
   "dependencies": {
     "@mantine/carousel": "^7.9.1",
     "@mantine/charts": "^7.9.1",
-    "@mantine/code-highlight": "^7.9.1",
     "@mantine/core": "^7.9.1",
     "@mantine/dates": "^7.9.1",
     "@mantine/dropzone": "^7.9.1",
@@ -41,17 +35,12 @@
     "@mantine/tiptap": "^7.9.1",
     "@react-pdf/renderer": "^3.4.4",
     "@tabler/icons-react": "^3.3.0",
-    "@tiptap/extension-link": "^2.3.2",
     "@tiptap/extension-placeholder": "^2.4.0",
-    "@tiptap/extension-subscript": "^2.4.0",
     "@tiptap/react": "^2.3.2",
     "@tiptap/starter-kit": "^2.3.2",
     "dayjs": "^1.11.11",
     "embla-carousel-react": "^8.0.4",
     "file-saver": "^2.0.5",
-    "puppeteer": "^22.10.0",
-    "react-to-pdf": "^1.0.1",
-    "recharts": "^2.12.7",
-    "yup": "^1.4.0"
+    "recharts": "^2.12.7"
   }
 }

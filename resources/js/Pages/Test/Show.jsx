@@ -4,12 +4,12 @@ import {
   Button,
   Divider,
   Flex,
-  Group,
+  Group, Image,
   Progress,
   SimpleGrid,
   Stack,
   Text,
-  Title
+  Title,
 } from '@mantine/core'
 import React, { useState } from 'react'
 import { useForm } from '@inertiajs/react'
@@ -18,6 +18,7 @@ import {
   IconArrowNarrowRight,
   IconPrinter
 } from '@tabler/icons-react'
+const Unsada = '/unsada.png'
 
 const Show = (props) => {
   console.log(props)
@@ -158,7 +159,18 @@ const Show = (props) => {
                     }}>Cetak</Button>
           )}
           
-          <Title size={30} align="center" my={32}>Hasil Tipe Kepribadian</Title>
+          <Group justify='space-between'>
+            <Image
+              src={Unsada}
+              w={48}
+            />
+            
+            <Title size={30} my={32}>Hasil Tipe Kepribadian</Title>
+            
+            <span></span>
+          </Group>
+          
+         
           
           <Flex gap={16}>
             <Stack w="50%">

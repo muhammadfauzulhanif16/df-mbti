@@ -55,7 +55,7 @@ const Edit = (props) => {
             extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Masukkan saran pekerjaan...' })],
             content: form.data.job,
             onUpdate: ({ editor }) => {
-              form.setData('development', editor.getHTML())
+              form.setData('job', editor.getHTML())
             }
           })}>
           <RichTextEditor.Toolbar>

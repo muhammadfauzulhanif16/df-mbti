@@ -36,7 +36,7 @@ const Profile = (props) => {
         <Title align="center"
                mb={8}>Profil</Title>
         <Title align="center" order={3}
-               mb={32}>({props.auth.user.role})</Title>
+               mb={32}>({props.auth.user.role === 'Admin' ? "Staff TU" : props.auth.user.role})</Title>
         
         <Dropzone
           p={0}
