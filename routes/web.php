@@ -16,10 +16,10 @@
   use Illuminate\Support\Facades\Auth;
   use Illuminate\Support\Facades\Route;
   use Inertia\Inertia;
-  
-  Route::get('/', function () {
-    return Inertia::render('Home');
-  })->name('home');
+
+//  Route::get('/', function () {
+//    return Inertia::render('Home');
+//  })->name('home');
   
   Route::fallback(fn() => to_route(auth()->check() ? 'dashboard' : 'login'));
   
