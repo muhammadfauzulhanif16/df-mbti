@@ -192,7 +192,7 @@
       ];
       
       return Inertia::render('Test/Show', [
-        'test' => $test,
+        'test' => $test->load('student.user'),
         'indicators' => $test->load('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
           ->answers
           ->groupBy('statement.indicator.name')

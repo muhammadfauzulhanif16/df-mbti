@@ -24,8 +24,8 @@ const Show = (props) => {
   console.log(props)
   
   const form = useForm({
-    full_name: props.auth.user.full_name,
-    id_number: props.auth.user.id_number,
+    full_name: props.test.student.user.full_name,
+    id_number: props.test.student.user.id_number,
     created_at: new Date(props.test.created_at).toLocaleString('id', {
       year: 'numeric',
       month: '2-digit',
