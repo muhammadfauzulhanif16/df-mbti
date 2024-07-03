@@ -17,7 +17,7 @@ import { router } from '@inertiajs/core'
 const Epersona = '/epersona.jpg'
 const Unsada = '/unsada.png'
 
-const Home = () => {
+const Welcome = () => {
   return (
     <AppLayout title="Halaman Utama">
       <Group h={80} px={16} justify="space-between">
@@ -89,4 +89,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Welcome
