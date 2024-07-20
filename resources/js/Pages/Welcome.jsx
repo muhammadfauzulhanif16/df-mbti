@@ -7,7 +7,6 @@ import {
   SimpleGrid,
   Stack,
   Text,
-  ThemeIcon,
   Title,
 } from '@mantine/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
@@ -270,30 +269,24 @@ const Welcome = () => {
         </List>
       </Stack>
       
-      <Group p={32}>
+      <Group p={32} bg="blue.1">
         <Image src={Unsada} w={160} />
         
         <Stack>
           <Group>
-            <ThemeIcon variant="white">
-              <IconPhoneCall />
-            </ThemeIcon>
+            <IconPhoneCall />
             
             <Text>021 8649058</Text>
           </Group>
           
           <Group>
-            <ThemeIcon variant="white">
-              <IconMail />
-            </ThemeIcon>
+            <IconMail />
             
             <Text>humas@unsada.ac.id</Text>
           </Group>
           
           <Group>
-            <ThemeIcon variant="white">
-              <IconMapPin />
-            </ThemeIcon>
+            <IconMapPin />
             
             <Text>Jl. Taman Malaka Selatan Pondok Kelapa - Jakarta Timur
                   13450</Text>
