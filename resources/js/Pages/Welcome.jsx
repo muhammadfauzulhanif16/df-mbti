@@ -34,11 +34,11 @@ const Welcome = () => {
         </Center>
         
         <Group justify="end" h="100%">
-          <Anchor fz={14} fw={500}>
+          <Anchor fz={14} fw={500} href="#dimensi">
             Dimensi Kepribadian
           </Anchor>
           
-          <Anchor fz={14} fw={500}>
+          <Anchor fz={14} fw={500} href="#tipe">
             Tipe Kepribadian
           </Anchor>
           
@@ -68,7 +68,7 @@ const Welcome = () => {
         </Text>
       </Stack>
       
-      <Stack py={32} align="center">
+      <Stack py={32} align="center" id="dimensi">
         <Image src={MBTI} w={320} />
         
         <Title fz={26}>Dalam Tes Kepribadian MBTI ini, Ada 4 Dimensi
@@ -238,7 +238,7 @@ const Welcome = () => {
         </List>
       </Stack>
       
-      <Stack p={32} align="center">
+      <Stack p={32} align="center" id="tipe">
         <Title fz={26}>Tipe Kepribadian MBTI</Title>
         
         <Text>Berdasarkan keempat dimensi kecenderungan kepribadian tersebut,
