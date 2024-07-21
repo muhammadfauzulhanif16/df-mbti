@@ -9,7 +9,7 @@ import {
   Stack,
   Table,
   TextInput,
-  Tooltip
+  Tooltip,
 } from '@mantine/core'
 import { IconCalendar, IconPlus, IconUser } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
@@ -27,8 +27,8 @@ const Index = (props) => {
   ))
   
   const THList = props.auth.user.role === 'Admin'
-    ? ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Email', 'Nomor Telepon', 'DPA', 'Aksi']
-    : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Email', 'Tipe Kepribadian', 'Aksi']
+    ? ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Email', 'Nomor Telepon', 'DPA', 'Opsi']
+    : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Email', 'Tipe Kepribadian', 'Opsi']
   console.log(props)
   return (
     <AppLayout title="Mahasiswa" activeNav="Mahasiswa" authed={props.auth.user}
@@ -37,7 +37,7 @@ const Index = (props) => {
         <Grid grow>
           <Grid.Col span={{
             base: 6,
-            sm: 3
+            sm: 3,
           }}>
             <Select styles={{
               label: { marginBottom: 8 },
@@ -45,10 +45,43 @@ const Index = (props) => {
                 height: 48,
                 borderRadius: 32,
                 paddingLeft: 50,
-                paddingRight: 16
+                paddingRight: 16,
               },
               section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 }
+              error: { marginTop: 8 },
+            }}
+                    leftSection={<IconUser />}
+                    clearable
+                    searchable
+                    value={supervisorId}
+                    disabled={props.auth.user.role === 'Dosen PA'}
+                    nothingFoundMessage="Tidak ada dosen pembimbing"
+                    checkIconPosition="right"
+                    placeholder="Dosen Pembimbing"
+                    data={props.lecturers
+                      .map(lecturer => ({
+                        label: lecturer.user.full_name,
+                        value: lecturer.user.id,
+                      }))
+                      .sort((a, b) => a.label.localeCompare(b.label))}
+                    onChange={(value) => setSupervisorId(value)}
+            />
+          </Grid.Col>
+          
+          <Grid.Col span={{
+            base: 6,
+            sm: 3,
+          }}>
+            <Select styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16,
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 },
             }}
                     leftSection={<IconCalendar />}
                     clearable
@@ -63,40 +96,7 @@ const Index = (props) => {
           
           <Grid.Col span={{
             base: 6,
-            sm: 3
-          }}>
-            <Select styles={{
-              label: { marginBottom: 8 },
-              input: {
-                height: 48,
-                borderRadius: 32,
-                paddingLeft: 50,
-                paddingRight: 16
-              },
-              section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 }
-            }}
-                    leftSection={<IconUser />}
-                    clearable
-                    searchable
-                    value={supervisorId}
-                    disabled={props.auth.user.role === 'Dosen PA'}
-                    nothingFoundMessage="Tidak ada dosen pembimbing"
-                    checkIconPosition="right"
-                    placeholder="Dosen Pembimbing"
-                    data={props.lecturers
-                      .map(lecturer => ({
-                        label: lecturer.user.full_name,
-                        value: lecturer.user.id
-                      }))
-                      .sort((a, b) => a.label.localeCompare(b.label))}
-                    onChange={(value) => setSupervisorId(value)}
-            />
-          </Grid.Col>
-          
-          <Grid.Col span={{
-            base: 6,
-            sm: 3
+            sm: 3,
           }}>
             <TextInput
               styles={{
@@ -105,10 +105,10 @@ const Index = (props) => {
                   height: 48,
                   borderRadius: 32,
                   paddingLeft: 50,
-                  paddingRight: 16
+                  paddingRight: 16,
                 },
                 section: { marginLeft: 0, width: 48, height: 48 },
-                error: { marginTop: 8 }
+                error: { marginTop: 8 },
               }}
               leftSection={<IconUser />}
               placeholder="Cari mahasiswa..."
@@ -120,7 +120,7 @@ const Index = (props) => {
           {props.auth.user.role === 'Admin' && (
             <Grid.Col span={{
               base: 6,
-              sm: 3
+              sm: 3,
             }}>
               <Tooltip
                 disabled={!!props.lecturers.length}
@@ -143,7 +143,7 @@ const Index = (props) => {
         <Box
           style={{
             borderRadius: 32,
-            border: '1px solid #E9ECEF'
+            border: '1px solid #E9ECEF',
           }}>
           <Table.ScrollContainer>
             <Table highlightOnHover withColumnBorders>

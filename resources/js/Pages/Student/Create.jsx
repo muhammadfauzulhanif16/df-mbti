@@ -2,13 +2,12 @@ import React, { useEffect } from 'react'
 import { useForm } from '@inertiajs/react'
 import {
   Button,
-  Divider,
   FileButton,
   Flex,
   Select,
-  SimpleGrid,
+  Stack,
   TextInput,
-  Title
+  Title,
 } from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
@@ -19,7 +18,7 @@ import {
   IconMail,
   IconPassword,
   IconPhone,
-  IconUser
+  IconUser,
 } from '@tabler/icons-react'
 import { YearPickerInput } from '@mantine/dates'
 
@@ -32,7 +31,7 @@ const Create = (props) => {
     academic_year: '',
     email: '',
     password: '',
-    supervisor_id: ''
+    supervisor_id: '',
   })
   
   useEffect(() => {
@@ -50,9 +49,9 @@ const Create = (props) => {
                  authed={props.auth.user}
                  meta={props.meta}>
         
-        <Title align="center" mb={32}>Tambah Data Mahasiswa</Title>
+        <Title align="center" mb={32}>Masukkan Data Mahasiswa</Title>
         
-        <FileButton variant="light" color="green" w="100%"
+        <FileButton variant="light" color="green" w={320} mb={32}
                     onChange={(file) => form.setData('file', file)}
                     accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
           {(props) =>
@@ -61,41 +60,10 @@ const Create = (props) => {
               <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
         </FileButton>
         
-        <Divider my={24} label="Atau" labelPosition="center"
-                 styles={{ label: { fontSize: 14 } }} />
+        {/*<Divider my={24} label="Atau" labelPosition="center"*/}
+        {/*         styles={{ label: { fontSize: 14 } }} />*/}
         
-        <SimpleGrid cols={2} my={16}>
-          <TextInput
-            styles={{
-              label: { marginBottom: 8 },
-              input: {
-                height: 48,
-                borderRadius: 32,
-                paddingLeft: 50,
-                paddingRight: 16
-              },
-              section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 }
-            }}
-            leftSection={<IconUser />}
-            withAsterisk
-            label="Nama Lengkap"
-            placeholder="Masukkan nama lengkap..."
-            onChange={(e) => {
-              form.setData('full_name', e.target.value)
-              
-              if (!e.target.value) {
-                form.setError({
-                  full_name:
-                    'Nama lengkap tidak boleh kosong.'
-                })
-              } else {
-                form.clearErrors('full_name')
-              }
-            }}
-            error={form.errors.full_name}
-          />
-          
+        <Stack px={160}>
           <TextInput
             type="number"
             leftSection={<IconId />}
@@ -105,10 +73,10 @@ const Create = (props) => {
                 height: 48,
                 borderRadius: 32,
                 paddingLeft: 50,
-                paddingRight: 16
+                paddingRight: 16,
               },
               section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 }
+              error: { marginTop: 8 },
             }}
             withAsterisk
             label="NIM"
@@ -120,7 +88,7 @@ const Create = (props) => {
               if (!e.target.value) {
                 form.setError({
                   student_id_number:
-                    'NIM tidak boleh kosong.'
+                    'NIM tidak boleh kosong.',
                 })
               } else {
                 form.clearErrors('student_id_number')
@@ -129,13 +97,74 @@ const Create = (props) => {
               if (e.target.value.toString().length < 10 || e.target.value.toString().length > 10) {
                 form.setError({
                   student_id_number:
-                    'NIM harus 10 digit.'
+                    'NIM harus 10 digit.',
                 })
               } else {
                 form.clearErrors('student_id_number')
               }
             }}
             error={form.errors.student_id_number}
+          />
+          
+          <TextInput
+            styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16,
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 },
+            }}
+            leftSection={<IconUser />}
+            withAsterisk
+            label="Nama Lengkap"
+            placeholder="Masukkan nama lengkap..."
+            onChange={(e) => {
+              form.setData('full_name', e.target.value)
+              
+              if (!e.target.value) {
+                form.setError({
+                  full_name:
+                    'Nama lengkap tidak boleh kosong.',
+                })
+              } else {
+                form.clearErrors('full_name')
+              }
+            }}
+            error={form.errors.full_name}
+          />
+          
+          <YearPickerInput
+            styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16,
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 },
+            }}
+            leftSection={<IconCalendar />}
+            withAsterisk
+            label="Tahun Angkatan"
+            placeholder="Masukkan tahun angkatan..."
+            onChange={(value) => {
+              if (!value) {
+                form.setError({
+                  academic_year:
+                    'Tahun akademik tidak boleh kosong.',
+                })
+              } else {
+                form.clearErrors('academic_year')
+                form.setData('academic_year', value.getFullYear().toString())
+              }
+            }}
+            error={form.errors.academic_year}
           />
           
           <TextInput
@@ -146,10 +175,10 @@ const Create = (props) => {
                 height: 48,
                 borderRadius: 32,
                 paddingLeft: 50,
-                paddingRight: 16
+                paddingRight: 16,
               },
               section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 }
+              error: { marginTop: 8 },
             }}
             leftSection={<IconPhone />}
             withAsterisk
@@ -162,7 +191,7 @@ const Create = (props) => {
               if (!e.target.value) {
                 form.setError({
                   phone_number:
-                    'Nomor telepon tidak boleh kosong.'
+                    'Nomor telepon tidak boleh kosong.',
                 })
               } else {
                 form.clearErrors('phone_number')
@@ -171,43 +200,13 @@ const Create = (props) => {
               if (e.target.value.toString().length < 10 || e.target.value.toString().length > 13) {
                 form.setError({
                   phone_number:
-                    'Nomor telepon harus 10-13 digit.'
+                    'Nomor telepon harus 10-13 digit.',
                 })
               } else {
                 form.clearErrors('phone_number')
               }
             }}
             error={form.errors.phone_number}
-          />
-          
-          <YearPickerInput
-            styles={{
-              label: { marginBottom: 8 },
-              input: {
-                height: 48,
-                borderRadius: 32,
-                paddingLeft: 50,
-                paddingRight: 16
-              },
-              section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 }
-            }}
-            leftSection={<IconCalendar />}
-            withAsterisk
-            label="Tahun Angkatan"
-            placeholder="Masukkan tahun angkatan..."
-            onChange={(value) => {
-              if (!value) {
-                form.setError({
-                  academic_year:
-                    'Tahun akademik tidak boleh kosong.'
-                })
-              } else {
-                form.clearErrors('academic_year')
-                form.setData('academic_year', value.getFullYear().toString())
-              }
-            }}
-            error={form.errors.academic_year}
           />
           
           <TextInput
@@ -217,10 +216,10 @@ const Create = (props) => {
                 height: 48,
                 borderRadius: 32,
                 paddingLeft: 50,
-                paddingRight: 16
+                paddingRight: 16,
               },
               section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 }
+              error: { marginTop: 8 },
             }}
             leftSection={<IconMail />}
             withAsterisk
@@ -233,7 +232,7 @@ const Create = (props) => {
               if (!e.target.value) {
                 form.setError({
                   email:
-                    'Email tidak boleh kosong.'
+                    'Email tidak boleh kosong.',
                 })
               } else {
                 form.clearErrors('email')
@@ -250,10 +249,10 @@ const Create = (props) => {
                 height: 48,
                 borderRadius: 32,
                 paddingLeft: 50,
-                paddingRight: 16
+                paddingRight: 16,
               },
               section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 }
+              error: { marginTop: 8 },
             }}
             leftSection={<IconPassword />}
             withAsterisk
@@ -262,68 +261,70 @@ const Create = (props) => {
             label="Kata Sandi (Bawaan: NIM)"
             placeholder="Masukkan kata sandi..."
           />
-        </SimpleGrid>
-        
-        <Select
-          styles={{
-            label: { marginBottom: 8 },
-            input: {
-              height: 48,
-              borderRadius: 32,
-              paddingLeft: 50,
-              paddingRight: 16
-            },
-            section: { marginLeft: 0, width: 48, height: 48 },
-            error: { marginTop: 8 }
-          }}
-          leftSection={<IconUser />}
-          label="Dosen Pembimbing Akademik"
-          placeholder="Masukkan Dosen Pembimbing Akademik..."
-          clearable
-          searchable
-          withAsterisk
-          nothingFoundMessage="Tidak ada dosen pembimbing akademik"
-          checkIconPosition="right"
-          data={props.lecturers.map((lecturer) => ({
-            label: lecturer.user.full_name,
-            value: lecturer.user.id
-          }))}
-          onChange={(value) => {
-            form.setData('supervisor_id', value)
-            
-            if (!value) {
-              form.setError({
-                supervisor_id:
-                  'Dosen pembimbing akademik tidak boleh kosong.'
-              })
-            } else {
-              form.clearErrors('supervisor_id')
-            }
-          }}
-          error={form.errors.supervisor_id}
-        />
-        
-        <Flex mt={24} gap={16}>
-          <Button h={48}
-                  px={16} styles={{ section: { marginRight: 12 } }} radius={32}
-                  variant="outline"
-                  color="red"
-                  disabled={form.processing}
-                  fullWidth
-                  onClick={() => router.get(route('students.index'))}
-          >
-            Batal
-          </Button>
-          <Button h={48}
-                  px={16} styles={{ section: { marginRight: 12 } }} radius={32}
-                  disabled={form.data.file ? false : form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'file' && !value)}
-                  fullWidth
-                  loading={form.processing}
-                  type="submit"
-          >
-            Simpan
-          </Button>
-        </Flex>
+          
+          <Select
+            styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16,
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 },
+            }}
+            leftSection={<IconUser />}
+            label="Dosen Pembimbing Akademik"
+            placeholder="Masukkan Dosen Pembimbing Akademik..."
+            clearable
+            searchable
+            withAsterisk
+            nothingFoundMessage="Tidak ada dosen pembimbing akademik"
+            checkIconPosition="right"
+            data={props.lecturers.map((lecturer) => ({
+              label: lecturer.user.full_name,
+              value: lecturer.user.id,
+            }))}
+            onChange={(value) => {
+              form.setData('supervisor_id', value)
+              
+              if (!value) {
+                form.setError({
+                  supervisor_id:
+                    'Dosen pembimbing akademik tidak boleh kosong.',
+                })
+              } else {
+                form.clearErrors('supervisor_id')
+              }
+            }}
+            error={form.errors.supervisor_id}
+          />
+          
+          <Flex mt={24} gap={16}>
+            <Button h={48}
+                    px={16} styles={{ section: { marginRight: 12 } }}
+                    radius={32}
+                    variant="outline"
+                    color="red"
+                    disabled={form.processing}
+                    fullWidth
+                    onClick={() => router.get(route('students.index'))}
+            >
+              Batal
+            </Button>
+            <Button h={48}
+                    px={16} styles={{ section: { marginRight: 12 } }}
+                    radius={32}
+                    disabled={form.data.file ? false : form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'file' && !value)}
+                    fullWidth
+                    loading={form.processing}
+                    type="submit"
+            >
+              Simpan
+            </Button>
+          </Flex>
+        </Stack>
       </AppLayout>
     </form>
   )

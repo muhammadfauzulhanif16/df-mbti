@@ -16,10 +16,12 @@
     public function run(): void
     {
       User::create([
-        'full_name' => 'Staff TU',
+        'full_name' => 'Eka Yuni Astuty, S.Kom.,M.MSI',
+        'id_number' => '0301067502',
+        'phone_number' => '087875484975',
         'role' => 'Admin',
-        'email' => 'stafftu@mbti.id',
-        'password' => Hash::make('stafftu@mbti.id'),
+        'email' => 'eka.y.astuty@gmail.com ',
+        'password' => Hash::make('0301067502'),
       ]);
       
       if (env('WITH_FAKER')) {

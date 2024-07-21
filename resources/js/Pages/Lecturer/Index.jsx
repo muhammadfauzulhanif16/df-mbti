@@ -8,7 +8,7 @@ import {
   Stack,
   Table,
   TextInput,
-  Tooltip
+  Tooltip,
 } from '@mantine/core'
 import { IconPlus, IconUser } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
@@ -18,10 +18,10 @@ const Index = (props) => {
   console.log(props)
   const [search, setSearch] = useState('')
   const lecturers = props.lecturers.filter(lecturer =>
-    lecturer.user.full_name.toLowerCase().includes(search.toLowerCase())
+    lecturer.user.full_name.toLowerCase().includes(search.toLowerCase()),
   )
   
-  const THList = ['#', 'Foto', 'NIDN', 'Nama Lengkap', 'Status', 'Email', 'Nomor Telepon', 'Aksi']
+  const THList = ['#', 'Foto', 'NIDN', 'Nama Lengkap', 'Email', 'Nomor Telepon', 'Opsi']
   
   return (
     <AppLayout title="Dosen" activeNav="Dosen" authed={props.auth.user}
@@ -29,38 +29,40 @@ const Index = (props) => {
       <Stack gap={32}>
         <SimpleGrid cols={{
           base: 1,
-          xs: 2
+          xs: 2,
         }} justify="space-between">
+          <Button w={320} px={16} styles={{ section: { marginRight: 16 } }}
+                  leftSection={<IconPlus />} h={48} radius={32}
+                  onClick={() => router.get(route('lecturers.create'))}
+          >
+            Tambah Dosen
+          </Button>
+          
           <TextInput
+            w={320}
+            ml="auto"
             styles={{
               label: { marginBottom: 8 },
               input: {
                 height: 48,
                 borderRadius: 32,
                 paddingLeft: 50,
-                paddingRight: 16
+                paddingRight: 16,
               },
               section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 }
+              error: { marginTop: 8 },
             }}
             leftSection={<IconUser />}
             placeholder="Cari dosen..."
             value={search}
             onChange={(event) => setSearch(event.currentTarget.value)}
           />
-          
-          <Button px={16} styles={{ section: { marginRight: 16 } }}
-                  leftSection={<IconPlus />} h={48} radius={32}
-                  onClick={() => router.get(route('lecturers.create'))}
-          >
-            Tambah Dosen
-          </Button>
         </SimpleGrid>
         
         <Box
           style={{
             borderRadius: 32,
-            border: '1px solid #E9ECEF'
+            border: '1px solid #E9ECEF',
           }}>
           <Table.ScrollContainer>
             <Table highlightOnHover withColumnBorders>
@@ -89,9 +91,6 @@ const Index = (props) => {
                     <Table.Td
                       px={16} py={0}
                       style={{ whiteSpace: 'nowrap' }}>{lecturer.user.full_name}</Table.Td>
-                    <Table.Td
-                      px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>{lecturer.user.role}</Table.Td>
                     <Table.Td
                       px={16} py={0}
                       style={{ whiteSpace: 'nowrap' }}>{lecturer.user.email}</Table.Td>

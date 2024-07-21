@@ -4,8 +4,8 @@ import {
   Button,
   Drawer,
   Group,
-  Image,
-  Menu
+  Menu,
+  Text,
 } from '@mantine/core'
 import React from 'react'
 import { router } from '@inertiajs/core'
@@ -19,7 +19,7 @@ import {
   IconMenu,
   IconQuestionMark,
   IconUser,
-  IconUsers
+  IconUsers,
 } from '@tabler/icons-react'
 import { useDisclosure } from '@mantine/hooks'
 
@@ -32,53 +32,63 @@ export const NavBar = (props) => {
     {
       icon: <IconHome />,
       label: 'Beranda',
-      route: 'dashboard'
+      route: 'dashboard',
     },
     {
       icon: <IconUser />,
       label: 'Profil',
-      route: 'profile'
+      route: 'profile',
     },
     {
       icon: <IconUsers />,
       label: 'Dosen',
-      route: 'lecturers.index'
+      route: 'lecturers.index',
     },
     {
       icon: <IconUsers />,
       label: 'Mahasiswa',
-      route: 'students.index'
+      route: 'students.index',
     },
     {
       icon: <IconCategory />,
       label: 'Kategori Soal',
-      route: 'basic-traits.index'
+      route: 'basic-traits.index',
     },
     {
       icon: <IconQuestionMark />,
       label: 'Soal',
-      route: 'indicators.index'
+      route: 'indicators.index',
     },
     {
       icon: <IconCheck />,
       label: 'Jawaban',
-      route: 'choices.index'
+      route: 'choices.index',
     },
     {
       icon: <IconArticle />,
       label: 'Kepribadian',
-      route: 'personalities.index'
+      route: 'personalities.index',
     },
     {
       icon: <IconInfoCircle />,
       label: 'Panduan',
-      route: 'guides.index'
+      route: 'guides.index',
     },
     {
-      icon: <IconLogout />,
-      label: 'Keluar',
-      route: 'logout'
-    }
+      icon: <IconUsers />,
+      label: 'Hasil Tes Mahasiswa',
+      route: 'chart.index',
+    },
+    {
+      icon: <IconUsers />,
+      label: 'Grafik',
+      route: 'chart.index',
+    },
+    // {
+    //   icon: <IconLogout />,
+    //   label: 'Keluar',
+    //   route: 'logout',
+    // },
   ]
   
   
@@ -89,61 +99,56 @@ export const NavBar = (props) => {
       {
         icon: <IconHome />,
         label: 'Beranda',
-        route: 'dashboard'
+        route: 'dashboard',
       },
       {
         icon: <IconUser />,
         label: 'Profil',
-        route: 'profile.edit'
+        route: 'profile.edit',
       },
       {
         icon: <IconUser />,
         label: 'Tes MBTI',
-        route: 'tests.index'
+        route: 'tests.index',
       },
       {
         icon: <IconUser />,
         label: 'Hasil',
-        route: 'results.index'
+        route: 'results.index',
       },
       {
         icon: <IconLogout />,
         label: 'Keluar',
-        route: 'logout'
-      }
+        route: 'logout',
+      },
     ]
   } else {
     NavList = [
       {
         icon: <IconHome />,
         label: 'Beranda',
-        route: 'dashboard'
+        route: 'dashboard',
       },
       {
         icon: <IconUser />,
         label: 'Profil',
-        route: 'profile.edit'
+        route: 'profile.edit',
       },
       {
         icon: <IconUsers />,
         label: 'Mahasiswa',
-        route: 'students.index'
-      },
-      {
-        icon: <IconUsers />,
-        label: 'Grafik',
-        route: 'chart.index'
+        route: 'students.index',
       },
       {
         icon: <IconInfoCircle />,
         label: 'Panduan',
-        route: 'guides.index'
+        route: 'guides.index',
       },
       {
         icon: <IconLogout />,
         label: 'Keluar',
-        route: 'logout'
-      }
+        route: 'logout',
+      },
     ]
   }
   
@@ -157,9 +162,9 @@ export const NavBar = (props) => {
       top={0}
       style={{
         zIndex: 2,
-        borderBottom: '1px solid #f0f0f0'
+        borderBottom: '1px solid #f0f0f0',
       }}>
-      <Image src={Unsada} w={48} />
+      {/*<Image src={Unsada} w={48} />*/}
       
       <ActionIcon
         radius={32}
@@ -167,21 +172,16 @@ export const NavBar = (props) => {
         size={48}
         color="gray"
         aria-label="Menu"
-        display={{
-          base: 'block',
-          lg: 'none'
-        }}
+        display="block"
         onClick={open}
       >
         <IconMenu />
       </ActionIcon>
       
       <Drawer
-        offset={16}
-        radius={20}
         opened={opened}
         onClose={close}
-        position="right"
+        position="left"
         title="Menu"
         size="xs"
       >
@@ -189,10 +189,44 @@ export const NavBar = (props) => {
           bg="white"
           orientation="vertical"
         >
-          {NavList.map((nav, id) => (
+          {NavList.filter(nav => nav.label === 'Beranda').map((nav, id) => (
             <Button
               px={16}
-              radius={32} h={48}
+              h={48}
+              disabled={nav.disabled}
+              color="gray"
+              justify="start"
+              leftSection={nav.icon}
+              onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
+              variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
+              key={id}
+            >
+              {nav.label}
+            </Button>
+          ))}
+          
+          <Text mt={16}>Users</Text>
+          {NavList.filter(nav => nav.label === 'Dosen' || nav.label === 'Mahasiswa').map((nav, id) => (
+            <Button
+              px={16}
+              h={48}
+              disabled={nav.disabled}
+              color="gray"
+              justify="start"
+              leftSection={nav.icon}
+              onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
+              variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
+              key={id}
+            >
+              {nav.label === 'Dosen' ? 'Dosen PA' : 'Mahasiswa'}
+            </Button>
+          ))}
+          
+          <Text mt={16}>Data MBTI</Text>
+          {NavList.filter(nav => nav.label !== 'Beranda' && nav.label !== 'Dosen' && nav.label !== 'Mahasiswa').map((nav, id) => (
+            <Button
+              px={16}
+              h={48}
               disabled={nav.disabled}
               color="gray"
               justify="start"
@@ -207,44 +241,41 @@ export const NavBar = (props) => {
         </Button.Group>
       </Drawer>
       
-      <Button.Group
-        style={{ zIndex: 2 }}
-        bg="white"
-        pos="sticky"
-        top={0}
-        display={{
-          base: 'none',
-          lg: 'flex'
-        }}
-      >
-        {NavList.map((nav, id) => (
-          <Button
-            px={16}
-            radius={32} h={48}
-            disabled={nav.disabled}
-            color="gray"
-            leftSection={nav.icon}
-            onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
-            variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
-            key={id}
-          >
-            {nav.label}
-          </Button>
-        ))}
-      </Button.Group>
+      {/*<Button.Group*/}
+      {/*  style={{ zIndex: 2 }}*/}
+      {/*  bg="white"*/}
+      {/*  pos="sticky"*/}
+      {/*  top={0}*/}
+      {/*  display="none"*/}
+      {/*>*/}
+      {/*  {NavList.map((nav, id) => (*/}
+      {/*    <Button*/}
+      {/*      px={16}*/}
+      {/*      h={48}*/}
+      {/*      disabled={nav.disabled}*/}
+      {/*      color="gray"*/}
+      {/*      leftSection={nav.icon}*/}
+      {/*      onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}*/}
+      {/*      variant={nav.label === props.activeNav ? 'filled' : 'subtle'}*/}
+      {/*      key={id}*/}
+      {/*    >*/}
+      {/*      {nav.label}*/}
+      {/*    </Button>*/}
+      {/*  ))}*/}
+      {/*</Button.Group>*/}
       
       
       <Menu shadow="md"
             styles={{
               dropdown: { padding: 8, borderRadius: 32, width: 240 },
               item: { height: 48, borderRadius: 32 },
-              itemSection: { marginRight: 16 }
+              itemSection: { marginRight: 16 },
             }}>
         <Menu.Target style={{ cursor: 'pointer' }}>
           <Avatar
             display={{
               base: 'none',
-              lg: 'flex'
+              lg: 'flex',
             }}
             src={props.authed.avatar}
             alt={props.authed.full_name} />
