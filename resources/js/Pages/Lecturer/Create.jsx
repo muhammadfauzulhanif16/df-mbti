@@ -21,7 +21,7 @@ import {
 
 const Create = (props) => {
   const form = useForm({
-    file: '',
+    file: null,
     role: 'Dosen PA',
     full_name: '',
     national_lecturer_id_number: '',
@@ -44,17 +44,6 @@ const Create = (props) => {
       <AppLayout title="Tambah Dosen" activeNav="Dosen" authed={props.auth.user}
                  meta={props.meta}>
         
-        <Title align="center" mb={32}>Masukkan Data Dosen</Title>
-        
-        <FileButton variant="light" color="green" w={320}
-                    mb={32}
-                    onChange={(file) => form.setData('file', file)}
-                    accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-          {(props) =>
-            <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
-                    radius={32} leftSection={
-              <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
-        </FileButton>
         
         {/*<Divider my={24} label="Atau" labelPosition="center"*/}
         {/*         styles={{ label: { fontSize: 14 } }} />*/}
@@ -89,6 +78,18 @@ const Create = (props) => {
         {/*</Radio.Group>*/}
         
         <Stack px={160}>
+          <Title align="center" mb={32}>Masukkan Data Dosen</Title>
+          
+          <FileButton variant="light" color="green" w={320}
+                      mb={32}
+                      onChange={(file) => form.setData('file', file)}
+                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            {(props) =>
+              <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+                      radius={32} leftSection={
+                <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
+          </FileButton>
+          
           <TextInput
             styles={{
               label: { marginBottom: 8 },
@@ -258,29 +259,31 @@ const Create = (props) => {
             label="Kata Sandi (Bawaan: NIDN)"
             placeholder="Masukkan kata sandi..."
           />
+          
+          <Flex mt={24} gap={16}>
+            <Button h={48}
+                    px={16} styles={{ section: { marginRight: 12 } }}
+                    radius={32}
+                    variant="outline"
+                    color="red"
+                    disabled={form.processing}
+                    fullWidth
+                    onClick={() => router.get(route('lecturers.index'))}
+            >
+              Batal
+            </Button>
+            <Button h={48}
+                    px={16} styles={{ section: { marginRight: 12 } }}
+                    radius={32}
+                    disabled={form.data.file ? false : form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'file' && !value)}
+                    fullWidth
+                    loading={form.processing}
+                    type="submit"
+            >
+              Simpan
+            </Button>
+          </Flex>
         </Stack>
-        
-        <Flex mt={24} gap={16}>
-          <Button h={48}
-                  px={16} styles={{ section: { marginRight: 12 } }} radius={32}
-                  variant="outline"
-                  color="red"
-                  disabled={form.processing}
-                  fullWidth
-                  onClick={() => router.get(route('lecturers.index'))}
-          >
-            Batal
-          </Button>
-          <Button h={48}
-                  px={16} styles={{ section: { marginRight: 12 } }} radius={32}
-                  disabled={form.data.file ? false : form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'file' && !value)}
-                  fullWidth
-                  loading={form.processing}
-                  type="submit"
-          >
-            Simpan
-          </Button>
-        </Flex>
       </AppLayout>
     </form>
   )

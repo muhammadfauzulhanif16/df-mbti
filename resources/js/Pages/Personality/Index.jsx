@@ -6,18 +6,18 @@ import {
   SimpleGrid,
   Stack,
   Table,
-  TextInput
+  TextInput,
 } from '@mantine/core'
-import { IconArticle, IconPlus } from '@tabler/icons-react'
+import { IconPlus, IconSearch } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
   const [search, setSearch] = useState('')
   const personalities = props.personalities.filter(personality =>
-    personality.name.toLowerCase().includes(search.toLowerCase())
+    personality.name.toLowerCase().includes(search.toLowerCase()),
   )
-  const THList = ['#', 'Nama Tipe Kepribadian', 'Deskripsi', 'Saran Pekerjaan', 'Aksi']
+  const THList = ['#', 'Nama Tipe Kepribadian', 'Deskripsi', 'Opsi']
   
   return (
     <AppLayout title="Kepribadian" activeNav="Kepribadian"
@@ -25,38 +25,41 @@ const Index = (props) => {
       <Stack gap={32}>
         <SimpleGrid cols={{
           base: 1,
-          xs: 2
+          xs: 2,
         }} justify="space-between">
-          <TextInput styles={{
-            label: { marginBottom: 8 },
-            input: {
-              height: 48,
-              borderRadius: 32,
-              paddingLeft: 50,
-              paddingRight: 16
-            },
-            section: { marginLeft: 0, width: 48, height: 48 },
-            error: { marginTop: 8 }
-          }}
-                     leftSection={<IconArticle />}
-                     placeholder="Cari tipe kepribadian..."
-                     value={search}
-                     onChange={(event) => setSearch(event.currentTarget.value)}
-          />
-          
           <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+                  w={320}
                   radius={32}
                   leftSection={<IconPlus />}
                   onClick={() => router.get(route('personalities.create'))}
           >
             Tambah Tipe Kepribadian
           </Button>
+          
+          <TextInput styles={{
+            label: { marginBottom: 8 },
+            input: {
+              height: 48,
+              borderRadius: 32,
+              paddingLeft: 50,
+              paddingRight: 16,
+            },
+            section: { marginLeft: 0, width: 48, height: 48 },
+            error: { marginTop: 8 },
+          }} w={320} ml="auto"
+                     leftSection={<IconSearch />}
+                     placeholder="Cari tipe kepribadian..."
+                     value={search}
+                     onChange={(event) => setSearch(event.currentTarget.value)}
+          />
+        
+        
         </SimpleGrid>
         
         <Box
           style={{
             borderRadius: 32,
-            border: '1px solid #E9ECEF'
+            border: '1px solid #E9ECEF',
           }}>
           <Table.ScrollContainer>
             <Table highlightOnHover withColumnBorders
@@ -86,13 +89,13 @@ const Index = (props) => {
                         dangerouslySetInnerHTML={{ __html: personality.description }}
                       />
                     </Table.Td>
-                    <Table.Td
-                      px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>
-                      <div
-                        dangerouslySetInnerHTML={{ __html: personality.job }}
-                      />
-                    </Table.Td>
+                    {/*<Table.Td*/}
+                    {/*  px={16} py={0}*/}
+                    {/*  style={{ whiteSpace: 'nowrap' }}>*/}
+                    {/*  <div*/}
+                    {/*    dangerouslySetInnerHTML={{ __html: personality.job }}*/}
+                    {/*  />*/}
+                    {/*</Table.Td>*/}
                     <Table.Td px={16} py={0}
                               style={{ whiteSpace: 'nowrap' }}>
                       <Flex gap={16}>

@@ -14,8 +14,6 @@
         $table->uuid('id')->primary();
         $table->string('name');
         $table->text('description');
-        $table->text('job');
-        $table->text('detail');
         $table->timestamps();
       });
     }

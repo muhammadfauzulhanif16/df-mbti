@@ -7,9 +7,9 @@ import {
   Stack,
   Table,
   TextInput,
-  Tooltip
+  Tooltip,
 } from '@mantine/core'
-import { IconCategory, IconPlus } from '@tabler/icons-react'
+import { IconPlus, IconSearch } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
@@ -17,10 +17,10 @@ const Index = (props) => {
   const [search, setSearch] = useState('')
   
   const basicTraits = props.basic_traits.filter((basic_trait) =>
-    basic_trait.name.toLowerCase().includes(search.toLowerCase())
+    basic_trait.name.toLowerCase().includes(search.toLowerCase()),
   )
   
-  const THList = ['#', 'Kode', 'Nama', 'Aksi']
+  const THList = ['#', 'Kode Kategori', 'Nama Kategori', 'Opsi']
   
   return (
     <AppLayout
@@ -33,40 +33,43 @@ const Index = (props) => {
         <SimpleGrid
           cols={{
             base: 1,
-            xs: 2
+            xs: 2,
           }}
           justify="space-between"
         >
-          <TextInput styles={{
+          <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+                  w={320}
+                  radius={32}
+                  leftSection={<IconPlus />}
+                  onClick={() => router.get(route('basic-traits.create'))}
+          >
+            Tambah Kategori
+          </Button>
+          
+          <TextInput ml="auto" styles={{
             label: { marginBottom: 8 },
             input: {
               height: 48,
               borderRadius: 32,
               paddingLeft: 50,
-              paddingRight: 16
+              paddingRight: 16,
             },
             section: { marginLeft: 0, width: 48, height: 48 },
-            error: { marginTop: 8 }
-          }}
-                     leftSection={<IconCategory />}
-                     placeholder="Cari kategori soal..."
+            error: { marginTop: 8 },
+          }} w={320}
+                     leftSection={<IconSearch />}
+                     placeholder="Cari kategori..."
                      value={search}
                      onChange={(event) => setSearch(event.currentTarget.value)}
           />
-          
-          <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
-                  radius={32}
-                  leftSection={<IconPlus />}
-                  onClick={() => router.get(route('basic-traits.create'))}
-          >
-            Tambah Kategori Soal
-          </Button>
+        
+        
         </SimpleGrid>
         
         <Box
           style={{
             borderRadius: 32,
-            border: '1px solid #E9ECEF'
+            border: '1px solid #E9ECEF',
           }}>
           <Table.ScrollContainer>
             <Table
@@ -121,7 +124,7 @@ const Index = (props) => {
                                   disabled={basicTrait.statements.length}
                                   onClick={() =>
                                     router.delete(
-                                      route('basic-traits.destroy', basicTrait)
+                                      route('basic-traits.destroy', basicTrait),
                                     )
                                   }
                           >

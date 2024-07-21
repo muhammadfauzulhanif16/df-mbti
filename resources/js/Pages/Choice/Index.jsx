@@ -6,9 +6,9 @@ import {
   SimpleGrid,
   Stack,
   Table,
-  TextInput
+  TextInput,
 } from '@mantine/core'
-import { IconCheck, IconPlus } from '@tabler/icons-react'
+import { IconPlus, IconSearch } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
@@ -16,10 +16,10 @@ const Index = (props) => {
   const [search, setSearch] = useState('')
   
   const choices = props.choices.filter(choice =>
-    choice.name.toLowerCase().includes(search.toLowerCase())
+    choice.name.toLowerCase().includes(search.toLowerCase()),
   )
   
-  const THList = ['#', 'Nama Jawaban', 'Bobot Penilaian', 'Aksi']
+  const THList = ['#', 'Bobot Penilaian', 'Nama Jawaban', 'Opsi']
   
   return (
     <AppLayout title="Jawaban" activeNav="Jawaban"
@@ -27,38 +27,39 @@ const Index = (props) => {
       <Stack gap={32}>
         <SimpleGrid cols={{
           base: 1,
-          xs: 2
+          xs: 2,
         }} justify="space-between">
-          <TextInput styles={{
-            label: { marginBottom: 8 },
-            input: {
-              height: 48,
-              borderRadius: 32,
-              paddingLeft: 50,
-              paddingRight: 16
-            },
-            section: { marginLeft: 0, width: 48, height: 48 },
-            error: { marginTop: 8 }
-          }}
-                     leftSection={<IconCheck />}
-                     placeholder="Cari jawaban..."
-                     value={search}
-                     onChange={(event) => setSearch(event.currentTarget.value)}
-          />
-          
           <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+                  w={320}
                   radius={32}
                   leftSection={<IconPlus />}
                   onClick={() => router.get(route('choices.create'))}
           >
             Tambah Jawaban
           </Button>
+          
+          <TextInput styles={{
+            label: { marginBottom: 8 },
+            input: {
+              height: 48,
+              borderRadius: 32,
+              paddingLeft: 50,
+              paddingRight: 16,
+            },
+            section: { marginLeft: 0, width: 48, height: 48 },
+            error: { marginTop: 8 },
+          }} w={320} ml="auto"
+                     leftSection={<IconSearch />}
+                     placeholder="Cari jawaban..."
+                     value={search}
+                     onChange={(event) => setSearch(event.currentTarget.value)}
+          />
         </SimpleGrid>
         
         <Box
           style={{
             borderRadius: 32,
-            border: '1px solid #E9ECEF'
+            border: '1px solid #E9ECEF',
           }}>
           <Table.ScrollContainer>
             <Table highlightOnHover withColumnBorders
@@ -80,10 +81,11 @@ const Index = (props) => {
                       style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
                     <Table.Td
                       px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>{choice.name}</Table.Td>
+                      style={{ whiteSpace: 'nowrap' }}>{choice.value}</Table.Td>
                     <Table.Td
                       px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>{choice.value}</Table.Td>
+                      style={{ whiteSpace: 'nowrap' }}>{choice.name}</Table.Td>
+                    
                     <Table.Td px={16} py={0}
                               style={{ whiteSpace: 'nowrap' }}>
                       <Flex gap={16}>

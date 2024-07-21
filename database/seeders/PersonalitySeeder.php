@@ -33,8 +33,8 @@
         Personality::create([
           'name' => $combination,
           'description' => 'Deskripsi ' . $combination,
-          'job' => 'Pekerjaan ' . $combination,
-          'detail' => 'Detail ' . $combination,
+//          'job' => 'Pekerjaan ' . $combination,
+//          'detail' => 'Detail ' . $combination,
         ]);
       }
     }

@@ -285,6 +285,10 @@ export const NavBar = (props) => {
           <Menu.Item leftSection={<IconUser />} px={16} py={0}
                      onClick={() => router.get(route('profile.edit'))}>Profil
                                                                        Saya</Menu.Item>
+          
+          <Menu.Item leftSection={<IconLogout />} px={16} py={0} color="red"
+                     onClick={() => router.post(route('logout'))}>Keluar
+                                                                  Akun</Menu.Item>
         </Menu.Dropdown>
       </Menu>
     

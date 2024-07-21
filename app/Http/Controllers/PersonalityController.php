@@ -2,11 +2,13 @@
   
   namespace App\Http\Controllers;
   
+  use App\Imports\StudentsImport;
   use App\Models\BasicTrait;
   use App\Models\Personality;
   use Exception;
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Auth;
+  use Maatwebsite\Excel\Facades\Excel;
   
   class PersonalityController extends Controller
   {
@@ -31,18 +33,28 @@
     public function store(Request $request)
     {
       try {
-        Personality::create([
-          'name' => $request->name,
-          'description' => $request->description,
-          'job' => $request->job,
-          'detail' => $request->detail,
-        ]);
-        
-        return redirect()->route('personalities.index')->with('meta', [
-          'status' => true,
-          'title' => 'Berhasil menambahkan tipe kepribadian',
-          'message' => "Kepribadian '{$request->name}' berhasil ditambahkan!"
-        ]);
+        if ($request->hasFile('file')) {
+          Excel::import(new StudentsImport, $request->file('file'));
+          
+          return to_route('personalities.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan tipe kepribadian',
+            'message' => 'Tipe kepribadian berhasil ditambahkan!'
+          ]);
+        } else {
+          Personality::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'job' => $request->job,
+            'detail' => $request->detail,
+          ]);
+          
+          return redirect()->route('personalities.index')->with('meta', [
+            'status' => true,
+            'title' => 'Berhasil menambahkan tipe kepribadian',
+            'message' => "Kepribadian '{$request->name}' berhasil ditambahkan!"
+          ]);
+        }
       } catch (Exception $e) {
         return redirect()->route('personalities.index')->with('meta', [
           'status' => false,

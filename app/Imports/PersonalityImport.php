@@ -23,8 +23,8 @@
       return new Personality([
         'name' => $row['nama_kepribadian'],
         'description' => $row['deskripsi_kepribadian'],
-        'job' => $row['saran_pekerjaan'],
-        'detail' => $row['rincian_pekerjaan'],
+//        'job' => $row['saran_pekerjaan'],
+//        'detail' => $row['rincian_pekerjaan'],u
       ]);
     }
   }

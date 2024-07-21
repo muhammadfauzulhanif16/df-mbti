@@ -49,21 +49,22 @@ const Create = (props) => {
                  authed={props.auth.user}
                  meta={props.meta}>
         
-        <Title align="center" mb={32}>Masukkan Data Mahasiswa</Title>
-        
-        <FileButton variant="light" color="green" w={320} mb={32}
-                    onChange={(file) => form.setData('file', file)}
-                    accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-          {(props) =>
-            <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
-                    radius={32} leftSection={
-              <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
-        </FileButton>
         
         {/*<Divider my={24} label="Atau" labelPosition="center"*/}
         {/*         styles={{ label: { fontSize: 14 } }} />*/}
         
         <Stack px={160}>
+          <Title align="center" mb={32}>Masukkan Data Mahasiswa</Title>
+          
+          <FileButton variant="light" color="green" w={320} mb={32}
+                      onChange={(file) => form.setData('file', file)}
+                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            {(props) =>
+              <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+                      radius={32} leftSection={
+                <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
+          </FileButton>
+          
           <TextInput
             type="number"
             leftSection={<IconId />}

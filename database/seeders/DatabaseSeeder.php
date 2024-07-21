@@ -20,7 +20,7 @@
         'id_number' => '0301067502',
         'phone_number' => '087875484975',
         'role' => 'Admin',
-        'email' => 'eka.y.astuty@gmail.com ',
+        'email' => 'eka.y.astuty@gmail.com',
         'password' => Hash::make('0301067502'),
       ]);
       

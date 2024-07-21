@@ -3,60 +3,112 @@ import {
   Box,
   Button,
   Flex,
-  SimpleGrid,
+  Grid,
+  Select,
   Stack,
   Table,
   TextInput,
-  Title
+  Title,
 } from '@mantine/core'
-import { IconPlus, IconQuote } from '@tabler/icons-react'
+import { IconCategory, IconPlus, IconSearch } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
   const [search, setSearch] = useState('')
-  console.log(props)
+  const [basicTraitId, setBasicTraitId] = useState('')
   const statements = props.statements.filter(statement =>
-    statement.name.toLowerCase().includes(search.toLowerCase())
+    statement.name.toLowerCase().includes(search.toLowerCase()) &&
+    (basicTraitId === '' || statement.basic_trait.id === basicTraitId),
   )
   
-  const THList = ['#', 'Kategori Soal', 'Konten Pertanyaan', 'Aksi']
+  const THList = ['#', 'Kategori Soal', 'Pertanyaan', 'Opsi']
   
   return (
     <AppLayout title="Pertanyaan" activeNav="Soal"
                authed={props.auth.user} meta={props.meta}>
       <Stack gap={32}>
-        <SimpleGrid cols={{
-          base: 1,
-          xs: 2
-        }} justify="space-between">
-          <TextInput styles={{
-            label: { marginBottom: 8 },
-            input: {
-              height: 48,
-              borderRadius: 32,
-              paddingLeft: 50,
-              paddingRight: 16
-            },
-            section: { marginLeft: 0, width: 48, height: 48 },
-            error: { marginTop: 8 }
-          }}
-                     leftSection={<IconQuote />}
-                     placeholder="Cari pertanyaan..."
-                     value={search}
-                     onChange={(event) => setSearch(event.currentTarget.value)}
-          />
+        <Grid grow>
+          <Grid.Col span={{
+            base: 6,
+            sm: 3,
+          }}>
+            <Button fullWidth px={16} styles={{ section: { marginRight: 16 } }}
+                    h={48}
+                    radius={32}
+                    leftSection={<IconPlus />}
+                    onClick={() => router.get(route('statements.create', {
+                      indicator: props.indicator,
+                    }))}
+            >
+              Tambah Pertanyaan
+            </Button>
+          </Grid.Col>
           
-          <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
-                  radius={32}
-                  leftSection={<IconPlus />}
-                  onClick={() => router.get(route('statements.create', {
-                    indicator: props.indicator
-                  }))}
-          >
-            Tambah Pertanyaan
-          </Button>
-        </SimpleGrid>
+          <Grid.Col span={{
+            base: 6,
+            sm: 3,
+          }}>
+            <Select styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16,
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 },
+            }}
+                    leftSection={<IconCategory />}
+                    clearable
+                    searchable
+              // value={supervisorId}
+              //       disabled={props.auth.user.role === 'Dosen PA'}
+                    nothingFoundMessage="Tidak ada kategori soal"
+                    checkIconPosition="right"
+                    placeholder="Kategori Soal"
+                    data={Array.from(
+                      new Set(
+                        statements.map(statement => JSON.stringify({
+                          label: statement.basic_trait.name,
+                          value: statement.basic_trait.id,
+                        })),
+                      ),
+                    ).map(item => JSON.parse(item))
+                      .sort((a, b) => a.label.localeCompare(b.label))}
+                    onChange={(value) => {
+                      if (value) {
+                        setBasicTraitId(value)
+                      } else {
+                        setBasicTraitId('')
+                      }
+                    }}
+            />
+          </Grid.Col>
+          
+          <Grid.Col span={{
+            base: 6,
+            sm: 3,
+          }}>
+            <TextInput styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16,
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 },
+            }}
+                       leftSection={<IconSearch />}
+                       placeholder="Cari pertanyaan..."
+                       value={search}
+                       onChange={(event) => setSearch(event.currentTarget.value)}
+            />
+          </Grid.Col>
+        </Grid>
         
         <Title
           align="center">"{props.indicator.name}"</Title>
@@ -64,17 +116,17 @@ const Index = (props) => {
         <Box
           style={{
             borderRadius: 20,
-            border: '1px solid #E9ECEF'
+            border: '1px solid #E9ECEF',
           }}>
           <Table.ScrollContainer>
             <Table highlightOnHover withColumnBorders
                    styles={{
                      table: {
-                       borderRadius: 16
+                       borderRadius: 16,
                      },
                      thead: {
-                       borderRadius: 16
-                     }
+                       borderRadius: 16,
+                     },
                    }}>
               <Table.Thead h={64}>
                 <Table.Tr>
@@ -105,14 +157,14 @@ const Index = (props) => {
                                 styles={{ section: { marginRight: 16 } }}
                                 onClick={() => router.get(route('statements.edit', {
                                   statement: statement,
-                                  indicator: props.indicator
+                                  indicator: props.indicator,
                                 }))}>Ubah</Button>
                         <Button variant="outline" color="red" px={16} h={48}
                                 radius={32}
                                 styles={{ section: { marginRight: 16 } }}
                                 onClick={() => router.delete(route('statements.destroy', {
                                   statement: statement,
-                                  indicator: props.indicator
+                                  indicator: props.indicator,
                                 }))}>Hapus</Button>
                       </Flex>
                     </Table.Td>

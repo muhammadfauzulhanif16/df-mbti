@@ -1,21 +1,14 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import {
-  Button,
-  Divider,
-  FileButton,
-  Flex,
-  TextInput,
-  Title
-} from '@mantine/core'
+import { Button, Flex, Stack, TextInput, Title } from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
-import { IconFileSpreadsheet, IconQuestionMark } from '@tabler/icons-react'
+import { IconQuestionMark } from '@tabler/icons-react'
 
 const Create = (props) => {
   const form = useForm({
     file: null,
-    name: ''
+    name: '',
   })
   
   return (<form onSubmit={(e) => {
@@ -24,59 +17,62 @@ const Create = (props) => {
     }}>
       <AppLayout title="Tambah Soal" activeNav="Soal"
                  authed={props.auth.user} meta={props.meta}>
-        <Title align="center" mb={32}>Tambah Data Soal</Title>
+        <Title align="center" mb={32}>Masukkan Data Soal</Title>
         
-        <FileButton variant="light" color="green" w="100%"
-                    onChange={(file) => form.setData('file', file)}
-                    accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-          {(props) =>
-            <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
-                    radius={32} leftSection={
-              <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
-        </FileButton>
+        {/*<FileButton variant="light" color="green" w="100%"*/}
+        {/*            onChange={(file) => form.setData('file', file)}*/}
+        {/*            accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">*/}
+        {/*  {(props) =>*/}
+        {/*    <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}*/}
+        {/*            radius={32} leftSection={*/}
+        {/*      <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}*/}
+        {/*</FileButton>*/}
         
-        <Divider my={24} label="Atau" labelPosition="center"
-                 styles={{ label: { fontSize: 14 } }} />
+        {/*<Divider my={24} label="Atau" labelPosition="center"*/}
+        {/*         styles={{ label: { fontSize: 14 } }} />*/}
         
-        <TextInput styles={{
-          label: { marginBottom: 8 },
-          input: {
-            height: 48,
-            borderRadius: 32,
-            paddingLeft: 50,
-            paddingRight: 16
-          },
-          section: { marginLeft: 0, width: 48, height: 48 },
-          error: { marginTop: 8 }
-        }} leftSection={<IconQuestionMark />}
-                   withAsterisk
-                   label="Nama Soal"
-                   placeholder="Masukkan nama soal..."
-                   onChange={(e) => form.setData('name', e.target.value)}
-        />
-        
-        <Flex mt={24} gap={16}>
-          <Button h={48}
-                  px={16} styles={{ section: { marginRight: 12 } }} radius={32}
-                  variant="outline"
-                  color="red"
-                  disabled={form.processing}
-                  fullWidth
-                  onClick={() => router.get(route('indicators.index'))}
-          >
-            Batal
-          </Button>
-          <Button
-            disabled={form.data.file ? false : form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'file' && !value)}
-            fullWidth
-            h={48}
-            px={16} styles={{ section: { marginRight: 12 } }} radius={32}
-            loading={form.processing}
-            type="submit"
-          >
-            Simpan
-          </Button>
-        </Flex>
+        <Stack px={160}>
+          <TextInput styles={{
+            label: { marginBottom: 8 },
+            input: {
+              height: 48,
+              borderRadius: 32,
+              paddingLeft: 50,
+              paddingRight: 16,
+            },
+            section: { marginLeft: 0, width: 48, height: 48 },
+            error: { marginTop: 8 },
+          }} leftSection={<IconQuestionMark />}
+                     withAsterisk
+                     label="Nama Soal"
+                     placeholder="Masukkan nama soal..."
+                     onChange={(e) => form.setData('name', e.target.value)}
+          />
+          
+          <Flex mt={24} gap={16}>
+            <Button h={48}
+                    px={16} styles={{ section: { marginRight: 12 } }}
+                    radius={32}
+                    variant="outline"
+                    color="red"
+                    disabled={form.processing}
+                    fullWidth
+                    onClick={() => router.get(route('indicators.index'))}
+            >
+              Batal
+            </Button>
+            <Button
+              disabled={form.data.file ? false : form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'file' && !value)}
+              fullWidth
+              h={48}
+              px={16} styles={{ section: { marginRight: 12 } }} radius={32}
+              loading={form.processing}
+              type="submit"
+            >
+              Simpan
+            </Button>
+          </Flex>
+        </Stack>
       </AppLayout>
     </form>
   )
