@@ -29,15 +29,11 @@
         'email' => $row['email'],
         'password' => $row['nim'],
       ]);
-
-//      dd();
-      
-      $supervisor = User::where('full_name', $row['dosen_pembimbing_akademik'])->first();
       
       Student::create([
         'user_id' => $user->id,
         'academic_year' => date('Y', strtotime($row['tahun_angkatan'])),
-        'supervisor_id' => $supervisor->id,
+        'supervisor_id' => User::where('full_name', 'like', '%' . $row['dosen_pembimbing_akademik'] . '%')->first()->id ?? null,
       ]);
       
       return $user;
