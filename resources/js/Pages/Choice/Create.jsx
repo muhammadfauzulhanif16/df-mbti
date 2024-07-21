@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from '@inertiajs/react'
 import {
   Button,
+  FileButton,
   Flex,
   NumberInput,
   Stack,
@@ -10,7 +11,7 @@ import {
 } from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
-import { IconCheck, IconWeight } from '@tabler/icons-react'
+import { IconCheck, IconFileSpreadsheet, IconWeight } from '@tabler/icons-react'
 
 const Create = (props) => {
   const form = useForm({
@@ -29,19 +30,20 @@ const Create = (props) => {
         
         <Title align="center" mb={32}>Masukkan Data Jawaban</Title>
         
-        {/*<FileButton variant="light" color="green" w="100%"*/}
-        {/*            onChange={(file) => form.setData('file', file)}*/}
-        {/*            accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">*/}
-        {/*  {(props) =>*/}
-        {/*    <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}*/}
-        {/*            radius={32} leftSection={*/}
-        {/*      <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}*/}
-        {/*</FileButton>*/}
         
         {/*<Divider my={24} label="Atau" labelPosition="center"*/}
         {/*         styles={{ label: { fontSize: 14 } }} />*/}
         
         <Stack px={160}>
+          <FileButton variant="light" color="green" w={320}
+                      onChange={(file) => form.setData('file', file)}
+                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            {(props) =>
+              <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+                      radius={32} leftSection={
+                <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
+          </FileButton>
+          
           <NumberInput styles={{
             label: { marginBottom: 8 },
             input: {

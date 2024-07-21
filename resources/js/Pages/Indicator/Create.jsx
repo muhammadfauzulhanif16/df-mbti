@@ -1,9 +1,16 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import { Button, Flex, Stack, TextInput, Title } from '@mantine/core'
+import {
+  Button,
+  FileButton,
+  Flex,
+  Stack,
+  TextInput,
+  Title,
+} from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
-import { IconQuestionMark } from '@tabler/icons-react'
+import { IconFileSpreadsheet, IconQuestionMark } from '@tabler/icons-react'
 
 const Create = (props) => {
   const form = useForm({
@@ -19,19 +26,20 @@ const Create = (props) => {
                  authed={props.auth.user} meta={props.meta}>
         <Title align="center" mb={32}>Masukkan Data Soal</Title>
         
-        {/*<FileButton variant="light" color="green" w="100%"*/}
-        {/*            onChange={(file) => form.setData('file', file)}*/}
-        {/*            accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">*/}
-        {/*  {(props) =>*/}
-        {/*    <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}*/}
-        {/*            radius={32} leftSection={*/}
-        {/*      <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}*/}
-        {/*</FileButton>*/}
         
         {/*<Divider my={24} label="Atau" labelPosition="center"*/}
         {/*         styles={{ label: { fontSize: 14 } }} />*/}
         
         <Stack px={160}>
+          <FileButton variant="light" color="green" w={320}
+                      onChange={(file) => form.setData('file', file)}
+                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            {(props) =>
+              <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+                      radius={32} leftSection={
+                <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
+          </FileButton>
+          
           <TextInput styles={{
             label: { marginBottom: 8 },
             input: {
