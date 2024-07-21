@@ -13,7 +13,6 @@
   use Illuminate\Support\Facades\Auth;
   use Illuminate\Support\Facades\Hash;
   use Inertia\Inertia;
-  use Maatwebsite\Excel\Facades\Excel;
   
   class StudentController extends Controller
   {
@@ -45,7 +44,7 @@
     {
       try {
         if ($request->hasFile('file')) {
-          Excel::import(new StudentsImport, $request->file('file'));
+          (new StudentsImport)->import($request->file('file'));
           
           return to_route('students.index')->with('meta', [
             'status' => true,

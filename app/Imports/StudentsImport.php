@@ -24,16 +24,20 @@
       $user = User::create([
         'full_name' => $row['nama_lengkap'],
         'id_number' => $row['nim'],
-        'phone_number' => '0' . $row['nomor_telepon'],
+        'phone_number' => $row['nomor_telepon'],
         'role' => 'Mahasiswa',
         'email' => $row['email'],
         'password' => $row['nim'],
       ]);
+
+//      dd();
+      
+      $supervisor = User::where('full_name', $row['dosen_pembimbing_akademik'])->first();
       
       Student::create([
         'user_id' => $user->id,
-        'academic_year' => $row['tahun_angkatan'],
-        'supervisor_id' => User::where('full_name', $row['dosen_pembimbing_akademik'])->first()->id,
+        'academic_year' => date('Y', strtotime($row['tahun_angkatan'])),
+        'supervisor_id' => $supervisor->id,
       ]);
       
       return $user;

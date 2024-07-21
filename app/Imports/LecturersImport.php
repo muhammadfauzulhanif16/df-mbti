@@ -26,7 +26,7 @@
       $user = User::create([
         'full_name' => $row['nama_lengkap'],
         'id_number' => $row['nidn'],
-        'phone_number' => '0' . $row['nomor_telepon'],
+        'phone_number' => $row['nomor_telepon'],
         'role' => 'Dosen PA',
         'email' => $row['email'],
         'password' => $row['nidn'],

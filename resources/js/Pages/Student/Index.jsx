@@ -191,7 +191,7 @@ const Index = (props) => {
                       }</Table.Td>
                       <Table.Td
                         px={16} py={0}
-                        style={{ whiteSpace: 'nowrap' }}>{student.supervisor.user.full_name}</Table.Td></>) : (
+                        style={{ whiteSpace: 'nowrap' }}>{student?.supervisor?.user.full_name}</Table.Td></>) : (
                       <Table.Td
                         px={16} py={0}
                         style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0].personality : '-'}</Table.Td>
