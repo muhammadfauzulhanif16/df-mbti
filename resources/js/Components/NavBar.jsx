@@ -11,6 +11,7 @@ import React from 'react'
 import { router } from '@inertiajs/core'
 import {
   IconArticle,
+  IconBriefcase,
   IconCategory,
   IconCheck,
   IconHome,
@@ -68,6 +69,11 @@ export const NavBar = (props) => {
       icon: <IconArticle />,
       label: 'Kepribadian',
       route: 'personalities.index',
+    },
+    {
+      icon: <IconBriefcase />,
+      label: 'Pekerjaan',
+      route: 'works.index',
     },
     {
       icon: <IconInfoCircle />,

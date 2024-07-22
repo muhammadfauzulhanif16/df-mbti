@@ -6,13 +6,18 @@
   use Illuminate\Database\Eloquent\Factories\HasFactory;
   use Illuminate\Database\Eloquent\Model;
   
-  class Personality extends Model
+  class Work extends Model
   {
     use HasFactory, HasUuids;
     
     protected $fillable = [
-      'id',
       'name',
-      'description',
+      'detail',
+      'personality',
     ];
+    
+    public function basicTraits()
+    {
+      return $this->hasMany(WorkBasicTrait::class);
+    }
   }

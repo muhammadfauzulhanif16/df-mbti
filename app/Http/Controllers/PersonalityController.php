@@ -45,8 +45,6 @@
           Personality::create([
             'name' => $request->name,
             'description' => $request->description,
-            'job' => $request->job,
-            'detail' => $request->detail,
           ]);
           
           return redirect()->route('personalities.index')->with('meta', [
@@ -112,8 +110,6 @@
         $personality->update([
           'name' => $request->name,
           'description' => $request->description,
-          'job' => $request->job,
-          'detail' => $request->detail,
         ]);
         
         return redirect()->route('personalities.index')->with('meta', [

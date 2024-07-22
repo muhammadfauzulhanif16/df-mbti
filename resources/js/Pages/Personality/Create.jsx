@@ -24,8 +24,6 @@ const Create = (props) => {
     file: null,
     name: '',
     description: '',
-    job: '',
-    detail: '',
   })
   console.log(props)
   return (
@@ -35,18 +33,20 @@ const Create = (props) => {
     }}>
       <AppLayout title="Tambah Tipe Kepribadian" activeNav="Kepribadian"
                  authed={props.auth.user} meta={props.meta}>
-        <Title align="center" mb={32}>Masukkan Data Tipe Kepribadian</Title>
         
-        <FileButton variant="light" color="green" w={320} mb={32}
-                    onChange={(file) => form.setData('file', file)}
-                    accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-          {(props) =>
-            <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
-                    radius={32} leftSection={
-              <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
-        </FileButton>
         
         <Stack px={160}>
+          <Title align="center" mb={32}>Masukkan Data Tipe Kepribadian</Title>
+          
+          <FileButton variant="light" color="green" w={320} mb={32}
+                      onChange={(file) => form.setData('file', file)}
+                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            {(props) =>
+              <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+                      radius={32} leftSection={
+                <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
+          </FileButton>
+          
           <Box mb={32}>
             <Title order={6} mb={8}>Keterangan Nama Tipe Kepribadian:</Title>
             <Grid grow cols={props.basic_traits.length}>
@@ -285,7 +285,7 @@ const Create = (props) => {
             <Button
               fullWidth
               h={48}
-              disabled={form.hasErrors || Object.values(form.data).some(field => !field)}
+              disabled={form.data.file ? false : form.hasErrors || Object.entries(form.data).some(([key, value]) => key !== 'file' && !value)}
               px={16} styles={{ section: { marginRight: 12 } }} radius={32}
               loading={form.processing}
               type="submit"

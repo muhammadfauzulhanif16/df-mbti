@@ -24,13 +24,14 @@ const Create = (props) => {
     }}>
       <AppLayout title="Tambah Soal" activeNav="Soal"
                  authed={props.auth.user} meta={props.meta}>
-        <Title align="center" mb={32}>Masukkan Data Soal</Title>
         
         
         {/*<Divider my={24} label="Atau" labelPosition="center"*/}
         {/*         styles={{ label: { fontSize: 14 } }} />*/}
         
         <Stack px={160}>
+          <Title align="center" mb={32}>Masukkan Data Soal</Title>
+          
           <FileButton variant="light" color="green" w={320}
                       onChange={(file) => form.setData('file', file)}
                       accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">

@@ -8,11 +8,13 @@
   use App\Http\Controllers\LecturerController;
   use App\Http\Controllers\PDFController;
   use App\Http\Controllers\PersonalityController;
+  use App\Http\Controllers\PersonalityJobsController;
   use App\Http\Controllers\ProfileController;
   use App\Http\Controllers\ResultController;
   use App\Http\Controllers\StatementController;
   use App\Http\Controllers\StudentController;
   use App\Http\Controllers\TestController;
+  use App\Http\Controllers\WorkController;
   use Illuminate\Support\Facades\Auth;
   use Illuminate\Support\Facades\Route;
   use Inertia\Inertia;
@@ -98,6 +100,15 @@
       Route::get('{personality}/edit', [PersonalityController::class, 'edit'])->name('personalities.edit');
       Route::put('{personality}', [PersonalityController::class, 'update'])->name('personalities.update');
       Route::delete('{personality}', [PersonalityController::class, 'destroy'])->name('personalities.destroy');
+    });
+    
+    Route::group(['prefix' => 'works'], function () {
+      Route::get('', [WorkController::class, 'index'])->name('works.index');
+      Route::get('create', [WorkController::class, 'create'])->name('works.create');
+      Route::post('', [WorkController::class, 'store'])->name('works.store');
+      Route::get('{work}/edit', [WorkController::class, 'edit'])->name('works.edit');
+      Route::put('{work}', [WorkController::class, 'update'])->name('works.update');
+      Route::delete('{work}', [WorkController::class, 'destroy'])->name('works.destroy');
     });
     
     Route::group(['prefix' => 'guides'], function () {
