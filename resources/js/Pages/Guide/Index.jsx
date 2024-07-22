@@ -8,7 +8,7 @@ import {
   Table,
   TextInput,
 } from '@mantine/core'
-import { IconInfoCircle, IconPlus } from '@tabler/icons-react'
+import { IconPlus, IconSearch } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
@@ -18,7 +18,7 @@ const Index = (props) => {
     guide.personality.toLowerCase().includes(search.toLowerCase()),
   )
   const isAdmin = props.auth.user.role === 'Admin'
-  const THList = ['#', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Mata Kuliah Relevan']
+  const THList = ['#', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Mata Kuliah Relevan', 'Saran Pengembangan']
   if (isAdmin) {
     THList.push('Opsi')
   }
@@ -52,7 +52,7 @@ const Index = (props) => {
             section: { marginLeft: 0, width: 48, height: 48 },
             error: { marginTop: 8 },
           }}
-                     leftSection={<IconInfoCircle />}
+                     leftSection={<IconSearch />}
                      placeholder="Cari panduan..."
                      value={search}
                      onChange={(event) => setSearch(event.currentTarget.value)}
@@ -88,7 +88,14 @@ const Index = (props) => {
                     <Table.Td
                       px={16} py={0}
                       style={{ whiteSpace: 'nowrap' }}>
-                      {guide.personality}
+                      {guide.job}
+                    </Table.Td>
+                    <Table.Td
+                      px={16} py={0}
+                      style={{ whiteSpace: 'nowrap' }}>
+                      <div
+                        dangerouslySetInnerHTML={{ __html: guide.course }}
+                      />
                     </Table.Td>
                     <Table.Td
                       px={16} py={0}
@@ -102,11 +109,6 @@ const Index = (props) => {
                         <Table.Td px={16} py={0}
                                   style={{ whiteSpace: 'nowrap' }}>
                           <Flex gap={16}>
-                            <Button px={16} h={48}
-                                    radius={32}
-                                    styles={{ section: { marginRight: 16 } }}
-                                    variant="outline" color="green"
-                                    onClick={() => router.get(route('guides.show', guide))}>Lihat</Button>
                             <Button px={16} h={48}
                                     radius={32}
                                     styles={{ section: { marginRight: 16 } }}
