@@ -34,12 +34,13 @@
           'personality' => $request->personality,
           'development' => $request->development,
           'job' => $request->job,
+          'course' => $request->course,
         ]);
         
         return redirect()->route('guides.index')->with('meta', [
           'status' => true,
           'title' => 'Berhasil menambahkan panduan',
-          'message' => "Panduan '{$request->title}' berhasil ditambahkan!"
+          'message' => "Panduan berhasil ditambahkan!"
         ]);
       } catch (Exception $e) {
         return redirect()->route('guides.index')->with('meta', [
@@ -97,12 +98,13 @@
           'personality' => $request->personality,
           'development' => $request->development,
           'job' => $request->job,
+          'course' => $request->course,
         ]);
         
         return redirect()->route('guides.index')->with('meta', [
           'status' => true,
           'title' => 'Berhasil mengubah panduan',
-          'message' => "Panduan '{$request->personality}' berhasil diubah!"
+          'message' => "Panduan berhasil diubah!"
         ]);
       } catch (Exception $e) {
         return redirect()->route('guides.index')->with('meta', [
@@ -124,7 +126,7 @@
         return redirect()->route('guides.index')->with('meta', [
           'status' => true,
           'title' => 'Berhasil menghapus panduan',
-          'message' => "Panduan '{$guide->personality}' berhasil dihapus!"
+          'message' => "Panduan berhasil dihapus!"
         ]);
       } catch (Exception $e) {
         return redirect()->route('guides.index')->with('meta', [

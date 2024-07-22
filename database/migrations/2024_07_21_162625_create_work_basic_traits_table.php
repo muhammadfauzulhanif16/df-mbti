@@ -13,6 +13,7 @@
       Schema::create('work_basic_traits', function (Blueprint $table) {
         $table->foreignUuid('work_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         $table->foreignUuid('basic_trait_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+        $table->unsignedTinyInteger('order');
         $table->unsignedInteger('min_value');
         $table->unsignedInteger('max_value');
       });

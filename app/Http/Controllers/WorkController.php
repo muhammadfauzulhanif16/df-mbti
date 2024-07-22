@@ -23,7 +23,7 @@
       return Inertia::render('Work/Index', [
         'meta' => session('meta'),
         'auth' => ['user' => $authedUser],
-        'works' => Work::all(),
+        'works' => Work::all()
       ]);
     }
     
@@ -56,6 +56,7 @@
             'basic_trait_id' => $trait['id'],
             'min_value' => $trait['min_value'],
             'max_value' => $trait['max_value'],
+            'order' => $trait['order'],
           ]);
         }
         
@@ -104,12 +105,25 @@
       $authedUser = Auth::user();
       $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
       
+      $transformedWorkBasicTraits = $work->basicTraits->map(function ($basicTrait) {
+        // Assuming you have a method to get 'code' and 'order' based on 'basic_trait_id'
+        // For demonstration, 'code' will be set to a placeholder value, and 'selected' will always be true
+        return [
+          'id' => $basicTrait->basic_trait_id,
+          'code' => BasicTrait::find($basicTrait->basic_trait_id)->code,
+          'selected' => true,
+          'min_value' => $basicTrait->min_value,
+          'max_value' => $basicTrait->max_value,
+          'order' => $basicTrait->order,
+        ];
+      });
+      
       return Inertia::render('Work/Edit', [
         'meta' => session('meta'),
         'auth' => ['user' => $authedUser],
         'work' => $work,
         'basic_traits' => BasicTrait::all(),
-        'work_basic_traits' => $work->basicTraits,
+        'work_basic_traits' => $transformedWorkBasicTraits,
       ]);
     }
     
@@ -135,22 +149,30 @@
           'personality' => $selectedTraitsCodesString,
         ]);
         
+        // Retrieve current WorkBasicTrait identifiers
+        $currentTraitIds = $work->basicTraits->pluck('basic_trait_id')->toArray();
+        
+        // Identifiers from the request
+        $requestTraitIds = array_column($request->basic_traits, 'id');
+        
+        // Identifiers to delete (not present in the request or have changed)
+        $idsToDelete = array_diff($currentTraitIds, $requestTraitIds);
+        
+        // Delete WorkBasicTrait records that are not present in the request or have changed
+        WorkBasicTrait::where('work_id', $work->id)
+          ->whereIn('basic_trait_id', $idsToDelete)
+          ->delete();
+        
+        // Update existing or create new WorkBasicTrait records
         foreach ($request->basic_traits as $trait) {
-          $workBasicTrait = WorkBasicTrait::where('work_id', $work->id)->where('basic_trait_id', $trait['id'])->first();
-          
-          if ($workBasicTrait) {
-            $workBasicTrait->update([
-              'min_value' => $trait['min_value'],
-              'max_value' => $trait['max_value'],
-            ]);
-          } else {
-            WorkBasicTrait::create([
-              'work_id' => $work->id,
-              'basic_trait_id' => $trait['id'],
-              'min_value' => $trait['min_value'],
-              'max_value' => $trait['max_value'],
-            ]);
-          }
+          WorkBasicTrait::updateOrCreate([
+            'work_id' => $work->id,
+            'basic_trait_id' => $trait['id'],
+          ], [
+            'order' => $trait['order'],
+            'min_value' => $trait['min_value'],
+            'max_value' => $trait['max_value'],
+          ]);
         }
         
         return to_route('works.index')->with('meta', [

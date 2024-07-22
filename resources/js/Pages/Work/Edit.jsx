@@ -22,18 +22,19 @@ import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 
 const Edit = (props) => {
-  console.log(props)
+  console.log(props, 'props')
   const [basicTraits, setBasicTraits] = useState([])
   const form = useForm({
     name: props.work.name,
     detail: props.work.detail,
     basic_traits: [],
   })
-  
+  console.log(form.data, 'form.data')
+  console.log(basicTraits, 'basicTraits')
   useEffect(() => {
     const initialTraits = props.basic_traits.slice(0, 8).map((trait, index) => {
       // Check if the current trait is selected in works_basic_traits
-      const workTrait = props.work_basic_traits.find(workTrait => workTrait.basic_trait_id === trait.id)
+      const workTrait = props.work_basic_traits.find(workTrait => workTrait.id === trait.id)
       const isSelected = !!workTrait // Convert to boolean: true if found, false otherwise
       
       return {
@@ -53,7 +54,13 @@ const Edit = (props) => {
     }, [])
     
     setBasicTraits(groupedTraits)
+    // form.setData('basic_traits', groupedTraits)
   }, [props.basic_traits, props.works_basic_traits]) // Add dependencies to useEffect
+  
+  useEffect(() => {
+    form.setData('basic_traits', props.work_basic_traits)
+  }, [props.work_basic_traits])
+  
   
   return (
     <form onSubmit={(e) => {
@@ -181,11 +188,48 @@ const Edit = (props) => {
                           <Checkbox
                             disabled={(isAnyTraitSelectedWithSameOrder && !trait.selected) || (!trait.selected && basicTraitGroup.some(t => t.selected))}
                             checked={trait.selected}
+                            // onChange={(e) => {
+                            //   // Update in form.data.basic_traits
+                            //   let updatedFormTraits = [...form.data.basic_traits]
+                            //   const formIndex = updatedFormTraits.findIndex(t => t.code === trait.code)
+                            //   if (e.target.checked) {
+                            //     if (formIndex === -1) {
+                            //       updatedFormTraits.push({
+                            //         ...trait,
+                            //         selected: e.target.checked,
+                            //       })
+                            //     } else {
+                            //       updatedFormTraits[formIndex] = {
+                            //         ...updatedFormTraits[formIndex],
+                            //         selected: e.target.checked,
+                            //       }
+                            //     }
+                            //   } else {
+                            //     if (formIndex !== -1) {
+                            //       updatedFormTraits.splice(formIndex, 1)
+                            //     }
+                            //   }
+                            //   updatedFormTraits.sort((a, b) => a.order - b.order)
+                            //   form.setData('basic_traits', updatedFormTraits)
+                            //
+                            //   // Update in basicTraits state
+                            //   const updatedBasicTraits = basicTraits.map((group, groupId) => {
+                            //     if (groupId === basicTraitGroupId) {
+                            //       return group.map(t => t.code === trait.code ? {
+                            //         ...t,
+                            //         selected: e.target.checked,
+                            //       } : t)
+                            //     }
+                            //     return group
+                            //   })
+                            //   setBasicTraits(updatedBasicTraits)
+                            // }}
                             onChange={(e) => {
-                              // Update in form.data.basic_traits
                               let updatedFormTraits = [...form.data.basic_traits]
                               const formIndex = updatedFormTraits.findIndex(t => t.code === trait.code)
+                              
                               if (e.target.checked) {
+                                // If checked, add or update the trait in form.data.basic_traits
                                 if (formIndex === -1) {
                                   updatedFormTraits.push({
                                     ...trait,
@@ -198,10 +242,10 @@ const Edit = (props) => {
                                   }
                                 }
                               } else {
-                                if (formIndex !== -1) {
-                                  updatedFormTraits.splice(formIndex, 1)
-                                }
+                                // If unchecked, remove the trait from form.data.basic_traits
+                                updatedFormTraits = updatedFormTraits.filter(t => t.code !== trait.code)
                               }
+                              
                               updatedFormTraits.sort((a, b) => a.order - b.order)
                               form.setData('basic_traits', updatedFormTraits)
                               

@@ -48,7 +48,8 @@ const Create = (props) => {
     
     setBasicTraits(groupedTraits)
   }, [])
-  
+  console.log(props)
+  console.log(form.data)
   return (
     <form onSubmit={(e) => {
       e.preventDefault()

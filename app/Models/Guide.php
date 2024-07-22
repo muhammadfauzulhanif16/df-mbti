@@ -14,5 +14,6 @@
       'personality',
       'development',
       'job',
+      'course'
     ];
   }

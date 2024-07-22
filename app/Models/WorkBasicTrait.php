@@ -14,6 +14,7 @@
     protected $fillable = [
       'work_id',
       'basic_trait_id',
+      'order',
       'min_value',
       'max_value',
     ];

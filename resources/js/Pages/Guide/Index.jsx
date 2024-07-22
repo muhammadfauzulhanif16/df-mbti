@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import {
   Box,
   Button,
+  Flex,
   SimpleGrid,
   Stack,
   Table,
   TextInput,
-  Flex
 } from '@mantine/core'
 import { IconInfoCircle, IconPlus } from '@tabler/icons-react'
 import { router } from '@inertiajs/core'
@@ -15,10 +15,10 @@ import { AppLayout } from '@/Layouts/AppLayout.jsx'
 const Index = (props) => {
   const [search, setSearch] = useState('')
   const guides = props.guides.filter(guide =>
-    guide.personality.toLowerCase().includes(search.toLowerCase())
+    guide.personality.toLowerCase().includes(search.toLowerCase()),
   )
   const isAdmin = props.auth.user.role === 'Admin'
-  const THList = ['#', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Saran Pengembangan']
+  const THList = ['#', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Mata Kuliah Relevan']
   if (isAdmin) {
     THList.push('Opsi')
   }
@@ -29,40 +29,40 @@ const Index = (props) => {
       <Stack gap={32}>
         <SimpleGrid cols={props.auth.user.role === 'Admin' && {
           base: 1,
-          xs: 2
+          xs: 2,
         }} grow justify="space-between">
-          <TextInput styles={{
-            label: { marginBottom: 8 },
-            input: {
-              height: 48,
-              borderRadius: 32,
-              paddingLeft: 50,
-              paddingRight: 16
-            },
-            section: { marginLeft: 0, width: 48, height: 48 },
-            error: { marginTop: 8 }
-          }}
-                     leftSection={<IconInfoCircle />}
-                     placeholder="Cari panduan..."
-                     value={search}
-                     onChange={(event) => setSearch(event.currentTarget.value)}
-          />
-          
           {props.auth.user.role === 'Admin' && (
-            <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
+            <Button w={320} px={16} styles={{ section: { marginRight: 16 } }}
+                    h={48}
                     radius={32}
                     leftSection={<IconPlus />}
                     onClick={() => router.get(route('guides.create'))}
             >
               Tambah Panduan
             </Button>)}
-        
+          
+          <TextInput ml="auto" w={320} styles={{
+            label: { marginBottom: 8 },
+            input: {
+              height: 48,
+              borderRadius: 32,
+              paddingLeft: 50,
+              paddingRight: 16,
+            },
+            section: { marginLeft: 0, width: 48, height: 48 },
+            error: { marginTop: 8 },
+          }}
+                     leftSection={<IconInfoCircle />}
+                     placeholder="Cari panduan..."
+                     value={search}
+                     onChange={(event) => setSearch(event.currentTarget.value)}
+          />
         </SimpleGrid>
         
         <Box
           style={{
             borderRadius: 32,
-            border: '1px solid #E9ECEF'
+            border: '1px solid #E9ECEF',
           }}>
           <Table.ScrollContainer>
             <Table highlightOnHover withColumnBorders
@@ -88,9 +88,7 @@ const Index = (props) => {
                     <Table.Td
                       px={16} py={0}
                       style={{ whiteSpace: 'nowrap' }}>
-                      <div
-                        dangerouslySetInnerHTML={{ __html: guide.job }}
-                      />
+                      {guide.personality}
                     </Table.Td>
                     <Table.Td
                       px={16} py={0}
@@ -104,6 +102,11 @@ const Index = (props) => {
                         <Table.Td px={16} py={0}
                                   style={{ whiteSpace: 'nowrap' }}>
                           <Flex gap={16}>
+                            <Button px={16} h={48}
+                                    radius={32}
+                                    styles={{ section: { marginRight: 16 } }}
+                                    variant="outline" color="green"
+                                    onClick={() => router.get(route('guides.show', guide))}>Lihat</Button>
                             <Button px={16} h={48}
                                     radius={32}
                                     styles={{ section: { marginRight: 16 } }}
