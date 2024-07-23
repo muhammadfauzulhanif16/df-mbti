@@ -4,8 +4,8 @@ import {
   Button,
   Divider,
   Flex,
-  Group, Image,
-  Progress,
+  Group,
+  Image,
   SimpleGrid,
   Stack,
   Text,
@@ -16,8 +16,10 @@ import { useForm } from '@inertiajs/react'
 import {
   IconArrowNarrowLeft,
   IconArrowNarrowRight,
-  IconPrinter
+  IconPrinter,
 } from '@tabler/icons-react'
+import { RadarChart } from '@mantine/charts'
+
 const Unsada = '/unsada.png'
 
 const Show = (props) => {
@@ -33,16 +35,51 @@ const Show = (props) => {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
-      hour12: false
+      hour12: false,
     }),
     time: props.test.time,
+    work: props.test.work.name,
     personality: props.test.personality,
     description: props.personality.description,
     job: props.personality.job,
-    detail: props.personality.detail
+    detail: props.test.work.detail,
+    course: props.guide.course,
   })
   const [isDetail, setIsDetail] = useState(0)
   const [isPrint, setIsPrint] = useState(false)
+  
+  // console.log(props.indicators.map(indicator => {
+  //   return indicator.basic_traits.reduce((highest, current) => {
+  //     return (current.totalValue > highest.totalValue) ? current : highest
+  //   })
+  // }))
+  
+  const data = [
+    {
+      product: 'Apples',
+      sales: 120,
+    },
+    {
+      product: 'Oranges',
+      sales: 98,
+    },
+    {
+      product: 'Tomatoes',
+      sales: 86,
+    },
+    {
+      product: 'Grapes',
+      sales: 99,
+    },
+    {
+      product: 'Bananas',
+      sales: 85,
+    },
+    {
+      product: 'Lemons',
+      sales: 65,
+    },
+  ]
   
   return (
     <AppLayout
@@ -55,47 +92,32 @@ const Show = (props) => {
           <Title align="center"
                  mb={32}>{props.test.personality}</Title>
           
-          <Stack gap={24}>
-            {props.indicators.map((indicator, id) => (
-              <Stack align="center" gap={16} key={id}>
-                <Text fz={20}>"{indicator.name}"</Text>
-                <Flex w="100%" justify="center" align="center"
-                      gap={16}>
-                  <Text fw={600}>{
-                    (indicator.basic_traits[0].totalValue / indicator.totalValue * 100).toFixed(1)
-                  }%</Text>
-                  
-                  <Progress.Root size={32} radius="xl" w="100%">
-                    {indicator.basic_traits.map((basic_trait, id) => (
-                      <Progress.Section
-                        key={id}
-                        value={basic_trait.totalValue / indicator.totalValue * 100}
-                        color={
-                          id % 2 === 0 ? 'cyan' : 'pink'
-                        }
-                      >
-                        <Progress.Label
-                          style={{
-                            lineHeight: '32px'
-                          }}
-                          fz={16}>{basic_trait.name}</Progress.Label>
-                      </Progress.Section>
-                    ))}
-                  </Progress.Root>
-                  
-                  <Text fw={600}>
-                    {
-                      (indicator.basic_traits[1].totalValue / indicator.totalValue * 100).toFixed(1)
-                    }%
-                  </Text>
-                </Flex>
-              </Stack>
-            ))}
-          </Stack>
+          <RadarChart
+            h={300}
+            data={props.indicators.map(indicator => {
+              const highestBasicTrait = indicator.basic_traits.reduce((highest, current) => {
+                return (current.totalValue > highest.totalValue) ? current : highest
+              })
+              
+              if (highestBasicTrait.totalValue > 0) {
+                return {
+                  basic_trait: `${highestBasicTrait.name} (${(highestBasicTrait.totalValue / indicator.totalValue * 100).toFixed(1)}%)`,
+                  totalValue: highestBasicTrait.totalValue / indicator.totalValue * 100,
+                  totalValueIndicator: indicator.totalValue,
+                }
+              }
+            }).filter(item => item !== undefined)}
+            dataKey="basic_trait"
+            withPolarGrid
+            withPolarAngleAxis
+            withPolarRadiusAxis
+            series={[{ name: 'totalValue', color: 'blue.4', opacity: 0.2 }]}
+          />
+        
         </Box>
       
       
-      ) : (props.auth.user.role !== 'Mahasiswa' && isDetail === 1) ? (
+      ) : (props.auth.user.role === 'Mahasiswa' && isDetail === 1) ? (
         <Box>
           <Title size={30} align="center" mb={32}>Hasil Tipe
                                                   Kepribadian</Title>
@@ -159,7 +181,7 @@ const Show = (props) => {
                     }}>Cetak</Button>
           )}
           
-          <Group justify='space-between'>
+          <Group justify="space-between">
             <Image
               src={Unsada}
               w={48}
@@ -170,7 +192,6 @@ const Show = (props) => {
             <span></span>
           </Group>
           
-         
           
           <Flex gap={16}>
             <Stack w="50%">
@@ -210,7 +231,7 @@ const Show = (props) => {
                 <Text mb={4}>Deskripsi Kepribadian : </Text>
                 <div
                   style={{
-                    fontWeight: 600
+                    fontWeight: 600,
                   }}
                   dangerouslySetInnerHTML={{ __html: form.data.description }}
                 />
@@ -218,23 +239,29 @@ const Show = (props) => {
               
               <Box>
                 <Text mb={4}>Saran Pekerjaan : </Text>
-                <div
-                  style={{
-                    fontWeight: 600
-                  }}
-                  dangerouslySetInnerHTML={{ __html: form.data.job }}
-                />
+                <Text
+                  fw={600}>{form.data.work}</Text>
               </Box>
             </Stack>
           </Flex>
           
           <Box mt={16}>
-            <Text mb={4}>Rincian Pekerjaan : </Text>
+            <Text mb={4}>Detail Pekerjaan : </Text>
             <div
               style={{
-                fontWeight: 600
+                fontWeight: 600,
               }}
               dangerouslySetInnerHTML={{ __html: form.data.detail }}
+            />
+          </Box>
+          
+          <Box mt={16}>
+            <Text mb={4}>Mata Kuliah Relevan : </Text>
+            <div
+              style={{
+                fontWeight: 600,
+              }}
+              dangerouslySetInnerHTML={{ __html: form.data.course }}
             />
           </Box>
         </Box>
@@ -249,7 +276,7 @@ const Show = (props) => {
                     onClick={() => setIsDetail(isDetail - 1)}>Kembali</Button>
           )}
           
-          {(props.auth.user.role !== 'Mahasiswa' ? isDetail < 2 : isDetail < 1) &&
+          {(props.auth.user.role === 'Mahasiswa' ? isDetail < 2 : isDetail < 1) &&
             (
               <Button px={16} h={48} rightSection={<IconArrowNarrowRight />}
                       radius={32} variant="subtle"

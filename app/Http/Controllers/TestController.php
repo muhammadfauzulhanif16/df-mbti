@@ -6,10 +6,12 @@
   use App\Models\Answer;
   use App\Models\BasicTrait;
   use App\Models\Choice;
+  use App\Models\Guide;
   use App\Models\Indicator;
   use App\Models\Personality;
   use App\Models\Statement;
   use App\Models\Test;
+  use App\Models\Work;
   use Exception;
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Auth;
@@ -40,6 +42,7 @@
         $test = Test::create([
           'user_id' => Auth::id(),
           'time' => gmdate('H:i:s', $request->time),
+          'work_id' => Work::inRandomOrder()->first()->id,
         ]);
         
         foreach ($request->answers as $answer) {
@@ -86,9 +89,34 @@
         
         $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
         
+        
+        $highestPercentageBasicTraits = $groupedIndicators->map(function ($indicator) {
+          $percentage = ($indicator['maxBasicTrait']['totalValue'] / $indicator['totalValue']) * 100;
+          
+          return [
+            'indicatorName' => $indicator['name'],
+            'basicTraitName' => $indicator['maxBasicTrait']['name'],
+            'percentage' => $percentage,
+          ];
+        });
+        
+        
+        $work = Work::with(['basicTraits.basicTrait'])->get()->filter(function ($work) use ($highestPercentageBasicTraits) {
+          foreach ($highestPercentageBasicTraits as $highestBasicTrait) {
+            $basicTraitInWork = $work->basicTraits->firstWhere('basicTrait.name', $highestBasicTrait['basicTraitName']);
+            if (!$basicTraitInWork) {
+              return false;
+            }
+            if ($highestBasicTrait['percentage'] < $basicTraitInWork->min_value || $highestBasicTrait['percentage'] > $basicTraitInWork->max_value) {
+              return false;
+            }
+          }
+          return true;
+        })->shuffle()->first();
         // Update the Test model
         $test->update([
-          'personality' => $allMaxBasicTraitCodesString
+          'personality' => $allMaxBasicTraitCodesString,
+          'work_id' => $work->id,
         ]);
         
         return to_route('tests.show', $test->id)->with('meta', [
@@ -145,54 +173,8 @@
       $authedUser = Auth::user();
       $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
       
-      
-      $groupedIndicators = $test->load('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
-        ->answers->groupBy('statement.indicator.name');
-      
-      $allMaxBasicTraitCodes = [];
-      
-      $groupedIndicators->transform(function ($indicatorGroup, $indicatorName) use (&$allMaxBasicTraitCodes) {
-        $groupedBasicTraits = $indicatorGroup->groupBy('statement.basicTrait.name');
-        
-        $totalIndicatorValue = 0;
-        
-        $groupedBasicTraits->transform(function ($basicTraitGroup, $basicTraitName) use (&$totalIndicatorValue) {
-          $totalBasicTraitValue = $basicTraitGroup->sum('choice.value');
-          $totalIndicatorValue += $totalBasicTraitValue;
-          
-          return [
-            'name' => $basicTraitName,
-            'totalValue' => $totalBasicTraitValue,
-          ];
-        });
-        
-        $maxBasicTrait = $groupedBasicTraits->sortByDesc('totalValue')->first();
-        $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
-        
-        $allMaxBasicTraitCodes[] = $maxBasicTraitCode;
-        
-        return [
-          'name' => $indicatorName,
-          'totalValue' => $totalIndicatorValue,
-          'maxBasicTrait' => $maxBasicTrait,
-          'maxBasicTraitCode' => $maxBasicTraitCode,
-          'basic_traits' => $groupedBasicTraits->values()->all(),
-        ];
-      });
-      
-      $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
-      
-      $groupedResult = [
-        'id' => $test->id,
-        'test' => $test,
-        'indicators' => $groupedIndicators->values()->all(),
-        'allMaxBasicTraitCodes' => $allMaxBasicTraitCodesString,
-        'time' => $test->time,
-        'created_at' => $test->created_at->format('d/m/Y'),
-      ];
-      
       return Inertia::render('Test/Show', [
-        'test' => $test->load('student.user'),
+        'test' => $test->load('student.user', 'work'),
         'indicators' => $test->load('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
           ->answers
           ->groupBy('statement.indicator.name')
@@ -222,6 +204,9 @@
         'personality' => Personality::where('name', $test->personality)->first(),
         'meta' => session('meta'),
         'auth' => ['user' => $authedUser],
+        'guide' => Guide::where('personality', $test->personality)
+          ->where('job', Work::find($test->work_id)->name)
+          ->first(),
       ]);
     }
     

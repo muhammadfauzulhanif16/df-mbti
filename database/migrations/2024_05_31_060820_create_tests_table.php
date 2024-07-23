@@ -14,6 +14,7 @@
         $table->uuid('id')->primary();
         $table->foreignUuid('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         $table->time('time');
+        $table->foreignUuid('work_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         $table->string('personality')->nullable()->default(null);
         $table->timestamps();
       });

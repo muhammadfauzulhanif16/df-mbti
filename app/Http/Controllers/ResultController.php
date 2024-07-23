@@ -5,8 +5,10 @@
   use App\Http\Requests\StoreResultRequest;
   use App\Http\Requests\UpdateResultRequest;
   use App\Models\BasicTrait;
+  use App\Models\Lecturer;
   use App\Models\Personality;
   use App\Models\Result;
+  use App\Models\Student;
   use App\Models\Test;
   use Illuminate\Support\Facades\Auth;
   use Inertia\Inertia;
@@ -73,8 +75,26 @@
 //      });
       
       return Inertia::render('Result/Index', [
-        'tests' => Test::where('user_id', $authedUser->id)->latest()->get(),
+        'tests' => Test::where('user_id', $authedUser->id)->with('work')->latest()->get(),
         'auth' => ['user' => $authedUser],
+      ]);
+    }
+    
+    public function students_index()
+    {
+      $authedUser = Auth::user();
+      $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
+      
+      return Inertia::render('Result/Students', [
+        'auth' => ['user' => $authedUser],
+        'meta' => session('meta'),
+        'students' => Student::with(['user', 'supervisor.user', 'tests' => function ($query) {
+          $query->latest();
+        }])->get()->map(function ($student) {
+          $student->user->avatar = str_contains($student->user->avatar, 'https') ? $student->user->avatar : ($student->user->avatar ? asset('storage/' . $student->user->avatar) : null);
+          return $student;
+        })->sortBy('user.full_name')->values(),
+        'lecturers' => Lecturer::with('user')->get(),
       ]);
     }
     

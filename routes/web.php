@@ -133,6 +133,7 @@
     
     Route::group(['prefix' => 'results'], function () {
       Route::get('', [ResultController::class, 'index'])->name('results.index');
+      Route::get('users', [ResultController::class, 'students_index'])->name('results.students.index');
       Route::get('{test}', [ResultController::class, 'show'])->name('results.show');
     });
     

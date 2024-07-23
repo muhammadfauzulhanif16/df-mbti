@@ -16,17 +16,17 @@ export const Index = (props) => {
       <Box
         style={{
           borderRadius: 20,
-          border: '1px solid #E9ECEF'
+          border: '1px solid #E9ECEF',
         }}>
         <Table.ScrollContainer>
           <Table highlightOnHover withColumnBorders
                  styles={{
                    table: {
-                     borderRadius: 16
+                     borderRadius: 16,
                    },
                    thead: {
-                     borderRadius: 16
-                   }
+                     borderRadius: 16,
+                   },
                  }}>
             <Table.Thead h={64}>
               <Table.Tr>
@@ -36,7 +36,11 @@ export const Index = (props) => {
                           style={{ whiteSpace: 'nowrap' }}>Tipe
                                                            Kepribadian</Table.Th>
                 <Table.Th px={16} py={0}
-                          style={{ whiteSpace: 'nowrap' }}>Tanggal</Table.Th>
+                          style={{ whiteSpace: 'nowrap' }}>Saran
+                                                           Pekerjaan</Table.Th>
+                <Table.Th px={16} py={0}
+                          style={{ whiteSpace: 'nowrap' }}>Tanggal
+                                                           Pengerjaan</Table.Th>
                 <Table.Th px={16} py={0}
                           style={{ whiteSpace: 'nowrap' }}>Waktu
                                                            Selesai</Table.Th>
@@ -52,12 +56,14 @@ export const Index = (props) => {
                             style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
                   <Table.Td px={16} py={0}
                             style={{ whiteSpace: 'nowrap' }}>{test.personality}</Table.Td>
+                  <Table.Td px={16} py={0}
+                            style={{ whiteSpace: 'nowrap' }}>{test.work.name}</Table.Td>
                   <Table.Td px={16} py={0} style={{ whiteSpace: 'nowrap' }}>
-                    {new Date(test.created_at).toLocaleDateString('id-ID').split('/').join('-')}
+                    {new Date(test.created_at).toLocaleDateString('id-ID')}
                   </Table.Td>
                   <Table.Td px={16} py={0}
                             style={{ whiteSpace: 'nowrap' }}>
-                    {test.time.split(':').join('.')}
+                    {test.time}
                   </Table.Td>
                   <Table.Td px={16} py={0}
                             style={{ whiteSpace: 'nowrap' }}>

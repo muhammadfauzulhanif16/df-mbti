@@ -14,7 +14,8 @@
   use Illuminate\Support\Facades\Hash;
   use Inertia\Inertia;
   
-  class StudentController extends Controller
+  class
+  StudentController extends Controller
   {
     /**
      * Display a listing of the resource.

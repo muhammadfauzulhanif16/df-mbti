@@ -10,7 +10,7 @@
   {
     use HasFactory, HasUuids;
     
-    protected $fillable = ['user_id', 'time', 'personality'];
+    protected $fillable = ['user_id', 'time', 'work_id', 'personality'];
     
     public function answers()
     {
@@ -20,6 +20,11 @@
     public function student()
     {
       return $this->belongsTo(Student::class, 'user_id', 'user_id');
+    }
+    
+    public function work()
+    {
+      return $this->belongsTo(Work::class);
     }
   }
  

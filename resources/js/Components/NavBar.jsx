@@ -83,7 +83,7 @@ export const NavBar = (props) => {
     {
       icon: <IconUsers />,
       label: 'Hasil Tes Mahasiswa',
-      route: 'chart.index',
+      route: 'results.students.index',
     },
     {
       icon: <IconUsers />,
