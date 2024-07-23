@@ -3,7 +3,6 @@ import { useForm } from '@inertiajs/react'
 import {
   Box,
   Button,
-  FileButton,
   Flex,
   Grid,
   Stack,
@@ -17,7 +16,7 @@ import { Link, RichTextEditor } from '@mantine/tiptap'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
-import { IconArticle, IconFileSpreadsheet } from '@tabler/icons-react'
+import { IconArticle } from '@tabler/icons-react'
 
 const Create = (props) => {
   const form = useForm({
@@ -33,19 +32,17 @@ const Create = (props) => {
     }}>
       <AppLayout title="Tambah Tipe Kepribadian" activeNav="Kepribadian"
                  authed={props.auth.user} meta={props.meta}>
-        
-        
         <Stack px={160}>
           <Title align="center" mb={32}>Masukkan Data Tipe Kepribadian</Title>
           
-          <FileButton variant="light" color="green" w={320} mb={32}
-                      onChange={(file) => form.setData('file', file)}
-                      accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-            {(props) =>
-              <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}
-                      radius={32} leftSection={
-                <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}
-          </FileButton>
+          {/*<FileButton variant="light" color="green" w={320} mb={32}*/}
+          {/*            onChange={(file) => form.setData('file', file)}*/}
+          {/*            accept="text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">*/}
+          {/*  {(props) =>*/}
+          {/*    <Button px={16} styles={{ section: { marginRight: 16 } }} h={48}*/}
+          {/*            radius={32} leftSection={*/}
+          {/*      <IconFileSpreadsheet />} {...props}>{form.data.file ? form.data.file.name : 'Pilih Berkas Excel'}</Button>}*/}
+          {/*</FileButton>*/}
           
           <Box mb={32}>
             <Title order={6} mb={8}>Keterangan Nama Tipe Kepribadian:</Title>

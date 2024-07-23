@@ -1,10 +1,12 @@
 import {
   ActionIcon,
   Avatar,
+  Badge,
   Button,
   Drawer,
   Group,
   Menu,
+  Stack,
   Text,
 } from '@mantine/core'
 import React from 'react'
@@ -278,13 +280,18 @@ export const NavBar = (props) => {
               itemSection: { marginRight: 16 },
             }}>
         <Menu.Target style={{ cursor: 'pointer' }}>
-          <Avatar
-            display={{
-              base: 'none',
-              lg: 'flex',
-            }}
-            src={props.authed.avatar}
-            alt={props.authed.full_name} />
+          <Stack gap={0} align="center">
+            <Avatar
+              display={{
+                base: 'none',
+                lg: 'flex',
+              }}
+              src={props.authed.avatar}
+              alt={props.authed.full_name} />
+            
+            <Badge variant="transparent"
+                   color="blue">{props.authed.role === 'Admin' ? 'Kaprodi' : props.authed.role}</Badge>
+          </Stack>
         </Menu.Target>
         
         <Menu.Dropdown>
