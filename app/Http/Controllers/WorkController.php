@@ -163,15 +163,15 @@
           ->whereIn('basic_trait_id', $idsToDelete)
           ->delete();
         
-        // Update existing or create new WorkBasicTrait records
+        WorkBasicTrait::where('work_id', $work->id)->delete();
+        
         foreach ($request->basic_traits as $trait) {
-          WorkBasicTrait::updateOrCreate([
+          WorkBasicTrait::create([
             'work_id' => $work->id,
             'basic_trait_id' => $trait['id'],
-          ], [
-            'order' => $trait['order'],
             'min_value' => $trait['min_value'],
             'max_value' => $trait['max_value'],
+            'order' => $trait['order'],
           ]);
         }
         
