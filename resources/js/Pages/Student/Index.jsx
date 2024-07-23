@@ -33,8 +33,8 @@ const Index = (props) => {
   
   const THList = props.auth.user.role === 'Admin'
     ? ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Email', 'Nomor Telepon', 'DPA', 'Opsi']
-    : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Email', 'Tipe Kepribadian', 'Opsi']
-  console.log(props)
+    : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Tipe Kepribadian', 'Opsi']
+  
   return (
     <AppLayout title="Mahasiswa" activeNav="Mahasiswa" authed={props.auth.user}
                meta={props.meta}>
@@ -178,12 +178,12 @@ const Index = (props) => {
                     <Table.Td
                       px={16} py={0}
                       style={{ whiteSpace: 'nowrap' }}>{student.user.full_name}</Table.Td>
-                    {props.auth.user.role === 'Admin' && (<Table.Td
-                      px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>{student.user.id_number.substring(0, 4)}</Table.Td>)}
                     <Table.Td
                       px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>{student.user.email}</Table.Td>
+                      style={{ whiteSpace: 'nowrap' }}>{student.user.id_number.substring(0, 4)}</Table.Td>
+                    {props.auth.user.role === 'Admin' && (<Table.Td
+                      px={16} py={0}
+                      style={{ whiteSpace: 'nowrap' }}>{student.user.email}</Table.Td>)}
                     {props.auth.user.role === 'Admin' ? (<>
                       <Table.Td
                         px={16} py={0}

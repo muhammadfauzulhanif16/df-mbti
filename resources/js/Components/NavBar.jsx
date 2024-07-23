@@ -16,6 +16,7 @@ import {
   IconBriefcase,
   IconCategory,
   IconCheck,
+  IconGraph,
   IconHome,
   IconInfoCircle,
   IconLogout,
@@ -148,6 +149,11 @@ export const NavBar = (props) => {
         route: 'students.index',
       },
       {
+        icon: <IconGraph />,
+        label: 'Grafik',
+        route: 'chart.index',
+      },
+      {
         icon: <IconInfoCircle />,
         label: 'Panduan',
         route: 'guides.index',
@@ -197,55 +203,73 @@ export const NavBar = (props) => {
           bg="white"
           orientation="vertical"
         >
-          {NavList.filter(nav => nav.label === 'Beranda').map((nav, id) => (
-            <Button
-              px={16}
-              h={48}
-              disabled={nav.disabled}
-              color="gray"
-              justify="start"
-              leftSection={nav.icon}
-              onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
-              variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
-              key={id}
-            >
-              {nav.label}
-            </Button>
-          ))}
-          
-          <Text mt={16}>Users</Text>
-          {NavList.filter(nav => nav.label === 'Dosen' || nav.label === 'Mahasiswa').map((nav, id) => (
-            <Button
-              px={16}
-              h={48}
-              disabled={nav.disabled}
-              color="gray"
-              justify="start"
-              leftSection={nav.icon}
-              onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
-              variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
-              key={id}
-            >
-              {nav.label === 'Dosen' ? 'Dosen PA' : 'Mahasiswa'}
-            </Button>
-          ))}
-          
-          <Text mt={16}>Data MBTI</Text>
-          {NavList.filter(nav => nav.label !== 'Beranda' && nav.label !== 'Dosen' && nav.label !== 'Mahasiswa').map((nav, id) => (
-            <Button
-              px={16}
-              h={48}
-              disabled={nav.disabled}
-              color="gray"
-              justify="start"
-              leftSection={nav.icon}
-              onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
-              variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
-              key={id}
-            >
-              {nav.label}
-            </Button>
-          ))}
+          {props.authed.role === 'Admin' ? <>
+            {NavList.filter(nav => nav.label === 'Beranda').map((nav, id) => (
+              <Button
+                px={16}
+                h={48}
+                disabled={nav.disabled}
+                color="gray"
+                justify="start"
+                leftSection={nav.icon}
+                onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
+                variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
+                key={id}
+              >
+                {nav.label}
+              </Button>
+            ))}
+            
+            <Text mt={16}>Users</Text>
+            {NavList.filter(nav => nav.label === 'Dosen' || nav.label === 'Mahasiswa').map((nav, id) => (
+              <Button
+                px={16}
+                h={48}
+                disabled={nav.disabled}
+                color="gray"
+                justify="start"
+                leftSection={nav.icon}
+                onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
+                variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
+                key={id}
+              >
+                {nav.label === 'Dosen' ? 'Dosen PA' : 'Mahasiswa'}
+              </Button>
+            ))}
+            
+            <Text mt={16}>Data MBTI</Text>
+            {NavList.filter(nav => nav.label !== 'Beranda' && nav.label !== 'Dosen' && nav.label !== 'Mahasiswa').map((nav, id) => (
+              <Button
+                px={16}
+                h={48}
+                disabled={nav.disabled}
+                color="gray"
+                justify="start"
+                leftSection={nav.icon}
+                onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
+                variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
+                key={id}
+              >
+                {nav.label}
+              </Button>
+            ))}
+          </> : <>
+            {NavList.map((nav, id) => (
+              <Button
+                px={16}
+                h={48}
+                disabled={nav.disabled}
+                color="gray"
+                justify="start"
+                leftSection={nav.icon}
+                onClick={() => nav.route === 'logout' ? router.post(route('logout')) : router.get(route(nav.route))}
+                variant={nav.label === props.activeNav ? 'filled' : 'subtle'}
+                key={id}
+              >
+                {nav.label}
+              </Button>
+            ))}
+          </>}
         </Button.Group>
       </Drawer>
       
