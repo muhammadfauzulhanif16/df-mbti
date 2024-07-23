@@ -21,7 +21,9 @@ const MBTI = 'tipe_kepribadian_tes_mbti.jpg'
 const Welcome = () => {
   return (
     <AppLayout title="Halaman Utama">
-      <SimpleGrid cols={3} spacing={0} h={80} px={16} align="center"
+      <SimpleGrid cols={3} spacing={0} pos="sticky" top={0} bg="white" h={80}
+                  px={16}
+                  align="center"
                   justify="center" style={{
         borderBottom: '1px solid #e1e1e1',
       }}>
