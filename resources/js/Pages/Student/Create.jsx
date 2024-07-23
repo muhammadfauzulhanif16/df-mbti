@@ -12,7 +12,6 @@ import {
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import {
-  IconCalendar,
   IconFileSpreadsheet,
   IconId,
   IconMail,
@@ -20,7 +19,6 @@ import {
   IconPhone,
   IconUser,
 } from '@tabler/icons-react'
-import { YearPickerInput } from '@mantine/dates'
 
 const Create = (props) => {
   const form = useForm({
@@ -33,7 +31,7 @@ const Create = (props) => {
     password: '',
     supervisor_id: '',
   })
-  
+  console.log(form.data)
   useEffect(() => {
     if (form.data.student_id_number) {
       form.setData('password', form.data.student_id_number)
@@ -84,7 +82,11 @@ const Create = (props) => {
             hideControls
             placeholder="Masukkan NIM..."
             onChange={(e) => {
-              form.setData('student_id_number', e.target.value.toString())
+              form.setData({
+                ...form.data,
+                student_id_number: e.target.value.toString(),
+                academic_year: e.target.value.substring(0, 4),
+              })
               
               if (!e.target.value) {
                 form.setError({
@@ -136,36 +138,6 @@ const Create = (props) => {
               }
             }}
             error={form.errors.full_name}
-          />
-          
-          <YearPickerInput
-            styles={{
-              label: { marginBottom: 8 },
-              input: {
-                height: 48,
-                borderRadius: 32,
-                paddingLeft: 50,
-                paddingRight: 16,
-              },
-              section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 },
-            }}
-            leftSection={<IconCalendar />}
-            withAsterisk
-            label="Tahun Angkatan"
-            placeholder="Masukkan tahun angkatan..."
-            onChange={(value) => {
-              if (!value) {
-                form.setError({
-                  academic_year:
-                    'Tahun akademik tidak boleh kosong.',
-                })
-              } else {
-                form.clearErrors('academic_year')
-                form.setData('academic_year', value.getFullYear().toString())
-              }
-            }}
-            error={form.errors.academic_year}
           />
           
           <TextInput

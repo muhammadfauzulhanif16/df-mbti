@@ -22,6 +22,7 @@ import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
   const [search, setSearch] = useState('')
+  // const students = props.auth.user.role === 'Admin' ? props.students : props.students.filter(student => student.supervisor_id === props.auth.user.id)
   const [academicYear, setAcademicYear] = useState('')
   const [supervisorId, setSupervisorId] = useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.id : '')
   console.log(supervisorId)
@@ -94,7 +95,11 @@ const Index = (props) => {
                     placeholder="Tahun Angkatan"
                     checkIconPosition="right"
                     nothingFoundMessage="Tidak ada tahun ajaran"
-                    data={[...new Set(props.students.map(student => student.academic_year))].sort((a, b) => b - a)}
+                    data={
+                      props.auth.user.role === 'Admin'
+                        ? [...new Set(props.students.map(student => student.academic_year))].sort((a, b) => b - a)
+                        : [...new Set(props.students.filter(student => student.supervisor_id === props.auth.user.id).map(student => student.academic_year))].sort((a, b) => b - a)
+                    }
                     onChange={(value) => setAcademicYear(value)}
             />
           </Grid.Col>

@@ -4,14 +4,12 @@ import { Button, Flex, Select, Stack, TextInput, Title } from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import {
-  IconCalendar,
   IconId,
   IconMail,
   IconPassword,
   IconPhone,
   IconUser,
 } from '@tabler/icons-react'
-import { YearPickerInput } from '@mantine/dates'
 
 const Edit = (props) => {
   console.log(props)
@@ -55,7 +53,11 @@ const Edit = (props) => {
             hideControls
             placeholder="Masukkan NIM..."
             onChange={(e) => {
-              form.setData('student_id_number', e.target.value.toString())
+              form.setData({
+                ...form.data,
+                student_id_number: e.target.value.toString(),
+                academic_year: e.target.value.substring(0, 4),
+              })
               
               if (!e.target.value) {
                 form.setError({
@@ -111,36 +113,36 @@ const Edit = (props) => {
             value={form.data.full_name}
           />
           
-          <YearPickerInput
-            styles={{
-              label: { marginBottom: 8 },
-              input: {
-                height: 48,
-                borderRadius: 32,
-                paddingLeft: 50,
-                paddingRight: 16,
-              },
-              section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 },
-            }}
-            leftSection={<IconCalendar />}
-            withAsterisk
-            label="Tahun Angkatan"
-            placeholder="Masukkan tahun angkatan..."
-            onChange={(value) => {
-              if (!value) {
-                form.setError({
-                  academic_year:
-                    'Tahun akademik tidak boleh kosong.',
-                })
-              } else {
-                form.clearErrors('academic_year')
-                form.setData('academic_year', value.getFullYear().toString())
-              }
-            }}
-            error={form.errors.academic_year}
-            value={new Date(form.data.academic_year)}
-          />
+          {/*<YearPickerInput*/}
+          {/*  styles={{*/}
+          {/*    label: { marginBottom: 8 },*/}
+          {/*    input: {*/}
+          {/*      height: 48,*/}
+          {/*      borderRadius: 32,*/}
+          {/*      paddingLeft: 50,*/}
+          {/*      paddingRight: 16,*/}
+          {/*    },*/}
+          {/*    section: { marginLeft: 0, width: 48, height: 48 },*/}
+          {/*    error: { marginTop: 8 },*/}
+          {/*  }}*/}
+          {/*  leftSection={<IconCalendar />}*/}
+          {/*  withAsterisk*/}
+          {/*  label="Tahun Angkatan"*/}
+          {/*  placeholder="Masukkan tahun angkatan..."*/}
+          {/*  onChange={(value) => {*/}
+          {/*    if (!value) {*/}
+          {/*      form.setError({*/}
+          {/*        academic_year:*/}
+          {/*          'Tahun akademik tidak boleh kosong.',*/}
+          {/*      })*/}
+          {/*    } else {*/}
+          {/*      form.clearErrors('academic_year')*/}
+          {/*      form.setData('academic_year', value.getFullYear().toString())*/}
+          {/*    }*/}
+          {/*  }}*/}
+          {/*  error={form.errors.academic_year}*/}
+          {/*  value={new Date(form.data.academic_year)}*/}
+          {/*/>*/}
           
           <TextInput
             type="number"
