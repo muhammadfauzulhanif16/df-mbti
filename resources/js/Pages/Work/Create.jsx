@@ -34,8 +34,8 @@ const Create = (props) => {
       id: trait.id,
       code: trait.code,
       selected: false,
-      min_value: 50,
-      max_value: 100,
+      min_value: 10,
+      max_value: 50,
       // Calculate order based on index: integer division by 2 plus 1
       order: Math.floor(index / 2) + 1,
     }))
@@ -48,8 +48,6 @@ const Create = (props) => {
     
     setBasicTraits(groupedTraits)
   }, [])
-  console.log(props)
-  console.log(form.data)
   return (
     <form onSubmit={(e) => {
       e.preventDefault()
@@ -235,8 +233,8 @@ const Create = (props) => {
                             withAsterisk
                             placeholder="Minimum nilai..."
                             clampBehavior="strict"
-                            min={0}
-                            max={100}
+                            min={10}
+                            max={50}
                             value={trait.min_value}
                             suffix="%"
                             onChange={(value) => {
@@ -278,8 +276,8 @@ const Create = (props) => {
                             withAsterisk
                             placeholder="Maximum nilai..."
                             clampBehavior="strict"
-                            min={0}
-                            max={100}
+                            min={10}
+                            max={50}
                             value={trait.max_value}
                             suffix="%"
                             onChange={(value) => {

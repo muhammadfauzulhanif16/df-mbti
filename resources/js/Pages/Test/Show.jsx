@@ -94,25 +94,39 @@ const Show = (props) => {
           
           <RadarChart
             h={300}
-            data={props.indicators.map(indicator => {
-              const highestBasicTrait = indicator.basic_traits.reduce((highest, current) => {
-                return (current.totalValue > highest.totalValue) ? current : highest
-              })
-              
-              if (highestBasicTrait.totalValue > 0) {
-                return {
-                  basic_trait: `${highestBasicTrait.name} (${(highestBasicTrait.totalValue / indicator.totalValue * 100).toFixed(1)}%)`,
-                  totalValue: highestBasicTrait.totalValue / indicator.totalValue * 100,
-                  totalValueIndicator: indicator.totalValue,
+            data={(() => {
+              // Map through indicators to find the highest totalValue in each basic_traits array
+              const mappedData = props.indicators.map(indicator => {
+                const highestBasicTrait = indicator.basic_traits.reduce((highest, current) => {
+                  return (current.totalValue > highest.totalValue) ? current : highest
+                })
+                
+                if (highestBasicTrait.totalValue > 0) {
+                  return {
+                    basic_trait: highestBasicTrait.name,
+                    totalValue: highestBasicTrait.totalValue,
+                    totalValueIndicator: indicator.totalValue,
+                  }
                 }
-              }
-            }).filter(item => item !== undefined)}
+              }).filter(item => item !== undefined)
+              
+              // Sum of all highest totalValues
+              const totalHighestValues = mappedData.reduce((sum, item) => sum + item.totalValue, 0)
+              
+              // Calculate the percentage for each highest value relative to the total sum
+              return mappedData.map(item => ({
+                basic_trait: `${item.basic_trait} (${((item.totalValue / totalHighestValues) * 100).toFixed(1)}%)`,
+                totalValue: (item.totalValue / totalHighestValues) * 100,
+                totalValueIndicator: item.totalValueIndicator,
+              }))
+            })()}
             dataKey="basic_trait"
             withPolarGrid
             withPolarAngleAxis
             withPolarRadiusAxis
             series={[{ name: 'totalValue', color: 'blue.4', opacity: 0.2 }]}
           />
+        
         
         </Box>
       

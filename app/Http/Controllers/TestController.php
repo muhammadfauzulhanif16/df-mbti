@@ -90,8 +90,18 @@
         $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
         
         
-        $highestPercentageBasicTraits = $groupedIndicators->map(function ($indicator) {
-          $percentage = ($indicator['maxBasicTrait']['totalValue'] / $indicator['totalValue']) * 100;
+        $highestPercentageBasicTraits = $groupedIndicators->map(function ($indicator) use ($groupedIndicators) {
+          $highestTotalValueSum = $groupedIndicators->map(function ($indicator) {
+            // Extract total values from basic_traits
+            $totalValues = array_column($indicator['basic_traits'], 'totalValue');
+            
+            // Find the maximum totalValue in basic_traits
+            $maxTotalValue = max($totalValues);
+            
+            return $maxTotalValue;
+          })->sum();
+          
+          $percentage = ($indicator['maxBasicTrait']['totalValue'] / $highestTotalValueSum) * 100;
           
           return [
             'indicatorName' => $indicator['name'],
@@ -99,7 +109,6 @@
             'percentage' => $percentage,
           ];
         });
-        
         
         $work = Work::with(['basicTraits.basicTrait'])->get()->filter(function ($work) use ($highestPercentageBasicTraits) {
           foreach ($highestPercentageBasicTraits as $highestBasicTrait) {
@@ -113,7 +122,7 @@
           }
           return true;
         })->shuffle()->first();
-        // Update the Test model
+        
         $test->update([
           'personality' => $allMaxBasicTraitCodesString,
           'work_id' => $work->id,
