@@ -318,7 +318,7 @@ const Create = (props) => {
                     color="red"
                     disabled={form.processing}
                     fullWidth
-                    onClick={() => router.get(route('students.index'))}
+                    onClick={() => router.get(route('works.index'))}
             >
               Batal
             </Button>
