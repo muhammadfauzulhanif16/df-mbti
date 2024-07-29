@@ -113,14 +113,11 @@
         $work = Work::with(['basicTraits.basicTrait'])->get()->filter(function ($work) use ($highestPercentageBasicTraits) {
           foreach ($highestPercentageBasicTraits as $highestBasicTrait) {
             $basicTraitInWork = $work->basicTraits->firstWhere('basicTrait.name', $highestBasicTrait['basicTraitName']);
-            if (!$basicTraitInWork) {
-              return false;
-            }
-            if ($highestBasicTrait['percentage'] < $basicTraitInWork->min_value || $highestBasicTrait['percentage'] > $basicTraitInWork->max_value) {
-              return false;
+            if ($basicTraitInWork && $highestBasicTrait['percentage'] >= $basicTraitInWork->min_value && $highestBasicTrait['percentage'] <= $basicTraitInWork->max_value) {
+              return true;
             }
           }
-          return true;
+          return false;
         })->shuffle()->first();
         
         $test->update([

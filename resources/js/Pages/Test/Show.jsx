@@ -167,7 +167,7 @@ const Show = (props) => {
                         
                         <Text fw={600}
                               p={8}>Skor
-                                    : {(basic_trait.totalValue / indicator.totalValue * 100).toFixed(1)}%</Text>
+                                    : {basic_trait.totalValue}</Text>
                       </Stack>
                     ))}
                   </SimpleGrid>

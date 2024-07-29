@@ -45,7 +45,7 @@ export const Index = (props) => {
                           style={{ whiteSpace: 'nowrap' }}>Waktu
                                                            Selesai</Table.Th>
                 <Table.Th px={16} py={0}
-                          style={{ whiteSpace: 'nowrap' }}></Table.Th>
+                          style={{ whiteSpace: 'nowrap' }}>Opsi</Table.Th>
               </Table.Tr>
             </Table.Thead>
             
@@ -57,7 +57,9 @@ export const Index = (props) => {
                   <Table.Td px={16} py={0}
                             style={{ whiteSpace: 'nowrap' }}>{test.personality}</Table.Td>
                   <Table.Td px={16} py={0}
-                            style={{ whiteSpace: 'nowrap' }}>  {new Date(test.created_at).toLocaleDateString('id-ID')}</Table.Td>
+                            style={{ whiteSpace: 'nowrap' }}>{test.work.name}</Table.Td>
+                  <Table.Td px={16} py={0}
+                            style={{ whiteSpace: 'nowrap' }}>{new Date(test.created_at).toLocaleDateString('id-ID')}</Table.Td>
                   <Table.Td px={16} py={0}
                             style={{ whiteSpace: 'nowrap' }}>  {test.time}</Table.Td>
                   <Table.Td px={16} py={0}

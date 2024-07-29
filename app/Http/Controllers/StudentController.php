@@ -3,7 +3,6 @@
   namespace App\Http\Controllers;
   
   use App\Imports\StudentsImport;
-  use App\Models\BasicTrait;
   use App\Models\Lecturer;
   use App\Models\Student;
   use App\Models\Test;
@@ -180,61 +179,61 @@
     {
       $authedUser = Auth::user();
       $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
-      
-      
-      $results = Test::where('user_id', $user->id)
-        ->with('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
-        ->orderBy('created_at', 'desc')
-        ->get();
-      
-      $groupedResults = $results->map(function ($test) {
-        $groupedIndicators = $test->answers->groupBy('statement.indicator.name');
-        
-        $allMaxBasicTraitCodes = [];
-        
-        $groupedIndicators->transform(function ($indicatorGroup, $indicatorName) use (&$allMaxBasicTraitCodes) {
-          $groupedBasicTraits = $indicatorGroup->groupBy('statement.basicTrait.name');
-          
-          $totalIndicatorValue = 0;
-          
-          $groupedBasicTraits->transform(function ($basicTraitGroup, $basicTraitName) use (&$totalIndicatorValue) {
-            $totalBasicTraitValue = $basicTraitGroup->sum('choice.value');
-            $totalIndicatorValue += $totalBasicTraitValue;
-            
-            return [
-              'name' => $basicTraitName,
-              'totalValue' => $totalBasicTraitValue,
-            ];
-          });
-          
-          $maxBasicTrait = $groupedBasicTraits->sortByDesc('totalValue')->first();
-          $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
-          
-          $allMaxBasicTraitCodes[] = $maxBasicTraitCode;
-          
-          return [
-            'name' => $indicatorName,
-            'totalValue' => $totalIndicatorValue,
-            'maxBasicTrait' => $maxBasicTrait,
-            'maxBasicTraitCode' => $maxBasicTraitCode,
-            'basic_traits' => $groupedBasicTraits->values()->all(),
-          ];
-        });
-        
-        $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
-        
-        return [
-          'id' => $test->id,
-          'test' => $test,
-          'indicators' => $groupedIndicators->values()->all(),
-          'allMaxBasicTraitCodes' => $allMaxBasicTraitCodesString,
-          'time' => $test->time,
-          'created_at' => $test->created_at->format('d/m/Y'),
-        ];
-      });
+
+
+//      $results = Test::where('user_id', $user->id)
+//        ->with('answers.statement.basicTrait', 'answers.statement.indicator', 'answers.choice')
+//        ->orderBy('created_at', 'desc')
+//        ->get();
+//
+//      $groupedResults = $results->map(function ($test) {
+//        $groupedIndicators = $test->answers->groupBy('statement.indicator.name');
+//
+//        $allMaxBasicTraitCodes = [];
+//
+//        $groupedIndicators->transform(function ($indicatorGroup, $indicatorName) use (&$allMaxBasicTraitCodes) {
+//          $groupedBasicTraits = $indicatorGroup->groupBy('statement.basicTrait.name');
+//
+//          $totalIndicatorValue = 0;
+//
+//          $groupedBasicTraits->transform(function ($basicTraitGroup, $basicTraitName) use (&$totalIndicatorValue) {
+//            $totalBasicTraitValue = $basicTraitGroup->sum('choice.value');
+//            $totalIndicatorValue += $totalBasicTraitValue;
+//
+//            return [
+//              'name' => $basicTraitName,
+//              'totalValue' => $totalBasicTraitValue,
+//            ];
+//          });
+//
+//          $maxBasicTrait = $groupedBasicTraits->sortByDesc('totalValue')->first();
+//          $maxBasicTraitCode = BasicTrait::where('name', $maxBasicTrait['name'])->first()->code;
+//
+//          $allMaxBasicTraitCodes[] = $maxBasicTraitCode;
+//
+//          return [
+//            'name' => $indicatorName,
+//            'totalValue' => $totalIndicatorValue,
+//            'maxBasicTrait' => $maxBasicTrait,
+//            'maxBasicTraitCode' => $maxBasicTraitCode,
+//            'basic_traits' => $groupedBasicTraits->values()->all(),
+//          ];
+//        });
+//
+//        $allMaxBasicTraitCodesString = implode('', $allMaxBasicTraitCodes);
+//
+//        return [
+//          'id' => $test->id,
+//          'test' => $test,
+//          'indicators' => $groupedIndicators->values()->all(),
+//          'allMaxBasicTraitCodes' => $allMaxBasicTraitCodesString,
+//          'time' => $test->time,
+//          'created_at' => $test->created_at->format('d/m/Y'),
+//        ];
+//      });
       
       return Inertia('Student/Tests', [
-        'tests' => Test::where('user_id', $user->id)->latest()->get(),
+        'tests' => Test::with('work')->where('user_id', $user->id)->latest()->get(),
         'auth' => ['user' => $authedUser],
       ]);
     }

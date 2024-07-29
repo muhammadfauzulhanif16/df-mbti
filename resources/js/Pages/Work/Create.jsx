@@ -233,8 +233,8 @@ const Create = (props) => {
                             withAsterisk
                             placeholder={`${trait.min_value}%`}
                             // clampBehavior="strict"
-                            min={10}
-                            max={50}
+                            min={0}
+                            max={100}
                             value={trait.min_value}
                             suffix="%"
                             onChange={(value) => {
@@ -276,8 +276,8 @@ const Create = (props) => {
                             withAsterisk
                             placeholder={`${trait.max_value}%`}
                             // clampBehavior="strict"
-                            min={10}
-                            max={50}
+                            min={0}
+                            max={100}
                             value={trait.max_value}
                             suffix="%"
                             onChange={(value) => {

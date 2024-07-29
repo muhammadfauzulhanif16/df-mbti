@@ -41,8 +41,8 @@ const Edit = (props) => {
         id: trait.id,
         code: trait.code,
         selected: isSelected,
-        min_value: isSelected ? workTrait.min_value : 50, // Use workTrait values if selected, otherwise default
-        max_value: isSelected ? workTrait.max_value : 100,
+        min_value: isSelected ? workTrait.min_value : 10, // Use workTrait values if selected, otherwise default
+        max_value: isSelected ? workTrait.max_value : 50,
         order: Math.floor(index / 2) + 1,
       }
     })
