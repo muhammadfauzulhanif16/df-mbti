@@ -231,11 +231,11 @@ const Create = (props) => {
                             }}
                             leftSection={<IconCaretDown />}
                             withAsterisk
-                            placeholder="Minimum nilai..."
+                            placeholder={trait.min_value}
                             clampBehavior="strict"
                             min={10}
                             max={50}
-                            value={trait.min_value}
+                            // value={trait.min_value}
                             suffix="%"
                             onChange={(value) => {
                               // Update in basicTraits state
@@ -274,11 +274,11 @@ const Create = (props) => {
                             }}
                             leftSection={<IconCaretUp />}
                             withAsterisk
-                            placeholder="Maximum nilai..."
+                            placeholder={trait.max_value}
                             clampBehavior="strict"
                             min={10}
                             max={50}
-                            value={trait.max_value}
+                            // value={trait.max_value}
                             suffix="%"
                             onChange={(value) => {
                               // Update in basicTraits state
