@@ -32,7 +32,7 @@
       
       Student::create([
         'user_id' => $user->id,
-        'academic_year' => date('Y', strtotime($row['tahun_angkatan'])),
+        'academic_year' => $row['tahun_angkatan'],
         'supervisor_id' => User::where('full_name', 'like', '%' . $row['dosen_pembimbing_akademik'] . '%')->first()->id ?? null,
       ]);
       
