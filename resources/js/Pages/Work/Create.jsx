@@ -231,7 +231,7 @@ const Create = (props) => {
                             }}
                             leftSection={<IconCaretDown />}
                             withAsterisk
-                            placeholder={trait.min_value}
+                            placeholder={`${trait.min_value}%`}
                             clampBehavior="strict"
                             min={10}
                             max={50}
@@ -274,7 +274,7 @@ const Create = (props) => {
                             }}
                             leftSection={<IconCaretUp />}
                             withAsterisk
-                            placeholder={trait.max_value}
+                            placeholder={`${trait.max_value}%`}
                             clampBehavior="strict"
                             min={10}
                             max={50}

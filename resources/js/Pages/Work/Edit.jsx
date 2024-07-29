@@ -283,7 +283,7 @@ const Edit = (props) => {
                             }}
                             leftSection={<IconCaretDown />}
                             withAsterisk
-                            placeholder="Minimum nilai..."
+                            placeholder={`${trait.min_value}%`}
                             clampBehavior="strict"
                             min={0}
                             max={100}
@@ -326,7 +326,7 @@ const Edit = (props) => {
                             }}
                             leftSection={<IconCaretUp />}
                             withAsterisk
-                            placeholder="Maximum nilai..."
+                            placeholder={`${trait.max_value}%`}
                             clampBehavior="strict"
                             min={0}
                             max={100}
@@ -370,7 +370,7 @@ const Edit = (props) => {
                     color="red"
                     disabled={form.processing}
                     fullWidth
-                    onClick={() => router.get(route('students.index'))}
+                    onClick={() => router.get(route('works.index'))}
             >
               Batal
             </Button>
