@@ -287,14 +287,20 @@ const Show = (props) => {
           {isDetail > 0 && (
             <Button px={16} h={48} leftSection={<IconArrowNarrowLeft />}
                     radius={32} variant="subtle"
-                    onClick={() => setIsDetail(isDetail - 1)}>Kembali</Button>
+                    onClick={() => {
+                      setIsDetail(isDetail - 1)
+                      window.scrollTo(0, 0)
+                    }}>Kembali</Button>
           )}
           
           {(props.auth.user.role === 'Mahasiswa' ? isDetail < 2 : isDetail < 1) &&
             (
               <Button px={16} h={48} rightSection={<IconArrowNarrowRight />}
                       radius={32} variant="subtle"
-                      onClick={() => setIsDetail(isDetail + 1)}>Selanjutnya</Button>
+                      onClick={() => {
+                        setIsDetail(isDetail + 1)
+                        window.scrollTo(0, 0)
+                      }}>Selanjutnya</Button>
             )}
         </Group>
       )}
