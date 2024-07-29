@@ -235,7 +235,7 @@ const Create = (props) => {
                             // clampBehavior="strict"
                             min={10}
                             max={50}
-                            // value={trait.min_value}
+                            value={trait.min_value}
                             suffix="%"
                             onChange={(value) => {
                               // Update in basicTraits state
@@ -278,7 +278,7 @@ const Create = (props) => {
                             // clampBehavior="strict"
                             min={10}
                             max={50}
-                            // value={trait.max_value}
+                            value={trait.max_value}
                             suffix="%"
                             onChange={(value) => {
                               // Update in basicTraits state

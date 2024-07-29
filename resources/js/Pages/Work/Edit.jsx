@@ -284,7 +284,7 @@ const Edit = (props) => {
                             leftSection={<IconCaretDown />}
                             withAsterisk
                             placeholder={`${trait.min_value}%`}
-                            clampBehavior="strict"
+                            // clampBehavior="strict"
                             min={0}
                             max={100}
                             value={trait.min_value}
@@ -327,7 +327,7 @@ const Edit = (props) => {
                             leftSection={<IconCaretUp />}
                             withAsterisk
                             placeholder={`${trait.max_value}%`}
-                            clampBehavior="strict"
+                            // clampBehavior="strict"
                             min={0}
                             max={100}
                             value={trait.max_value}
