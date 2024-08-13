@@ -26,6 +26,7 @@
       'role',
       'email',
       'password',
+      'is_actived',
     ];
     
     /**

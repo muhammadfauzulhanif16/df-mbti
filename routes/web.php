@@ -56,6 +56,7 @@
       Route::put('{user}', [StudentController::class, 'update'])->name('students.update');
       Route::delete('{user}', [StudentController::class, 'destroy'])->name('students.destroy');
       Route::get('{user}/tests', [StudentController::class, 'tests_index'])->name('students.tests.index');
+      Route::put('{user}/is_actived', [StudentController::class, 'is_actived'])->name('students.is_actived');
     });
     
     Route::group(['prefix' => 'indicators'], function () {

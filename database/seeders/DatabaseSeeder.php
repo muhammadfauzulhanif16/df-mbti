@@ -23,6 +23,7 @@
         'role' => 'Admin',
         'email' => 'eka.y.astuty@gmail.com',
         'password' => Hash::make('0301067502'),
+        'is_actived' => true,
       ]);
       
       Lecturer::create([

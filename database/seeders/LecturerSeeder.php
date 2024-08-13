@@ -16,7 +16,7 @@
       $roles = ['Kepala Program Studi', 'Dosen PA'];
       
       // Create one user with the role 'Kepala Program Studi'
-      $user = User::factory()->create(['role' => $roles[0]]);
+      $user = User::factory()->create(['role' => $roles[0], 'is_actived' => true,]);
       Lecturer::factory()->create(['user_id' => $user->id]);
       
       // Create the rest of the users with the role 'Dosen PA'

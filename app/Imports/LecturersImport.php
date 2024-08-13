@@ -30,6 +30,7 @@
         'role' => 'Dosen PA',
         'email' => $row['email'],
         'password' => $row['nidn'],
+        'is_actived' => true,
       ]);
       
       Lecturer::create([

@@ -14,6 +14,7 @@
         $table->foreignUuid('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         $table->year('academic_year');
         $table->foreignUuid('supervisor_id')->constrained('users', 'id')->cascadeOnUpdate()->cascadeOnDelete();
+        
       });
     }
     

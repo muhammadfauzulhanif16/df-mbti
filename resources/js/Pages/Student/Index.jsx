@@ -3,6 +3,7 @@ import {
   Avatar,
   Box,
   Button,
+  Checkbox,
   Flex,
   Grid,
   Select,
@@ -25,7 +26,7 @@ const Index = (props) => {
   // const students = props.auth.user.role === 'Admin' ? props.students : props.students.filter(student => student.supervisor_id === props.auth.user.id)
   const [academicYear, setAcademicYear] = useState('')
   const [supervisorId, setSupervisorId] = useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.id : '')
-  console.log(supervisorId)
+  console.log(props)
   const students = props.students.filter(student => (
     (!search || student.user.full_name.toLowerCase().includes(search.toLowerCase())) &&
     (!academicYear || student.academic_year === academicYear) &&
@@ -33,8 +34,8 @@ const Index = (props) => {
   ))
   
   const THList = props.auth.user.role === 'Admin'
-    ? ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Email', 'Nomor Telepon', 'DPA', 'Opsi']
-    : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Tipe Kepribadian', 'Opsi']
+    ? ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Email', 'Nomor Telepon', 'DPA', 'Aktif', 'Opsi']
+    : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Tipe Kepribadian', 'Aktif', 'Opsi']
   
   return (
     <AppLayout title="Mahasiswa" activeNav="Mahasiswa" authed={props.auth.user}
@@ -201,7 +202,12 @@ const Index = (props) => {
                         px={16} py={0}
                         style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0].personality : '-'}</Table.Td>
                     )}
-                    
+                    <Table.Td
+                      px={16} py={0}
+                      style={{ whiteSpace: 'nowrap' }}><Checkbox
+                      checked={student.user.is_actived} onClick={
+                      () => router.put(route('students.is_actived', student.user_id))
+                    } /></Table.Td>
                     <Table.Td px={16} py={0}
                               style={{ whiteSpace: 'nowrap' }}>
                       {props.auth.user.role === 'Admin' ? (

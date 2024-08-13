@@ -14,6 +14,7 @@
         $table->uuid('id')->primary();
         $table->string('name');
         $table->string('code');
+        $table->text('description')->nullable();
         $table->timestamps();
       });
     }

@@ -19,6 +19,7 @@
         $table->string('role')->nullable();
         $table->string('email')->unique();
         $table->string('password');
+        $table->boolean('is_actived')->default(false);
         $table->timestamps();
       });
       

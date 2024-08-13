@@ -56,6 +56,7 @@
             'role' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_actived' => true,
           ]);
           
           $user->lecturer()->create([

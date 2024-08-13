@@ -120,40 +120,6 @@
     }
     
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-      try {
-        $user->update([
-          'full_name' => $request->full_name,
-          'id_number' => $request->student_id_number,
-          'phone_number' => $request->phone_number,
-          'role' => 'Mahasiswa',
-          'email' => $request->email,
-          'password' => $request->password ? Hash::make($request->password) : $user->password,
-        ]);
-        
-        $user->student()->update([
-          'academic_year' => $request->academic_year,
-          'supervisor_id' => $request->supervisor_id,
-        ]);
-        
-        return to_route('students.index')->with('meta', [
-          'status' => true,
-          'title' => 'Berhasil mengubah mahasiswa',
-          'message' => "Mahasiswa '{$request->full_name}' berhasil diubah!"
-        ]);
-      } catch (Exception $e) {
-        return to_route('students.index')->with('meta', [
-          'status' => false,
-          'title' => 'Gagal mengubah mahasiswa',
-          'message' => $e->getMessage()
-        ]);
-      }
-    }
-    
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(User $user)
@@ -236,5 +202,60 @@
         'tests' => Test::with('work')->where('user_id', $user->id)->latest()->get(),
         'auth' => ['user' => $authedUser],
       ]);
+    }
+    
+    public function is_actived(User $user)
+    {
+      try {
+        $user->update([
+          'is_actived' => !$user->is_actived,
+        ]);
+        
+        return to_route('students.index')->with('meta', [
+          'status' => true,
+          'title' => 'Berhasil mengubah status mahasiswa',
+          'message' => "Status mahasiswa '{$user->full_name}' berhasil diubah!"
+        ]);
+      } catch (Exception $e) {
+        return to_route('students.index')->with('meta', [
+          'status' => false,
+          'title' => 'Gagal mengubah status mahasiswa',
+          'message' => $e->getMessage()
+        ]);
+      }
+    }
+    
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, User $user)
+    {
+      try {
+        $user->update([
+          'full_name' => $request->full_name,
+          'id_number' => $request->student_id_number,
+          'phone_number' => $request->phone_number,
+          'role' => 'Mahasiswa',
+          'email' => $request->email,
+          'password' => $request->password ? Hash::make($request->password) : $user->password,
+        ]);
+        
+        $user->student()->update([
+          'academic_year' => $request->academic_year,
+          'supervisor_id' => $request->supervisor_id,
+        ]);
+        
+        return to_route('students.index')->with('meta', [
+          'status' => true,
+          'title' => 'Berhasil mengubah mahasiswa',
+          'message' => "Mahasiswa '{$request->full_name}' berhasil diubah!"
+        ]);
+      } catch (Exception $e) {
+        return to_route('students.index')->with('meta', [
+          'status' => false,
+          'title' => 'Gagal mengubah mahasiswa',
+          'message' => $e->getMessage()
+        ]);
+      }
     }
   }

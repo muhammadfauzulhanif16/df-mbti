@@ -31,6 +31,18 @@
       try {
         $request->authenticate();
         
+        if (!Auth::user()->is_actived) {
+          Auth::guard('web')->logout();
+          $request->session()->invalidate();
+          $request->session()->regenerateToken();
+          
+          return redirect()->route('login')->with('meta', [
+            'status' => false,
+            'title' => 'Akun tidak aktif',
+            'message' => 'Akun Anda belum diaktifkan. Silakan hubungi administrator.'
+          ]);
+        }
+        
         $request->session()->regenerate();
         
         return redirect()->route('dashboard')->with('meta', [
