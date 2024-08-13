@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import { Button, Flex, Stack, TextInput, Title } from '@mantine/core'
+import { Button, Flex, Stack, Textarea, TextInput, Title } from '@mantine/core'
 import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import { IconCategory, IconTypography } from '@tabler/icons-react'
@@ -9,6 +9,7 @@ const Edit = (props) => {
   const form = useForm({
     code: props.basic_trait.code,
     name: props.basic_trait.name,
+    description: props.basic_trait.description,
   })
   
   return (
@@ -56,6 +57,22 @@ const Edit = (props) => {
                      label="Nama Kategori Soal"
                      placeholder="Masukkan nama kategori soal..."
                      onChange={(e) => form.setData('name', e.target.value)}
+          />
+          
+          <Textarea styles={{
+            label: { marginBottom: 8 },
+            input: {
+              borderRadius: 32,
+              paddingLeft: 50,
+              paddingRight: 16,
+            },
+            section: { marginLeft: 0, width: 48, height: 48 },
+            error: { marginTop: 8 },
+          }} leftSection={<IconCategory />}
+                    withAsterisk
+                    label="Deskripsi Kategori"
+                    placeholder="Masukkan deskripsi kategori..."
+                    onChange={(e) => form.setData('description', e.target.value)}
           />
           
           <Flex mt={24} gap={16}>

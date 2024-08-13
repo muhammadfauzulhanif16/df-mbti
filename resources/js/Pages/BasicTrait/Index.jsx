@@ -20,7 +20,7 @@ const Index = (props) => {
     basic_trait.name.toLowerCase().includes(search.toLowerCase()),
   )
   
-  const THList = ['#', 'Kode Kategori', 'Nama Kategori', 'Opsi']
+  const THList = ['#', 'Kode Kategori', 'Nama Kategori', 'Deskripsi', 'Opsi']
   
   return (
     <AppLayout
@@ -96,6 +96,10 @@ const Index = (props) => {
                     <Table.Td px={16} py={0}
                               style={{ whiteSpace: 'nowrap' }}>
                       {basicTrait.name}
+                    </Table.Td>
+                    <Table.Td px={16} py={0}
+                              style={{ whiteSpace: 'nowrap' }}>
+                      {basicTrait.description}
                     </Table.Td>
                     <Table.Td px={16} py={0}
                               style={{ whiteSpace: 'nowrap' }}>

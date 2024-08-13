@@ -23,6 +23,7 @@
       return new BasicTrait([
         'name' => $row['nama'],
         'code' => $row['kode'],
+        'description' => $row['deskripsi'],
       ]);
     }
   }

@@ -5,6 +5,7 @@ import {
   FileButton,
   Flex,
   Stack,
+  Textarea,
   TextInput,
   Title,
 } from '@mantine/core'
@@ -21,6 +22,7 @@ const Create = (props) => {
     file: null,
     code: '',
     name: '',
+    description: '',
   })
   return (<form onSubmit={(e) => {
       e.preventDefault()
@@ -79,6 +81,22 @@ const Create = (props) => {
                      label="Nama Kategori"
                      placeholder="Masukkan nama kategori..."
                      onChange={(e) => form.setData('name', e.target.value)}
+          />
+          
+          <Textarea styles={{
+            label: { marginBottom: 8 },
+            input: {
+              borderRadius: 32,
+              paddingLeft: 50,
+              paddingRight: 16,
+            },
+            section: { marginLeft: 0, width: 48, height: 48 },
+            error: { marginTop: 8 },
+          }} leftSection={<IconCategory />}
+                    withAsterisk
+                    label="Deskripsi Kategori"
+                    placeholder="Masukkan deskripsi kategori..."
+                    onChange={(e) => form.setData('description', e.target.value)}
           />
           
           <Flex mt={24} gap={16}>
