@@ -28,6 +28,7 @@ const Edit = (props) => {
     name: props.work.name,
     detail: props.work.detail,
     basic_traits: [],
+    'course': props.work.course,
   })
   console.log(form.data, 'form.data')
   console.log(basicTraits, 'basicTraits')
@@ -119,6 +120,71 @@ const Edit = (props) => {
                 content: form.data.detail,
                 onUpdate: ({ editor }) => {
                   form.setData('detail', editor.getHTML())
+                },
+              })}>
+              <RichTextEditor.Toolbar>
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Bold />
+                  <RichTextEditor.Italic />
+                  <RichTextEditor.Underline />
+                  <RichTextEditor.Strikethrough />
+                  <RichTextEditor.ClearFormatting />
+                  <RichTextEditor.Highlight />
+                  <RichTextEditor.Code />
+                </RichTextEditor.ControlsGroup>
+                
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.H1 />
+                  <RichTextEditor.H2 />
+                  <RichTextEditor.H3 />
+                  <RichTextEditor.H4 />
+                </RichTextEditor.ControlsGroup>
+                
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Blockquote />
+                  <RichTextEditor.Hr />
+                  <RichTextEditor.BulletList />
+                  <RichTextEditor.OrderedList />
+                  <RichTextEditor.Subscript />
+                  <RichTextEditor.Superscript />
+                </RichTextEditor.ControlsGroup>
+                
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Link />
+                  <RichTextEditor.Unlink />
+                </RichTextEditor.ControlsGroup>
+                
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.AlignLeft />
+                  <RichTextEditor.AlignCenter />
+                  <RichTextEditor.AlignJustify />
+                  <RichTextEditor.AlignRight />
+                </RichTextEditor.ControlsGroup>
+                
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Undo />
+                  <RichTextEditor.Redo />
+                </RichTextEditor.ControlsGroup>
+              </RichTextEditor.Toolbar>
+              
+              <RichTextEditor.Content
+              />
+            </RichTextEditor>
+          </Box>
+          
+          <Box>
+            <Text fz={14} mb={8}>Mata Kuliah Relevan</Text>
+            <RichTextEditor
+              styles={{
+                content: {
+                  border: '1px solid #dcdcdc',
+                },
+              }}
+              editor={useEditor({
+                extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Masukkan mata kuliah relevan...' })],
+                content: form.data.course,
+                onUpdate: ({ editor }) => {
+                  form.setData('course', editor.getHTML())
                 },
               })}>
               <RichTextEditor.Toolbar>

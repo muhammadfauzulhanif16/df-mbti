@@ -34,7 +34,6 @@
           'personality' => $request->personality,
           'development' => $request->development,
           'job' => $request->job,
-          'course' => $request->course,
         ]);
         
         return redirect()->route('guides.index')->with('meta', [
@@ -98,7 +97,6 @@
           'personality' => $request->personality,
           'development' => $request->development,
           'job' => $request->job,
-          'course' => $request->course,
         ]);
         
         return redirect()->route('guides.index')->with('meta', [

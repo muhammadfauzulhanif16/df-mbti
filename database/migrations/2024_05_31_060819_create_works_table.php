@@ -15,6 +15,7 @@
         $table->string('name');
         $table->text('detail');
         $table->string('personality');
+        $table->text('course');
         $table->timestamps();
       });
     }

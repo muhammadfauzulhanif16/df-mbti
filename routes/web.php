@@ -107,9 +107,9 @@
       Route::get('', [WorkController::class, 'index'])->name('works.index');
       Route::get('create', [WorkController::class, 'create'])->name('works.create');
       Route::post('', [WorkController::class, 'store'])->name('works.store');
-      Route::get('{work}/edit', [WorkController::class, 'edit'])->name('works.edit');
+      Route::get('{id}/edit', [WorkController::class, 'edit'])->name('works.edit');
       Route::put('{work}', [WorkController::class, 'update'])->name('works.update');
-      Route::delete('{work}', [WorkController::class, 'destroy'])->name('works.destroy');
+      Route::delete('{id}', [WorkController::class, 'destroy'])->name('works.destroy');
     });
     
     Route::group(['prefix' => 'guides'], function () {

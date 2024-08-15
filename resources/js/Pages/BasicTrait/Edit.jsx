@@ -59,7 +59,7 @@ const Edit = (props) => {
                      onChange={(e) => form.setData('name', e.target.value)}
           />
           
-          <Textarea styles={{
+          <Textarea value={form.data.description} styles={{
             label: { marginBottom: 8 },
             input: {
               borderRadius: 32,

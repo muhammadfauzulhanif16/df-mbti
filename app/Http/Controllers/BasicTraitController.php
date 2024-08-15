@@ -43,7 +43,8 @@
         } else {
           BasicTrait::create([
             'code' => $request->code,
-            'name' => $request->name
+            'name' => $request->name,
+            'description' => $request->description
           ]);
           
           return to_route('basic-traits.index')->with('meta', [
@@ -104,7 +105,8 @@
       try {
         $basicTrait->update([
           'code' => $request->code,
-          'name' => $request->name
+          'name' => $request->name,
+          'description' => $request->description
         ]);
         
         return to_route('basic-traits.index')->with('meta', [

@@ -20,10 +20,22 @@
       $authedUser = Auth::user();
       $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
       
+      $works = Work::all()->groupBy('name')->map(function ($group, $name) {
+        return [
+          'name' => $name,
+          'personalities' => $group->map(function ($work) {
+            return [
+              'id' => $work->id,
+              'name' => $work->personality
+            ];
+          })->toArray()
+        ];
+      })->values()->toArray();
+      
       return Inertia::render('Work/Index', [
         'meta' => session('meta'),
         'auth' => ['user' => $authedUser],
-        'works' => Work::all()
+        'works' => $works
       ]);
     }
     
@@ -48,6 +60,7 @@
           'name' => $request->name,
           'detail' => $request->detail,
           'personality' => $selectedTraitsCodesString,
+          'course' => $request->course,
         ]);
         
         foreach ($request->basic_traits as $trait) {
@@ -100,14 +113,14 @@
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Work $work)
+    public function edit(string $id)
     {
+      $work = Work::find($id);
+      
       $authedUser = Auth::user();
       $authedUser->avatar = str_contains($authedUser->avatar, 'https') ? $authedUser->avatar : ($authedUser->avatar ? asset('storage/' . $authedUser->avatar) : null);
       
       $transformedWorkBasicTraits = $work->basicTraits->map(function ($basicTrait) {
-        // Assuming you have a method to get 'code' and 'order' based on 'basic_trait_id'
-        // For demonstration, 'code' will be set to a placeholder value, and 'selected' will always be true
         return [
           'id' => $basicTrait->basic_trait_id,
           'code' => BasicTrait::find($basicTrait->basic_trait_id)->code,
@@ -147,6 +160,7 @@
           'name' => $request->name,
           'detail' => $request->detail,
           'personality' => $selectedTraitsCodesString,
+          'course' => $request->course,
         ]);
         
         // Retrieve current WorkBasicTrait identifiers
@@ -192,9 +206,10 @@
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Work $work)
+    public function destroy(string $id)
     {
       try {
+        $work = Work::find($id);
         $work->delete();
         
         return to_route('works.index')->with('meta', [

@@ -14,7 +14,6 @@ const Edit = (props) => {
     personality: props.guide.personality,
     development: props.guide.development,
     job: props.guide.job,
-    course: props.guide.course,
   })
   
   return (
@@ -127,71 +126,6 @@ const Edit = (props) => {
                      onChange={(e) => form.setData('job', e.target.value)}
                      value={form.data.job}
           />
-          
-          <Box>
-            <Text fz={14} mb={8}>Mata Kuliah Relevan</Text>
-            <RichTextEditor
-              styles={{
-                content: {
-                  border: '1px solid #dcdcdc',
-                },
-              }}
-              editor={useEditor({
-                extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Masukkan mata kuliah relevan...' })],
-                content: form.data.course,
-                onUpdate: ({ editor }) => {
-                  form.setData('course', editor.getHTML())
-                },
-              })}>
-              <RichTextEditor.Toolbar>
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.Bold />
-                  <RichTextEditor.Italic />
-                  <RichTextEditor.Underline />
-                  <RichTextEditor.Strikethrough />
-                  <RichTextEditor.ClearFormatting />
-                  <RichTextEditor.Highlight />
-                  <RichTextEditor.Code />
-                </RichTextEditor.ControlsGroup>
-                
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.H1 />
-                  <RichTextEditor.H2 />
-                  <RichTextEditor.H3 />
-                  <RichTextEditor.H4 />
-                </RichTextEditor.ControlsGroup>
-                
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.Blockquote />
-                  <RichTextEditor.Hr />
-                  <RichTextEditor.BulletList />
-                  <RichTextEditor.OrderedList />
-                  <RichTextEditor.Subscript />
-                  <RichTextEditor.Superscript />
-                </RichTextEditor.ControlsGroup>
-                
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.Link />
-                  <RichTextEditor.Unlink />
-                </RichTextEditor.ControlsGroup>
-                
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.AlignLeft />
-                  <RichTextEditor.AlignCenter />
-                  <RichTextEditor.AlignJustify />
-                  <RichTextEditor.AlignRight />
-                </RichTextEditor.ControlsGroup>
-                
-                <RichTextEditor.ControlsGroup>
-                  <RichTextEditor.Undo />
-                  <RichTextEditor.Redo />
-                </RichTextEditor.ControlsGroup>
-              </RichTextEditor.Toolbar>
-              
-              <RichTextEditor.Content
-              />
-            </RichTextEditor>
-          </Box>
           
           <Flex mt={24} gap={16}>
             <Button h={48}

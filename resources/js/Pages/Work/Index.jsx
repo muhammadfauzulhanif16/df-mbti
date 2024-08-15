@@ -13,10 +13,10 @@ import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
-  console.log(props)
+  
   const [search, setSearch] = useState('')
   const works = props.works.filter(work =>
-    work.name.toLowerCase().includes(search.toLowerCase()),
+    String(work.name).toLowerCase().includes(search.toLowerCase()),
   )
   
   const THList = ['#', 'Pekerjaan', 'Tipe Kepribadian', 'Opsi']
@@ -75,32 +75,43 @@ const Index = (props) => {
               
               <Table.Tbody>
                 {works.map((work, id) => (
-                  <Table.Tr key={id} h={64}>
-                    <Table.Td
-                      px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
-                    <Table.Td
-                      px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>{work.name}</Table.Td>
-                    <Table.Td
-                      px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>{work.personality}</Table.Td>
-                    <Table.Td px={16} py={0} style={{ whiteSpace: 'nowrap' }}>
-                      <Flex gap={16}>
-                        <Button px={16} h={48}
-                                radius={32}
-                                styles={{ section: { marginRight: 16 } }}
-                                variant="outline" color="yellow"
-                                onClick={() => router.get(route('works.edit', work))}>Ubah</Button>
-                        
-                        <Button px={16} h={48}
-                                radius={32}
-                                styles={{ section: { marginRight: 16 } }}
-                                variant="outline" color="red"
-                                onClick={() => router.delete(route('works.destroy', work))}>Hapus</Button>
-                      </Flex>
-                    </Table.Td>
-                  </Table.Tr>
+                  <React.Fragment key={id}>
+                    {work.personalities.map((personality, index) => (
+                      <Table.Tr key={personality.id} h={64}>
+                        {index === 0 && (
+                          <Table.Td
+                            rowSpan={work.personalities.length}
+                            px={16} py={0}
+                            style={{ whiteSpace: 'nowrap' }}>{id + 1}</Table.Td>
+                        )}
+                        {index === 0 && (
+                          <Table.Td
+                            rowSpan={work.personalities.length}
+                            px={16} py={0}
+                            style={{ whiteSpace: 'nowrap' }}>{work.name}</Table.Td>
+                        )}
+                        <Table.Td
+                          px={16} py={0}
+                          style={{ whiteSpace: 'nowrap' }}>{personality.name}</Table.Td>
+                        <Table.Td px={16} py={0}
+                                  style={{ whiteSpace: 'nowrap' }}>
+                          <Flex gap={16}>
+                            <Button px={16} h={48}
+                                    radius={32}
+                                    styles={{ section: { marginRight: 16 } }}
+                                    variant="outline" color="yellow"
+                                    onClick={() => router.get(route('works.edit', personality.id))}>Ubah</Button>
+                            
+                            <Button px={16} h={48}
+                                    radius={32}
+                                    styles={{ section: { marginRight: 16 } }}
+                                    variant="outline" color="red"
+                                    onClick={() => router.delete(route('works.destroy', personality.id))}>Hapus</Button>
+                          </Flex>
+                        </Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </React.Fragment>
                 ))}
               </Table.Tbody>
             </Table>

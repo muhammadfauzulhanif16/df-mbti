@@ -14,6 +14,7 @@
       'name',
       'detail',
       'personality',
+      'course',
     ];
     
     public function basicTraits()
