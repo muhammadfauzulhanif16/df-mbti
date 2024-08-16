@@ -17,7 +17,7 @@
       $tests = Student::has('tests')
         ->with(['tests' => function ($query) {
           $query->latest()->limit(1);
-        }])
+        }, 'tests.work'])
         ->get();
       
       return Inertia::render('Chart/Index', [

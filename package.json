@@ -41,6 +41,8 @@
     "dayjs": "^1.11.11",
     "embla-carousel-react": "^8.0.4",
     "file-saver": "^2.0.5",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "recharts": "^2.12.7"
   }
 }

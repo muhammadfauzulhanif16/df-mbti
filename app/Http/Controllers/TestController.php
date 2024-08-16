@@ -194,6 +194,7 @@
                 ->map(function ($answers, $basicTraitName) {
                   return [
                     'name' => $basicTraitName,
+                    'description' => BasicTrait::where('name', $basicTraitName)->first()->description,
                     'totalValue' => $answers->sum('choice.value'),
                     'statements' => $answers->map(function ($answer) {
                       return [
