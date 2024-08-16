@@ -7,6 +7,7 @@
   use App\Models\Student;
   use App\Models\Test;
   use App\Models\User;
+  use App\Models\Work;
   use Exception;
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,11 @@
           $query->latest();
         }])->get()->map(function ($student) {
           $student->user->avatar = str_contains($student->user->avatar, 'https') ? $student->user->avatar : ($student->user->avatar ? asset('storage/' . $student->user->avatar) : null);
+          
+          $student->tests->each(function ($test) {
+            $test->work_name = Work::where('personality', $test->work->personality)->value('name');
+          });
+          
           return $student;
         })->sortBy('user.full_name')->values(),
         'lecturers' => Lecturer::with('user')->get(),

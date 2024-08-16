@@ -39,6 +39,11 @@
     public function store(Request $request)
     {
       try {
+        $user = Auth::user();
+        $user->update([
+          'is_actived' => !$user->is_actived,
+        ]);
+        
         $test = Test::create([
           'user_id' => Auth::id(),
           'time' => gmdate('H:i:s', $request->time),

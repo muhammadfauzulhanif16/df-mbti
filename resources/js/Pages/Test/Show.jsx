@@ -3,11 +3,9 @@ import {
   Box,
   Button,
   Center,
-  Divider,
   Flex,
   Group,
   Image,
-  SimpleGrid,
   Stack,
   Text,
   Title,
@@ -24,8 +22,6 @@ import { RadarChart } from '@mantine/charts'
 const Unsada = '/unsada.png'
 
 const Show = (props) => {
-  
-  
   const form = useForm({
     full_name: props.test.student.user.full_name,
     id_number: props.test.student.user.id_number,
@@ -76,7 +72,6 @@ const Show = (props) => {
     totalValue: (item.totalValue / totalHighestValues) * 100,
     totalValueIndicator: item.totalValueIndicator,
   }))
-  console.log(radarData)
   return (
     <AppLayout
       title="Tes MBTI"
@@ -96,49 +91,6 @@ const Show = (props) => {
             withPolarRadiusAxis
             series={[{ name: 'totalValue', color: 'blue.4', opacity: 0.2 }]}
           />
-        </Box>
-      ) : (props.auth.user.role === 'Mahasiswa' && isDetail === 1) ? (
-        <Box>
-          <Title size={30} align="center" mb={32}>Hasil Tipe Kepribadian</Title>
-          
-          <Stack>
-            {props.indicators.map((indicator) => (
-              <Stack key={indicator.id}>
-                <Text align="center" fz={20}>
-                  "{indicator.name}"
-                </Text>
-                
-                <SimpleGrid cols={2} gap={16}>
-                  {indicator.basic_traits.map((basic_trait, basicTraitId) => (
-                    <Stack align={basicTraitId === 1 ? 'end' : 'start'}
-                           key={basicTraitId}>
-                      <Text p={8}>Hasil {basic_trait.name}</Text>
-                      
-                      {basic_trait.statements.map((statement, statementId) => (
-                        <Flex key={statementId} gap={16}>
-                          {basicTraitId === 0 &&
-                            <Text>{statementId + 1}.</Text>}
-                          
-                          <Stack align={basicTraitId === 1 && 'end'}>
-                            <Text
-                              align={basicTraitId === 1 && 'end'}>{statement.statement.name}</Text>
-                            <Text fw="bold">{statement.choice.name}</Text>
-                          </Stack>
-                          
-                          {basicTraitId === 1 &&
-                            <Text>{statementId + 1}.</Text>}
-                        </Flex>
-                      ))}
-                      
-                      <Text fw={600} p={8}>Skor: {basic_trait.totalValue}</Text>
-                    </Stack>
-                  ))}
-                </SimpleGrid>
-                
-                <Divider my={32} />
-              </Stack>
-            ))}
-          </Stack>
         </Box>
       ) : (
         <Box>
@@ -240,7 +192,7 @@ const Show = (props) => {
                     }}>Kembali</Button>
           )}
           
-          {(props.auth.user.role === 'Mahasiswa' ? isDetail < 2 : isDetail < 1) && (
+          {(props.auth.user.role === 'Mahasiswa' ? isDetail < 1 : isDetail < 1) && (
             <Button px={16} h={48} rightSection={<IconArrowNarrowRight />}
                     radius={32} variant="subtle"
                     onClick={() => {

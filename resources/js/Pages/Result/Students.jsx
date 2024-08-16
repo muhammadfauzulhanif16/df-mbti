@@ -17,18 +17,19 @@ import { AppLayout } from '@/Layouts/AppLayout.jsx'
 import { IconCalendar, IconSearch, IconUser } from '@tabler/icons-react'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { MonthPickerInput } from '@mantine/dates'
 
 const Index = (props) => {
-  console.log(props)
   const [search, setSearch] = useState('')
+  const [period, setPeriod] = useState('')
   const [academicYear, setAcademicYear] = useState('')
   const [supervisorId, setSupervisorId] = useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.id : '')
   const students = props.students.filter(student => (
     (!search || student.user.full_name.toLowerCase().includes(search.toLowerCase())) &&
     (!academicYear || student.academic_year === academicYear) &&
-    (!supervisorId || student.supervisor_id === supervisorId)
+    (!supervisorId || student.supervisor_id === supervisorId) &&
+    (!period || period === '' || (student.tests.length && new Date(student.tests[0].created_at).toLocaleDateString('id-ID').includes(period)))
   ))
-  
   const jobCounts = students.reduce((acc, student) => {
     const job = student?.tests.length ? student?.tests[0].work.name : '-'
     if (job !== '-') {
@@ -154,13 +155,13 @@ const Index = (props) => {
   }
   
   const THList = props.auth.user.role === 'Admin' &&
-    ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'DPA', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Opsi']
+    ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Dosen PA', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Opsi']
   
   const columns = [
     { header: 'NIM' },
     { header: 'Nama Lengkap' },
     { header: 'Tahun Angkatan' },
-    { header: 'DPA' },
+    { header: 'Dosen PA' },
     { header: 'Tipe Kepribadian' },
     { header: 'Saran Pekerjaan' },
   ]
@@ -170,6 +171,36 @@ const Index = (props) => {
                meta={props.meta}>
       <Stack gap={32}>
         <Grid grow>
+          <Grid.Col span={{
+            base: 6,
+            sm: 3,
+          }}>
+            <MonthPickerInput styles={{
+              label: { marginBottom: 8 },
+              input: {
+                height: 48,
+                borderRadius: 32,
+                paddingLeft: 50,
+                paddingRight: 16,
+              },
+              section: { marginLeft: 0, width: 48, height: 48 },
+              error: { marginTop: 8 },
+            }}
+                              leftSection={<IconCalendar />}
+                              clearable
+                              searchable
+                              placeholder="Periode"
+                              checkIconPosition="right"
+                              onChange={(value) => {
+                                if (value) {
+                                  setPeriod(`${value.getMonth() + 1}/${value.getFullYear()}`)
+                                } else {
+                                  setPeriod('')
+                                }
+                              }}
+            />
+          </Grid.Col>
+          
           <Grid.Col span={{
             base: 6,
             sm: 3,

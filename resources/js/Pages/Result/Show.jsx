@@ -9,14 +9,13 @@ import {
   SimpleGrid,
   Stack,
   Text,
-  Title
+  Title,
 } from '@mantine/core'
 import React, { useState } from 'react'
 import { useForm } from '@inertiajs/react'
 import { IconPrinter } from '@tabler/icons-react'
 
 const Show = (props) => {
-  console.log(props)
   const form = useForm({
     full_name: props.user.full_name,
     id_number: props.user.id_number,
@@ -25,7 +24,7 @@ const Show = (props) => {
     personality: props.personality.name,
     description: props.personality.description,
     job: props.personality.job,
-    detail: props.personality.detail
+    detail: props.personality.detail,
   })
   const [isDetail, setIsDetail] = useState(0)
   const [isPrint, setIsPrint] = useState(false)
@@ -62,7 +61,7 @@ const Show = (props) => {
                       >
                         <Progress.Label
                           style={{
-                            lineHeight: '32px'
+                            lineHeight: '32px',
                           }}
                           fz={16}>{basic_trait.name}</Progress.Label>
                       </Progress.Section>
@@ -152,7 +151,7 @@ const Show = (props) => {
                     style={{
                       padding: '8px 16px',
                       border: '1px solid #dcdcdc',
-                      fontSize: 14
+                      fontSize: 14,
                     }}
                     dangerouslySetInnerHTML={{ __html: form.data.full_name }}
                   />
@@ -164,7 +163,7 @@ const Show = (props) => {
                     style={{
                       padding: '8px 16px',
                       border: '1px solid #dcdcdc',
-                      fontSize: 14
+                      fontSize: 14,
                     }}
                     dangerouslySetInnerHTML={{ __html: form.data.id_number }}
                   />
@@ -176,7 +175,7 @@ const Show = (props) => {
                     style={{
                       padding: '8px 16px',
                       border: '1px solid #dcdcdc',
-                      fontSize: 14
+                      fontSize: 14,
                     }}
                     dangerouslySetInnerHTML={{ __html: form.data.created_at }}
                   />
@@ -188,7 +187,7 @@ const Show = (props) => {
                     style={{
                       padding: '8px 16px',
                       border: '1px solid #dcdcdc',
-                      fontSize: 14
+                      fontSize: 14,
                     }}
                     dangerouslySetInnerHTML={{ __html: form.data.time }}
                   />
@@ -202,7 +201,7 @@ const Show = (props) => {
                     style={{
                       padding: '8px 16px',
                       border: '1px solid #dcdcdc',
-                      fontSize: 14
+                      fontSize: 14,
                     }}
                     dangerouslySetInnerHTML={{ __html: form.data.personality }}
                   />
@@ -214,7 +213,7 @@ const Show = (props) => {
                     style={{
                       padding: '8px 16px',
                       border: '1px solid #dcdcdc',
-                      fontSize: 14
+                      fontSize: 14,
                     }}
                     dangerouslySetInnerHTML={{ __html: form.data.description }}
                   />
@@ -226,7 +225,7 @@ const Show = (props) => {
                     style={{
                       padding: '8px 16px',
                       border: '1px solid #dcdcdc',
-                      fontSize: 14
+                      fontSize: 14,
                     }}
                     dangerouslySetInnerHTML={{ __html: form.data.detail }}
                   />
@@ -240,7 +239,7 @@ const Show = (props) => {
                 style={{
                   padding: '8px 16px',
                   border: '1px solid #dcdcdc',
-                  fontSize: 14
+                  fontSize: 14,
                 }}
                 dangerouslySetInnerHTML={{ __html: form.data.detail }}
               />
