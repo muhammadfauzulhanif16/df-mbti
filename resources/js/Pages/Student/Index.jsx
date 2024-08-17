@@ -186,35 +186,37 @@ const Index = (props) => {
                meta={props.meta}>
       <Stack gap={32}>
         <Grid grow>
-          <Grid.Col span={{
-            base: 6,
-            sm: 3,
-          }}>
-            <MonthPickerInput styles={{
-              label: { marginBottom: 8 },
-              input: {
-                height: 48,
-                borderRadius: 32,
-                paddingLeft: 50,
-                paddingRight: 16,
-              },
-              section: { marginLeft: 0, width: 48, height: 48 },
-              error: { marginTop: 8 },
-            }}
-                              leftSection={<IconCalendar />}
-                              clearable
-                              searchable
-                              placeholder="Periode"
-                              checkIconPosition="right"
-                              onChange={(value) => {
-                                if (value) {
-                                  setSearchPeriod(`${value.getMonth() + 1}/${value.getFullYear()}`)
-                                } else {
-                                  setSearchPeriod('')
-                                }
-                              }}
-            />
-          </Grid.Col>
+          {props.auth.user.role !== 'Admin' && (
+            <Grid.Col span={{
+              base: 6,
+              sm: 3,
+            }}>
+              <MonthPickerInput styles={{
+                label: { marginBottom: 8 },
+                input: {
+                  height: 48,
+                  borderRadius: 32,
+                  paddingLeft: 50,
+                  paddingRight: 16,
+                },
+                section: { marginLeft: 0, width: 48, height: 48 },
+                error: { marginTop: 8 },
+              }}
+                                leftSection={<IconCalendar />}
+                                clearable
+                                searchable
+                                placeholder="Periode"
+                                checkIconPosition="right"
+                                onChange={(value) => {
+                                  if (value) {
+                                    setSearchPeriod(`${value.getMonth() + 1}/${value.getFullYear()}`)
+                                  } else {
+                                    setSearchPeriod('')
+                                  }
+                                }}
+              />
+            </Grid.Col>
+          )}
           
           <Grid.Col span={{
             base: 6,
@@ -325,62 +327,66 @@ const Index = (props) => {
           )}
         </Grid>
         
-        <Text c="blue" onClick={() => handleExportRows(
-          students.map(student => ({
-            'NIM': student.user.id_number,
-            'Nama Lengkap': student.user.full_name,
-            'Tahun Angkatan': student.academic_year,
-            'DPA': student.supervisor.user.full_name,
-            'Tipe Kepribadian': student?.tests.length ? student?.tests[0].personality : '-',
-            'Saran Pekerjaan': student?.tests.length ? student?.tests[0].work.name : '-',
-          })),
-          columns,
-          searchPeriod,
-        )}>Cetak Laporan</Text>
+        {props.auth.user.role !== 'Admin' && (
+          <Text c="blue" onClick={() => handleExportRows(
+            students.map(student => ({
+              'NIM': student.user.id_number,
+              'Nama Lengkap': student.user.full_name,
+              'Tahun Angkatan': student.academic_year,
+              'DPA': student.supervisor.user.full_name,
+              'Tipe Kepribadian': student?.tests.length ? student?.tests[0].personality : '-',
+              'Saran Pekerjaan': student?.tests.length ? student?.tests[0].work.name : '-',
+            })),
+            columns,
+            searchPeriod,
+          )}>Cetak Laporan</Text>
+        )}
         
-        <Grid>
-          {supervisorId && (
-            <Grid.Col span={4}>
-              <Stack>
-                <Text fw={600}>Nama Dosen PA :</Text>
-                <Text>
-                  {props.lecturers.find(lecturer => lecturer.user.id === supervisorId)?.user.full_name || 'Nama tidak ditemukan'}
-                </Text>
-              </Stack>
+        {props.auth.user.role !== 'Admin' && (
+          <Grid>
+            {supervisorId && (
+              <Grid.Col span={4}>
+                <Stack>
+                  <Text fw={600}>Nama Dosen PA :</Text>
+                  <Text>
+                    {props.lecturers.find(lecturer => lecturer.user.id === supervisorId)?.user.full_name || 'Nama tidak ditemukan'}
+                  </Text>
+                </Stack>
+              </Grid.Col>
+            )}
+            
+            <Grid.Col span={supervisorId ? 4 : 6}>
+              <Center>
+                <Stack>
+                  <Text fw={600}>Saran Pekerjaan :</Text>
+                  <List>
+                    {Object.entries(jobCounts).map(([job, count]) => (
+                      <List.Item key={job}>{job} : {count} Mahasiswa</List.Item>
+                    ))}
+                  </List>
+                  <Text fw={600}>Total
+                                 Mahasiswa: {Object.values(jobCounts).reduce((acc, count) => acc + count, 0)}</Text>
+                </Stack>
+              </Center>
             </Grid.Col>
-          )}
-          
-          <Grid.Col span={supervisorId ? 4 : 6}>
-            <Center>
-              <Stack>
-                <Text fw={600}>Saran Pekerjaan :</Text>
-                <List>
-                  {Object.entries(jobCounts).map(([job, count]) => (
-                    <List.Item key={job}>{job} : {count} Mahasiswa</List.Item>
-                  ))}
-                </List>
-                <Text fw={600}>Total
-                               Mahasiswa: {Object.values(jobCounts).reduce((acc, count) => acc + count, 0)}</Text>
-              </Stack>
-            </Center>
-          </Grid.Col>
-          
-          <Grid.Col span={supervisorId ? 4 : 6}>
-            <Center>
-              <Stack>
-                <Text fw={600}>Tipe Kepribadian :</Text>
-                <List>
-                  {Object.entries(personalityCounts).map(([personality, count]) => (
-                    <List.Item
-                      key={personality}>{personality} : {count} Mahasiswa</List.Item>
-                  ))}
-                </List>
-                <Text fw={600}>Total
-                               Mahasiswa: {Object.values(personalityCounts).reduce((acc, count) => acc + count, 0)}</Text>
-              </Stack>
-            </Center>
-          </Grid.Col>
-        </Grid>
+            
+            <Grid.Col span={supervisorId ? 4 : 6}>
+              <Center>
+                <Stack>
+                  <Text fw={600}>Tipe Kepribadian :</Text>
+                  <List>
+                    {Object.entries(personalityCounts).map(([personality, count]) => (
+                      <List.Item
+                        key={personality}>{personality} : {count} Mahasiswa</List.Item>
+                    ))}
+                  </List>
+                  <Text fw={600}>Total
+                                 Mahasiswa: {Object.values(personalityCounts).reduce((acc, count) => acc + count, 0)}</Text>
+                </Stack>
+              </Center>
+            </Grid.Col>
+          </Grid>
+        )}
         
         <Box
           style={{
