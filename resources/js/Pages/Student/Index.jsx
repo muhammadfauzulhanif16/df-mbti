@@ -28,9 +28,8 @@ import autoTable from 'jspdf-autotable'
 import { MonthPickerInput } from '@mantine/dates'
 
 const Index = (props) => {
-  console.log(props)
   const [searchPeriod, setSearchPeriod] = useState('')
-  const [period, setPeriod] = useState('')
+  const [search, setSearch] = useState('')
   const [academicYear, setAcademicYear] = useState('')
   const [supervisorId, setSupervisorId] = useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.id : '')
   const students = props.students.filter(student => (
