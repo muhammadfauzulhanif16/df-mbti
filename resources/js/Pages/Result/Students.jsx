@@ -21,14 +21,14 @@ import { MonthPickerInput } from '@mantine/dates'
 
 const Index = (props) => {
   const [search, setSearch] = useState('')
-  const [period, setPeriod] = useState('')
+  const [searchPeriod, setSearchPeriod] = useState('')
   const [academicYear, setAcademicYear] = useState('')
   const [supervisorId, setSupervisorId] = useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.id : '')
   const students = props.students.filter(student => (
     (!search || student.user.full_name.toLowerCase().includes(search.toLowerCase())) &&
     (!academicYear || student.academic_year === academicYear) &&
     (!supervisorId || student.supervisor_id === supervisorId) &&
-    (!period || period === '' || (student.tests.length && new Date(student.tests[0].created_at).toLocaleDateString('id-ID').includes(period)))
+    (!searchPeriod || searchPeriod === '' || (student.tests.length && new Date(student.tests[0].created_at).toLocaleDateString('id-ID').includes(searchPeriod)))
   ))
   const jobCounts = students.reduce((acc, student) => {
     const job = student?.tests.length ? student?.tests[0].work.name : '-'
@@ -46,9 +46,9 @@ const Index = (props) => {
     return acc
   }, {})
   
-  const handleExportRows = (rows, columns) => {
+  const handleExportRows = (rows, columns, searchPeriod) => {
     const doc = new jsPDF()
-    
+    console.log(searchPeriod)
     // Add logo to the top-left corner
     const logo = '/unsada.png' // Adjust the path as needed
     doc.addImage(logo, 'PNG', 10, 10, 30, 30)
@@ -70,6 +70,12 @@ const Index = (props) => {
       'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
       'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
     ]
+    
+    if (searchPeriod) {
+      const [month, year] = searchPeriod.split('/')
+      currentDate.setMonth(month - 1)
+      currentDate.setFullYear(year)
+    }
     const period = `Periode: ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`
     
     doc.setFontSize(18)
@@ -193,9 +199,9 @@ const Index = (props) => {
                               checkIconPosition="right"
                               onChange={(value) => {
                                 if (value) {
-                                  setPeriod(`${value.getMonth() + 1}/${value.getFullYear()}`)
+                                  setSearchPeriod(`${value.getMonth() + 1}/${value.getFullYear()}`)
                                 } else {
-                                  setPeriod('')
+                                  setSearchPeriod('')
                                 }
                               }}
             />
@@ -294,6 +300,7 @@ const Index = (props) => {
             'Saran Pekerjaan': student?.tests.length ? student?.tests[0].work.name : '-',
           })),
           columns,
+          searchPeriod,
         )}>Cetak Laporan</Text>
         
         <Grid>

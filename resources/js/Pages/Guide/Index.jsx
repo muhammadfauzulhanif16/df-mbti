@@ -13,6 +13,7 @@ import { router } from '@inertiajs/core'
 import { AppLayout } from '@/Layouts/AppLayout.jsx'
 
 const Index = (props) => {
+  console.log(props)
   const [search, setSearch] = useState('')
   const guides = props.guides.filter(guide =>
     guide.personality.toLowerCase().includes(search.toLowerCase()),
@@ -89,6 +90,13 @@ const Index = (props) => {
                       px={16} py={0}
                       style={{ whiteSpace: 'nowrap' }}>
                       {guide.job}
+                    </Table.Td>
+                    <Table.Td
+                      px={16} py={0}
+                      style={{ whiteSpace: 'nowrap' }}>
+                      <div
+                        dangerouslySetInnerHTML={{ __html: guide.course }}
+                      />
                     </Table.Td>
                     <Table.Td
                       px={16} py={0}

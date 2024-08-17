@@ -3,6 +3,7 @@
   namespace App\Http\Controllers;
   
   use App\Models\Guide;
+  use App\Models\Work;
   use Exception;
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,15 @@
       
       return Inertia('Guide/Index', [
         'meta' => session('meta'),
-        'guides' => Guide::all(),
+        'guides' => Guide::all()->map(function ($guide) {
+          return [
+            'id' => $guide->id,
+            'personality' => $guide->personality,
+            'development' => $guide->development,
+            'job' => $guide->job,
+            'course' => Work::where('personality', $guide->personality)->first()->course ?? null,
+          ];
+        }),
         'auth' => ['user' => $authedUser],
       ]);
     }
