@@ -94,13 +94,6 @@ const Index = (props) => {
                       px={16} py={0}
                       style={{ whiteSpace: 'nowrap' }}>
                       <div
-                        dangerouslySetInnerHTML={{ __html: guide.course }}
-                      />
-                    </Table.Td>
-                    <Table.Td
-                      px={16} py={0}
-                      style={{ whiteSpace: 'nowrap' }}>
-                      <div
                         dangerouslySetInnerHTML={{ __html: guide.development }}
                       />
                     </Table.Td>

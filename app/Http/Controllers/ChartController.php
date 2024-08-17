@@ -18,6 +18,9 @@
         ->with(['tests' => function ($query) {
           $query->latest()->limit(1);
         }, 'tests.work'])
+        ->when(Auth::user()->role !== 'Admin', function ($query) {
+          $query->where('supervisor_id', Auth::id());
+        })
         ->get();
       
       return Inertia::render('Chart/Index', [
