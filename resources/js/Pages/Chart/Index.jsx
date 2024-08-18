@@ -5,14 +5,13 @@ import { Select } from '@mantine/core'
 import { IconUser } from '@tabler/icons-react'
 
 const Index = (props) => {
-  console.log(props)
-  const [supervisorId, setSupervisorId] = React.useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.id : '')
-  
-  // If supervisorId is equal to the authenticated user's id, set it to an empty string
+  const [supervisorId, setSupervisorId] = React.useState('')
+
+// If supervisorId is equal to the authenticated user's id, set it to an empty string
   const effectiveSupervisorId = supervisorId === props.auth.user.id ? '' : supervisorId
   
-  let personalities = props.tests
-    .reduce((acc, student) => {
+  const aggregatePersonalities = (students) => {
+    return students.reduce((acc, student) => {
       const personality = student.tests[0].work.name
       if (personality) {
         const existingPersonality = acc.find(
@@ -26,25 +25,11 @@ const Index = (props) => {
       }
       return acc
     }, [])
-  
-  if (effectiveSupervisorId) {
-    personalities = props.tests
-      ?.filter((student) => effectiveSupervisorId === '' || student.supervisor_id === effectiveSupervisorId)
-      .reduce((acc, student) => {
-        const personality = student.tests[0].work.name
-        if (personality) {
-          const existingPersonality = acc.find(
-            (item) => item.personalityName === personality,
-          )
-          if (existingPersonality) {
-            existingPersonality['Mahasiswa'] += 1
-          } else {
-            acc.push({ personalityName: personality, 'Mahasiswa': 1 })
-          }
-        }
-        return acc
-      }, [])
   }
+  
+  const personalities = effectiveSupervisorId
+    ? aggregatePersonalities(props.tests.filter((student) => student.supervisor_id === effectiveSupervisorId))
+    : aggregatePersonalities(props.tests)
   
   return (
     <AppLayout
