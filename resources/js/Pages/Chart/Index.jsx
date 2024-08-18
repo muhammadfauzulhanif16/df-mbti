@@ -6,10 +6,6 @@ import { IconUser } from '@tabler/icons-react'
 
 const Index = (props) => {
   const [supervisorId, setSupervisorId] = React.useState('')
-  console.log(supervisorId, 'supervisorId')
-  
-  // If supervisorId is equal to the authenticated user's id, set it to an empty string
-  const effectiveSupervisorId = supervisorId === props.auth.user.id ? '' : supervisorId
   
   const aggregatePersonalities = (students) => {
     return students.reduce((acc, student) => {
@@ -28,8 +24,8 @@ const Index = (props) => {
     }, [])
   }
   
-  const filteredStudents = effectiveSupervisorId
-    ? props.tests.filter((student) => student.supervisor_id === effectiveSupervisorId)
+  const filteredStudents = supervisorId
+    ? props.tests.filter((student) => student.supervisor_id === supervisorId)
     : props.tests
   
   const personalities = aggregatePersonalities(filteredStudents)
