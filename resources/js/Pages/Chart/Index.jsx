@@ -6,7 +6,7 @@ import { IconUser } from '@tabler/icons-react'
 
 const Index = (props) => {
   console.log(props)
-  const [supervisorId, setSupervisorId] = React.useState(props.auth.user.id || '')
+  const [supervisorId, setSupervisorId] = React.useState(props.auth.user.role === 'Dosen PA' ? props.auth.user.id : '')
   
   // If supervisorId is equal to the authenticated user's id, set it to an empty string
   const effectiveSupervisorId = supervisorId === props.auth.user.id ? '' : supervisorId
