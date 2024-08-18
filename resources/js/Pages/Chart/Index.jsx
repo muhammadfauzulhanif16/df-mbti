@@ -6,8 +6,9 @@ import { IconUser } from '@tabler/icons-react'
 
 const Index = (props) => {
   const [supervisorId, setSupervisorId] = React.useState('')
-
-// If supervisorId is equal to the authenticated user's id, set it to an empty string
+  console.log(supervisorId, 'supervisorId')
+  
+  // If supervisorId is equal to the authenticated user's id, set it to an empty string
   const effectiveSupervisorId = supervisorId === props.auth.user.id ? '' : supervisorId
   
   const aggregatePersonalities = (students) => {
@@ -27,9 +28,11 @@ const Index = (props) => {
     }, [])
   }
   
-  const personalities = effectiveSupervisorId
-    ? aggregatePersonalities(props.tests.filter((student) => student.supervisor_id === effectiveSupervisorId))
-    : aggregatePersonalities(props.tests)
+  const filteredStudents = effectiveSupervisorId
+    ? props.tests.filter((student) => student.supervisor_id === effectiveSupervisorId)
+    : props.tests
+  
+  const personalities = aggregatePersonalities(filteredStudents)
   
   return (
     <AppLayout
@@ -73,8 +76,8 @@ const Index = (props) => {
         withLegend
         xAxisLabel="Kepribadian"
         yAxisLabel={`${
-          effectiveSupervisorId ? props.tests.filter((student) => student.supervisor_id === effectiveSupervisorId).length : props.tests.length
-        } dari ${effectiveSupervisorId ? props.students.filter((student) => student.supervisor_id === effectiveSupervisorId).length : props.students.length} Mahasiswa`}
+          filteredStudents.length
+        } dari ${props.students.length} Mahasiswa`}
         series={[{ name: 'Mahasiswa', color: 'blue' }]}
         withBarValueLabel
       />
