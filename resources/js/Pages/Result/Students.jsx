@@ -392,7 +392,6 @@ const Index = (props) => {
                     <Table.Td
                       px={16} py={0}
                       style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0].work.name : '-'}</Table.Td>
-                    
                     <Table.Td px={16} py={0}
                               style={{ whiteSpace: 'nowrap' }}>
                       <Button

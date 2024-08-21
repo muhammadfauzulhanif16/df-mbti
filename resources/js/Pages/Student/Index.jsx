@@ -40,7 +40,7 @@ const Index = (props) => {
   
   const THList = props.auth.user.role === 'Admin'
     ? ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Email', 'Nomor Telepon', 'DPA', 'Aktif', 'Opsi']
-    : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Tipe Kepribadian', 'Aktif', 'Opsi']
+    : ['#', 'Foto', 'NIM', 'Nama Lengkap', 'Tahun Angkatan', 'Tipe Kepribadian', 'Saran Pekerjaan', 'Aktif', 'Opsi']
   
   const columns = [
     { header: 'NIM' },
@@ -435,9 +435,14 @@ const Index = (props) => {
                       <Table.Td
                         px={16} py={0}
                         style={{ whiteSpace: 'nowrap' }}>{student?.supervisor?.user.full_name}</Table.Td></>) : (
-                      <Table.Td
-                        px={16} py={0}
-                        style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0].personality : '-'}</Table.Td>
+                      <>
+                        <Table.Td
+                          px={16} py={0}
+                          style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0].personality : '-'}</Table.Td>
+                        <Table.Td
+                          px={16} py={0}
+                          style={{ whiteSpace: 'nowrap' }}>{student?.tests.length ? student?.tests[0].work.name : '-'}</Table.Td>
+                      </>
                     )}
                     <Table.Td
                       px={16} py={0}
